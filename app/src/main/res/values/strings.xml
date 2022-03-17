@@ -1,0 +1,105 @@
+<resources>
+    <string name="Title" translatable="false">Title</string>
+    <string name="Language" translatable="true">Language</string>
+    <string name="English" translatable="true">English</string>
+    <string name="Hebrew" translatable="true">Hebrew</string>
+    <string name="Select" translatable="true">Select</string>
+    <string name="Search" translatable="true">Search</string>
+    <string name="DontHaveAccountCreateAccount" translatable="true">Dont have account? Create Account</string>
+    <string name="Finish" translatable="true">Finish</string>
+    <string name="Yes" translatable="true">Yes</string>
+    <string name="No" translatable="true">No</string>
+    <string name="Required" translatable="true">*Required</string>
+    <string name="InvalidEmail" translatable="true">Invalid Email</string>
+    <string name="Must6Chars" translatable="true">Must 6 or more chars</string>
+    <string name="Must9Chars" translatable="true">Must 9 chars</string>
+    <string name="EmailNotExist" translatable="true">Email not exist in the system</string>
+    <string name="EmailExist" translatable="true">Email exist in the system</string>
+    <string name="WrongPassword" translatable="true">Wrong Password</string>
+    <string name="DifferentPassword" translatable="true">Comfirm Password Not match</string>
+    <string name="OK" translatable="true">Ok</string>
+    <string name="Loading" translatable="true">Loading</string>
+    <string name="Other" translatable="true">Other</string>
+    <string name="Error" translatable="true">System Error please try again in a few minutes</string>
+    <string name="Male" translatable="true">Male</string>
+    <string name="Female" translatable="true">Female</string>
+    <string name="City" translatable="true">City</string>
+    <string name="SelectCity" translatable="true">Select City</string>
+    <string name="BeerSheva" translatable="true">Beer Sheva</string>
+    <string name="TelAviv" translatable="true">Tel Aviv</string>
+    <string name="Haifa" translatable="true">Haifa</string>
+    <string name="Age" translatable="true">Age</string>
+    <string name="Gender" translatable="true">Gender</string>
+    <string name="SelectAge" translatable="true">Select Age</string>
+    <string name="SelectGender" translatable="true">Select Gender</string>
+    <string name="Next" translatable="true">Next</string>
+    <!-- LiftYourLife Page -->
+    <string name="app_name" translatable="true">LiftYourLife</string>
+    <string name="SignIn" translatable="true">Sign In</string>
+    <string name="CreateAccount" translatable="true">Create Account</string>
+    <string name="ResetPassword" translatable="true">Reset Password</string>
+    <string name="About" translatable="true">About</string>
+    <string name="Contact" translatable="true">Contact</string>
+    <string name="SelectLanguage" translatable="true">Select Language</string>
+    <string name="Exit" translatable="true">Exit</string>
+    <string name="AreYouSureToExit" translatable="true">Are you sure you want to Exit?</string>
+    <!-- SignIn Page -->
+    <string name="Email" translatable="true">Email</string>
+    <string name="CheckEmailVerify" translatable="true">This account not verify yet, please check the link sent to your email to verify this account.</string>
+    <string name="Password" translatable="true">Password</string>
+    <string name="RecoverPassword" translatable="true">Forgot password? Reset Password</string>
+    <string name="Google" translatable="true">Google</string>
+    <string name="Facebook" translatable="true">Facebook</string>
+    <string name="OR" translatable="true">OR</string>
+    <!-- CreateAccount Page -->
+    <string name="FirstName" translatable="true">First Name</string>
+    <string name="LastName" translatable="true">Last Name</string>
+    <string name="Phone" translatable="true">Phone</string>
+    <string name="PhoneLenth" translatable="true">Required 10 digits</string>
+    <string name="ConfirmPassword" translatable="true">Confirm Password</string>
+    <string name="AlreadyHaveAccount" translatable="true">Already Have Account? Sign In</string>
+    <string name="CompleteCreateAccount" translatable="true">Successfully registered, Please verify your email with link sent to your email.</string>
+    <!-- ResetPassword Page -->
+    <string name="ForgotPasswordInfo" translatable="true">Please enter the email address which you want to reset the password</string>
+    <string name="ResetLink" translatable="true">Reset Link has been send to your Email</string>
+    <!-- About Page -->
+    <string name="AboutVersion" translatable="true">Version 1.1.0</string>
+    <string name="Copyright" translatable="true">Copyright &#169; 2022 Daniel Elmaliach, Elad Zafrani and Almog Sofer</string>
+    <string name="AboutInfo" translatable="true">The app was developed as part of the course Distributed Web Applications by Daniel Elmaleh, Elad Zafrani and Almog Sofer with the goal of creating a convenient app and tracking training and deep learning of the user to help him take care of the training life and not give up</string>
+    <!-- Contact Page -->
+    <string name="ContactInfo" translatable="true">Have you meet any problem?\nThe development team is at your service</string>
+    <string name="ContactSubject" translatable="true">Contact - App EasyLearnSCE</string>
+    <string name="ContactText" translatable="true">Team EasyLearnSCE, </string>
+    <string name="ContactEmailChooser" translatable="true">Choose an Email App</string>
+    <!-- Home Page -->
+    <string name="Profile" translatable="true">Profile</string>
+    <string name="Home" translatable="true">Home</string>
+    <string name="MyWorkOut" translatable="true">My Work Out</string>
+    <string name="WorkOutUpdate" translatable="true">Work Out Update</string>
+    <string name="ChangePassword" translatable="true">Change Password</string>
+    <string name="Logout" translatable="true">Logout</string>
+
+
+    <!-- Arrays -->
+    <string-array name="Lagnuage">
+        <item>@string/Hebrew</item>
+        <item>@string/English</item>
+    </string-array>
+    <string-array name="LiftYourLifeTagsName">
+        <item>@string/SignIn</item>
+        <item>@string/CreateAccount</item>
+        <item>@string/ResetPassword</item>
+        <item>@string/About</item>
+        <item>@string/Contact</item>
+    </string-array>
+    <string-array name="Gender">
+        <item>@string/Male</item>
+        <item>@string/Female</item>
+        <item>@string/Other</item>
+    </string-array>
+    <string-array name="City">
+        <item>@string/BeerSheva</item>
+        <item>@string/TelAviv</item>
+        <item>@string/Haifa</item>
+    </string-array>
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "618700014918",
+    "project_id": "liftyourlife-9d039",
+    "storage_bucket": "liftyourlife-9d039.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618700014918:android:08fb0501000f54a8e39147",
+        "android_client_info": {
+          "package_name": "com.example.liftyourlife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618700014918-bmjkdmmj0ums2fva6urld8sireuubbrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNG5NxZ5xCtm0Yz1Ztp_hwJlJ2vXcyytw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618700014918-bmjkdmmj0ums2fva6urld8sireuubbrs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

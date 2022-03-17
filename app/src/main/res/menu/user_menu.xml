@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="end"
+    android:layout_gravity="end">
+    <group
+        android:checkableBehavior="single"
+        android:gravity="end"
+        android:layout_gravity="end">
+        <item
+            android:id="@+id/ItemHome"
+            android:icon="@drawable/home"
+            android:title="@string/Home" />
+        <item
+            android:id="@+id/ItemProfile"
+            android:icon="@drawable/person"
+            android:title="@string/Profile" />
+        <item
+            android:id="@+id/ItemMyWorkOut"
+            android:icon="@drawable/create_account"
+            android:title="@string/MyWorkOut" />
+        <item
+            android:id="@+id/ItemWorkOutUpdate"
+            android:icon="@drawable/reset_password"
+            android:title="@string/WorkOutUpdate" />
+        <item
+            android:id="@+id/ItemChangePassword"
+            android:icon="@drawable/reset_password"
+            android:title="@string/ChangePassword" />
+        <item
+            android:id="@+id/ItemLogout"
+            android:icon="@drawable/contact"
+            android:title="@string/Logout" />
+    </group>
+</menu>

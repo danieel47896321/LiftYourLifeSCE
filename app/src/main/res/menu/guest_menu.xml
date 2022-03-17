@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="end"
+    android:layout_gravity="end">
+    <group
+        android:checkableBehavior="single"
+        android:gravity="end"
+        android:layout_gravity="end">
+        <item
+            android:id="@+id/ItemEasyLearnSCE"
+            android:icon="@drawable/home"
+            android:title="@string/app_name" />
+        <item
+            android:id="@+id/ItemSignIn"
+            android:icon="@drawable/sign_in"
+            android:title="@string/SignIn" />
+        <item
+            android:id="@+id/ItemCreateAccount"
+            android:icon="@drawable/create_account"
+            android:title="@string/CreateAccount" />
+        <item
+            android:id="@+id/ItemResetPassword"
+            android:icon="@drawable/reset_password"
+            android:title="@string/ResetPassword" />
+        <item
+            android:id="@+id/ItemAbout"
+            android:icon="@drawable/about"
+            android:title="@string/About" />
+        <item
+            android:id="@+id/ItemContact"
+            android:icon="@drawable/contact"
+            android:title="@string/Contact" />
+    </group>
+</menu>

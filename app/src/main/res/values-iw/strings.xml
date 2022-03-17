@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ALL -->
+    <string name="Title" translatable="true">כותרת</string>
+    <string name="Language" translatable="true">שפה</string>
+    <string name="English" translatable="true">אנגלית</string>
+    <string name="Hebrew" translatable="true">עברית</string>
+    <string name="Search" translatable="true">חיפוש</string>
+    <string name="Select" translatable="true">בחר</string>
+    <string name="DontHaveAccountCreateAccount" translatable="true">אין לך משתמש? צור חשבון</string>
+    <string name="Finish" translatable="true">סיום</string>
+    <string name="Yes" translatable="true">כן</string>
+    <string name="No" translatable="true">לא</string>
+    <string name="Required" translatable="true">*חובה</string>
+    <string name="InvalidEmail" translatable="true">אימייל לא חוקי</string>
+    <string name="Must6Chars" translatable="true">חובה לפחות 6 תווים</string>
+    <string name="Must9Chars" translatable="true">חובה 9 תווים</string>
+    <string name="EmailNotExist" translatable="true">האימייל לא קיים במערכת</string>
+    <string name="EmailExist" translatable="true">האימייל כבר קיים במערכת</string>
+    <string name="WrongPassword" translatable="true">סיסמה שגויה</string>
+    <string name="DifferentPassword" translatable="true">אימות סיסמה לא תואמת</string>
+    <string name="OK" translatable="true">אישור</string>
+    <string name="Loading" translatable="true">טוען</string>
+    <string name="Other" translatable="true">אחר</string>
+    <string name="Error" translatable="true">שגיאה במערכת בבקשה נסה שוב בעוד כמה דקות</string>
+    <string name="Male" translatable="true">זכר</string>
+    <string name="Female" translatable="true">נקבה</string>
+    <string name="City" translatable="true">עיר</string>
+    <string name="SelectCity" translatable="true">בחר עיר</string>
+    <string name="BeerSheva" translatable="true">באר שבע</string>
+    <string name="TelAviv" translatable="true">תל אביב</string>
+    <string name="Haifa" translatable="true">חיפה</string>
+    <string name="SelectAge" translatable="true">בחר גיל</string>
+    <string name="Age" translatable="true">גיל</string>
+    <string name="Gender" translatable="true">מגדר</string>
+    <string name="SelectGender" translatable="true">בחר מגדר</string>
+    <string name="Next" translatable="true">הבא</string>
+    <!-- EasyLearnSCE Page -->
+    <string name="app_name" translatable="true">LiftYourLife</string>
+    <string name="SignIn" translatable="true">כניסה</string>
+    <string name="CreateAccount" translatable="true">צור חשבון</string>
+    <string name="ResetPassword" translatable="true">איפוס סיסמה</string>
+    <string name="About" translatable="true">אודות</string>
+    <string name="Contact" translatable="true">צור קשר</string>
+    <string name="SelectLanguage" translatable="true">בחר שפה</string>
+    <string name="Exit" translatable="true">יציאה</string>
+    <string name="AreYouSureToExit" translatable="true">האם אתה בטוח שברצונך לצאת?</string>
+    <!-- SignIn Page -->
+    <string name="Email" translatable="true">אימייל</string>
+    <string name="CheckEmailVerify" translatable="true">חשבון זה עדיין לא אומת, בבקשה בדוק את הקישור שנשלח לאימייל שלך ואמת את החשבון.</string>
+    <string name="Password" translatable="true">סיסמה</string>
+    <string name="RecoverPassword" translatable="true">שכחת את הסיסמה? איפוס סיסמה</string>
+    <string name="Google" translatable="true">גוגל</string>
+    <string name="Facebook" translatable="true">פייסבוק</string>
+    <string name="OR" translatable="true">או</string>
+    <!-- CreateAccount Page -->
+    <string name="FirstName" translatable="true">שם פרטי</string>
+    <string name="LastName" translatable="true">שם משפחה</string>
+    <string name="Phone" translatable="true">טלפון</string>
+    <string name="PhoneLenth" translatable="true">חובה להזין 10 ספרות</string>
+    <string name="ConfirmPassword" translatable="true">אימות סיסמה</string>
+    <string name="AlreadyHaveAccount" translatable="true">קיים כבר משתמש? כניסה</string>
+    <string name="CompleteCreateAccount" translatable="true">נרשמת בהצלחה, בבקשה אמת את חשבונך בעזרת קישור אימות שנשלח לאיימיל שלך.</string>
+    <!-- ResetPassword Page -->
+    <string name="ForgotPasswordInfo" translatable="true">נא הזן את כתובת האימייל שברצונך לשחזר עבורו את הסיסמה</string>
+    <string name="ResetLink" translatable="true">קישור לאיפוס הסיסמה נשלח לאימייל</string>
+    <!-- About Page -->
+    <string name="AboutVersion" translatable="true">גרסה 1.1.0</string>
+    <string name="Copyright" translatable="true"> זכויות יוצרים &#169; 2022 דניאל אלמליח, אלעד זפרני ואלמוג סופר</string>
+    <string name="AboutInfo" translatable="true">האפליקציה פותחה במסגרת הקורס יישומי אינטרנט מבוזרים על ידי דניאל אלמליח, אלעד זפרני ואלמוג סופר כאשר המטרה ליצור אפליקציה נוחה ומעקב אחר אימונים ולמידה עמוקה של המשתמש על מנת לעזור לו להקפיד על חיי האימונים ולא לוותר לעצמו </string>
+    <!-- Contact Page -->
+    <string name="ContactInfo" translatable="true">האם נתקלת בבעיה כלשהי?\n צוות הפיתוח זמין לשירותך</string>
+    <string name="ContactSubject" translatable="true">יצירת קשר - App EasyLearnSCE</string>
+    <string name="ContactText" translatable="true">צוות EasyLearnSCE, </string>
+    <string name="ContactEmailChooser" translatable="true">בחר אפליקציית דוא"ל</string>
+    <!-- Home Page -->
+    <string name="Profile" translatable="true">פרופיל</string>
+    <string name="Home" translatable="true">מסך בית</string>
+    <string name="MyWorkOut" translatable="true">האימונים שלי</string>
+    <string name="WorkOutUpdate" translatable="true">עידכון אימונים</string>
+    <string name="ChangePassword" translatable="true">שינוי סיסמה</string>
+    <string name="Logout" translatable="true">התנתק</string>
+
+
+</resources>

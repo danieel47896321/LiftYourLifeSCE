@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/openingscreen">
+
+    <TextView
+        android:id="@+id/TextViewSearchCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@android:drawable/editbox_background"
+        android:backgroundTint="@color/sky"
+        android:drawableEnd="@drawable/drop_down"
+        android:drawableRight="@drawable/drop_down"
+        android:gravity="center"
+        android:hint="@string/SelectCity"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TextViewSearchAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@android:drawable/editbox_background"
+        android:backgroundTint="@color/sky"
+        android:drawableEnd="@drawable/drop_down"
+        android:drawableRight="@drawable/drop_down"
+        android:gravity="center"
+        android:hint="@string/SelectAge"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchCity" />
+
+    <TextView
+        android:id="@+id/TextViewSearchGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@android:drawable/editbox_background"
+        android:backgroundTint="@color/sky"
+        android:drawableEnd="@drawable/drop_down"
+        android:drawableRight="@drawable/drop_down"
+        android:gravity="center"
+        android:hint="@string/SelectGender"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchAge" />
+
+    <TextView
+        android:id="@+id/city_vali"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Required"
+        android:textColor="@color/red"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/age_vali"
+        app:layout_constraintStart_toStartOf="@+id/age_vali"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchCity" />
+
+    <TextView
+        android:id="@+id/age_vali"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Required"
+        android:textColor="@color/red"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/gender_vali"
+        app:layout_constraintStart_toStartOf="@+id/gender_vali"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchAge" />
+
+    <TextView
+        android:id="@+id/gender_vali"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Required"
+        android:textColor="@color/red"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/TextViewSearchCity"
+        app:layout_constraintStart_toStartOf="@+id/TextViewSearchGender"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchGender" />
+
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/Finish"
+        android:textAllCaps="false"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/TextViewSearchGender"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/TextViewSearchGender"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchGender"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
