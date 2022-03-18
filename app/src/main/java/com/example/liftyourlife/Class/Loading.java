@@ -12,7 +12,6 @@ public class Loading {
         LoadingBar = new ProgressDialog(context, R.style.AppCompatAlertDialogStyle);
         SpannableString loading =  new SpannableString(context.getResources().getString(R.string.Loading));
         loading.setSpan(new RelativeSizeSpan(2f), 0, loading.length(), 0);
-        // loading.setSpan(new ForegroundColorSpan(Color.BLACK), 0, loading.length(), 0);
         LoadingBar.setCancelable(false);
         LoadingBar.setMessage(loading);
         LoadingBar.show();

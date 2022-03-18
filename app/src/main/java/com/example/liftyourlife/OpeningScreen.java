@@ -68,6 +68,6 @@ public class OpeningScreen extends AppCompatActivity {
                 startActivity(new Intent(OpeningScreen.this, LiftYourLife.class));
                 finish();
             }
-        }, 300);
+        }, 1000);
     }
 }

@@ -7,8 +7,6 @@
     <string name="Search" translatable="true">Search</string>
     <string name="DontHaveAccountCreateAccount" translatable="true">Dont have account? Create Account</string>
     <string name="Finish" translatable="true">Finish</string>
-    <string name="Yes" translatable="true">Yes</string>
-    <string name="No" translatable="true">No</string>
     <string name="Required" translatable="true">*Required</string>
     <string name="InvalidEmail" translatable="true">Invalid Email</string>
     <string name="Must6Chars" translatable="true">Must 6 or more chars</string>
@@ -68,8 +66,8 @@
     <string name="AboutInfo" translatable="true">The app was developed as part of the course Distributed Web Applications by Daniel Elmaleh, Elad Zafrani and Almog Sofer with the goal of creating a convenient app and tracking training and deep learning of the user to help him take care of the training life and not give up</string>
     <!-- Contact Page -->
     <string name="ContactInfo" translatable="true">Have you meet any problem?\nThe development team is at your service</string>
-    <string name="ContactSubject" translatable="true">Contact - App EasyLearnSCE</string>
-    <string name="ContactText" translatable="true">Team EasyLearnSCE, </string>
+    <string name="ContactSubject" translatable="true">Contact - App LiftYourLife</string>
+    <string name="ContactText" translatable="true">Team LiftYourLife, </string>
     <string name="ContactEmailChooser" translatable="true">Choose an Email App</string>
     <!-- Home Page -->
     <string name="Profile" translatable="true">Profile</string>
@@ -77,8 +75,25 @@
     <string name="MyWorkOut" translatable="true">My Work Out</string>
     <string name="WorkOutUpdate" translatable="true">Work Out Update</string>
     <string name="ChangePassword" translatable="true">Change Password</string>
+    <string name="Statistics" translatable="true">Statistics</string>
     <string name="Logout" translatable="true">Logout</string>
-
+    <string name="Yes" translatable="true">Yes</string>
+    <string name="No" translatable="true">No</string>
+    <string name="AreYouSure" translatable="true">Are you sure you want to Log Out?</string>
+    <!-- Profile Page -->
+    <string name="CantChangeEmail" translatable="true">Cant Change Email</string>
+    <string name="ProfileUpdated" translatable="true">Profile successfully updated!</string>
+    <string name="CameraPermissionDenied" translatable="true">Camera Permission Denied</string>
+    <string name="Cammera" translatable="true">Cammera</string>
+    <string name="Gallery" translatable="true">Gallery</string>
+    <string name="CanNotChange" translatable="true">Can not change</string>
+    <string name="UpdateProfile" translatable="true">Update Profile</string>
+    <!-- ChangePassword Page -->
+    <string name="CurrentPassword" translatable="true">Current Password</string>
+    <string name="NewPassword" translatable="true">New Password</string>
+    <string name="ConfirmNewPassword" translatable="true">Confirm Password</string>
+    <string name="Change" translatable="true">Change</string>
+    <string name="PasswordChanged" translatable="true">Password Changed</string>
 
     <!-- Arrays -->
     <string-array name="Lagnuage">

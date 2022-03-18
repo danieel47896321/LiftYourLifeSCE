@@ -9,8 +9,6 @@
     <string name="Select" translatable="true">בחר</string>
     <string name="DontHaveAccountCreateAccount" translatable="true">אין לך משתמש? צור חשבון</string>
     <string name="Finish" translatable="true">סיום</string>
-    <string name="Yes" translatable="true">כן</string>
-    <string name="No" translatable="true">לא</string>
     <string name="Required" translatable="true">*חובה</string>
     <string name="InvalidEmail" translatable="true">אימייל לא חוקי</string>
     <string name="Must6Chars" translatable="true">חובה לפחות 6 תווים</string>
@@ -70,16 +68,34 @@
     <string name="AboutInfo" translatable="true">האפליקציה פותחה במסגרת הקורס יישומי אינטרנט מבוזרים על ידי דניאל אלמליח, אלעד זפרני ואלמוג סופר כאשר המטרה ליצור אפליקציה נוחה ומעקב אחר אימונים ולמידה עמוקה של המשתמש על מנת לעזור לו להקפיד על חיי האימונים ולא לוותר לעצמו </string>
     <!-- Contact Page -->
     <string name="ContactInfo" translatable="true">האם נתקלת בבעיה כלשהי?\n צוות הפיתוח זמין לשירותך</string>
-    <string name="ContactSubject" translatable="true">יצירת קשר - App EasyLearnSCE</string>
-    <string name="ContactText" translatable="true">צוות EasyLearnSCE, </string>
+    <string name="ContactSubject" translatable="true">יצירת קשר - App LiftYourLife</string>
+    <string name="ContactText" translatable="true">צוות LiftYourLife, </string>
     <string name="ContactEmailChooser" translatable="true">בחר אפליקציית דוא"ל</string>
     <!-- Home Page -->
     <string name="Profile" translatable="true">פרופיל</string>
     <string name="Home" translatable="true">מסך בית</string>
     <string name="MyWorkOut" translatable="true">האימונים שלי</string>
     <string name="WorkOutUpdate" translatable="true">עידכון אימונים</string>
+    <string name="Statistics" translatable="true">סטטיסטיקה</string>
     <string name="ChangePassword" translatable="true">שינוי סיסמה</string>
     <string name="Logout" translatable="true">התנתק</string>
+    <string name="Yes" translatable="true">כן</string>
+    <string name="No" translatable="true">לא</string>
+    <string name="AreYouSure" translatable="true">האם אתה בטוח שברצונך להתנתק?</string>
+    <!-- Profile Page -->
+    <string name="CantChangeEmail" translatable="true">לא ניתן לשנות אימייל</string>
+    <string name="ProfileUpdated" translatable="true">הפרופיל עודכן בהצלחה!</string>
+    <string name="CameraPermissionDenied" translatable="true">ההרשאה למצלמה נדחתה</string>
+    <string name="Cammera" translatable="true">מצלמה</string>
+    <string name="Gallery" translatable="true">גלריה</string>
+    <string name="CanNotChange" translatable="true">לא ניתן לשינוי</string>
+    <string name="UpdateProfile" translatable="true">עדכן פרופיל</string>
+    <!-- ChangePassword Page -->
+    <string name="CurrentPassword" translatable="true">סיסמה נוכחית</string>
+    <string name="NewPassword" translatable="true">סיסמה חדשה</string>
+    <string name="ConfirmNewPassword" translatable="true">אימות סיסמה</string>
+    <string name="Change" translatable="true">שינוי</string>
+    <string name="PasswordChanged" translatable="true">הסיסמה השתנתה</string>
 
 
 </resources>

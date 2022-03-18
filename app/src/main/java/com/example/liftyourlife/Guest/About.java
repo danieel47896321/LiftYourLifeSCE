@@ -11,16 +11,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.liftyourlife.Class.GuestLanguage;
-import com.example.liftyourlife.Class.GuestMenuView;
+import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class About extends AppCompatActivity {
     private TextView Title, TextViewSearchLanguage;
     private ImageView BackIcon, MenuIcon;
-    private NavigationView GuestMenuView;
+    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private GuestLanguage guestLagnuage;
+    private GuestLanguage guestLanguage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +32,7 @@ public class About extends AppCompatActivity {
         MenuItem();
         BackIcon();
         MenuIcon();
-        MenuView();
+        NavigationView();
         setLanguage();
     }
     private void setID(){
@@ -40,19 +40,19 @@ public class About extends AppCompatActivity {
         BackIcon = findViewById(R.id.BackIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
-        GuestMenuView = findViewById(R.id.GuestMenuView);
+        navigationView = findViewById(R.id.navigationView);
         Title.setText(R.string.About);
         TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        guestLagnuage = new GuestLanguage(About.this);
+        guestLanguage = new GuestLanguage(About.this);
     }
     private void setLanguage(){
         TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { guestLagnuage.setDialog(); }
+            public void onClick(View view) { guestLanguage.setDialog(); }
         });
     }
     private void MenuItem(){
-        Menu menu= GuestMenuView.getMenu();
+        Menu menu= navigationView.getMenu();
         MenuItem menuItem = menu.findItem(R.id.ItemAbout);
         menuItem.setCheckable(false);
         menuItem.setChecked(true);
@@ -64,11 +64,11 @@ public class About extends AppCompatActivity {
             public void onClick(View v) { drawerLayout.open(); }
         });
     }
-    private void MenuView(){
-        GuestMenuView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+    private void NavigationView(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                new GuestMenuView(About.this, item.getItemId());
+                new GuestNavigationView(About.this, item.getItemId());
                 return false;
             }
         });

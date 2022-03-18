@@ -25,7 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.liftyourlife.Class.GuestLanguage;
-import com.example.liftyourlife.Class.GuestMenuView;
+import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.Class.User;
@@ -43,7 +43,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class CreateAccount extends AppCompatActivity {
     private ImageView BackIcon, MenuIcon;
     private DrawerLayout drawerLayout;
-    private NavigationView GuestMenuView;
+    private NavigationView navigationView;
     private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName ,TextInputLayoutEmail, TextInputLayoutPassword, TextInputLayoutPasswordConfirm;
     private TextView Title, SignIn, TextViewSearchCity, TextViewSearchAge, TextViewSearchGender,TextViewSearch, gender_vali, age_vali, city_vali, TextViewSearchLanguage;
     private Dialog dialog;
@@ -55,7 +55,6 @@ public class CreateAccount extends AppCompatActivity {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance() ;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app");
     private DatabaseReference databaseReference = firebaseDatabase.getReference().child("Users");
-    private Intent intent;
     private User user = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,7 @@ public class CreateAccount extends AppCompatActivity {
         BackIcon();
         MenuIcon();
         EndIcon();
-        NavView();
+        NavigationView();
         SignOut();
         AlreadyHaveAccount();
         CreateAccountCheck();
@@ -80,7 +79,7 @@ public class CreateAccount extends AppCompatActivity {
         BackIcon = findViewById(R.id.BackIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
-        GuestMenuView = findViewById(R.id.GuestNavView);
+        navigationView = findViewById(R.id.navigationView);
         Title.setText(R.string.CreateAccount);
         SignIn = findViewById(R.id.SignIn);
         TextInputLayoutFirstName = findViewById(R.id.TextInputLayoutFirstName);
@@ -99,7 +98,7 @@ public class CreateAccount extends AppCompatActivity {
         });
     }
     private void MenuItem(){
-        Menu menu= GuestMenuView.getMenu();
+        Menu menu= navigationView.getMenu();
         MenuItem menuItem = menu.findItem(R.id.ItemCreateAccount);
         menuItem.setCheckable(false);
         menuItem.setChecked(true);
@@ -133,11 +132,11 @@ public class CreateAccount extends AppCompatActivity {
             public void onClick(View v) { drawerLayout.open(); }
         });
     }
-    private void NavView(){
-        GuestMenuView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+    private void NavigationView(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                new GuestMenuView(CreateAccount.this, item.getItemId());
+                new GuestNavigationView(CreateAccount.this, item.getItemId());
                 return false;
             }
         });

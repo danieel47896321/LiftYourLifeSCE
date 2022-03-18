@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/openingscreen">
+    android:background="@drawable/background_image">
 
     <TextView
         android:id="@+id/TextViewSearchCity"

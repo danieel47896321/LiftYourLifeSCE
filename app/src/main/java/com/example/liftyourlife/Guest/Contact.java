@@ -13,14 +13,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.liftyourlife.Class.GuestLanguage;
-import com.example.liftyourlife.Class.GuestMenuView;
+import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class Contact extends AppCompatActivity {
     private TextView SendEmail, Title, TextViewSearchLanguage;
     private ImageView BackIcon, MenuIcon;
-    private NavigationView GuestNavView;
+    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private GuestLanguage guestLanguage;
     private Intent intent;
@@ -36,7 +36,7 @@ public class Contact extends AppCompatActivity {
         MenuItem();
         BackIcon();
         MenuIcon();
-        MenuView();
+        NavigationView();
         SendEmail();
         setLanguage();
     }
@@ -46,7 +46,7 @@ public class Contact extends AppCompatActivity {
         BackIcon = findViewById(R.id.BackIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
-        GuestNavView = findViewById(R.id.GuestNavView);
+        navigationView = findViewById(R.id.navigationView);
         SendEmail = findViewById(R.id.SendEmail);
         Title.setText(R.string.Contact);
         TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
@@ -59,7 +59,7 @@ public class Contact extends AppCompatActivity {
         });
     }
     private void MenuItem(){
-        Menu menu= GuestNavView.getMenu();
+        Menu menu= navigationView.getMenu();
         MenuItem menuItem = menu.findItem(R.id.ItemContact);
         menuItem.setCheckable(false);
         menuItem.setChecked(true);
@@ -71,11 +71,11 @@ public class Contact extends AppCompatActivity {
             public void onClick(View v) { drawerLayout.open(); }
         });
     }
-    private void MenuView(){
-        GuestNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+    private void NavigationView(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                new GuestMenuView(Contact.this, item.getItemId());
+                new GuestNavigationView(Contact.this, item.getItemId());
                 return false;
             }
         });

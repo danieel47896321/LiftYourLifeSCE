@@ -11,7 +11,7 @@
     <color name="blue">#0E86EF</color>
     <color name="PickColor">#4BC5FB</color>
     <color name="yellow">#FFEB3B</color>
-    <color name="gray">#EAE6E6</color>
+    <color name="gray">#CCCCCC</color>
     <color name="red">#ED1919</color>
     <color name="dark_blue">#101BDD</color>
     <color name="mtrl_textinput_default_box_stroke_color" override="true">#fff</color>

@@ -11,9 +11,9 @@ import com.example.liftyourlife.Guest.ResetPassword;
 import com.example.liftyourlife.Guest.SignIn;
 import com.example.liftyourlife.R;
 
-public class GuestMenuView {
+public class GuestNavigationView {
     private Intent intent;
-    public GuestMenuView(Context context, int id){
+    public GuestNavigationView(Context context, int id){
         if (id == R.id.ItemEasyLearnSCE)
             intent = new Intent(context, LiftYourLife.class);
         else if(id == R.id.ItemSignIn)

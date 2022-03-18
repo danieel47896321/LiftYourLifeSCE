@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.liftyourlife.Class.GuestLanguage;
-import com.example.liftyourlife.Class.GuestMenuView;
+import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.R;
@@ -29,7 +29,7 @@ public class ResetPassword extends AppCompatActivity {
     private Button ButtonFinish;
     private TextInputLayout TextInputLayoutEmail;
     private DrawerLayout drawerLayout;
-    private NavigationView GuestNavView;
+    private NavigationView navigationView;
     private ImageView BackIcon, MenuIcon;
     private TextView CreateAccount, Title, TextViewSearchLanguage;
     private GuestLanguage guestLanguage;
@@ -48,7 +48,7 @@ public class ResetPassword extends AppCompatActivity {
         BackIcon();
         MenuIcon();
         EndIcon();
-        NavView();
+        NavigationView();
         ResetPassword();
         CreateAccount();
     }
@@ -57,7 +57,7 @@ public class ResetPassword extends AppCompatActivity {
         BackIcon = findViewById(R.id.BackIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
-        GuestNavView = findViewById(R.id.GuestNavView);
+        navigationView = findViewById(R.id.navigationView);
         Title.setText(R.string.ResetPassword);
         ButtonFinish = findViewById(R.id.ButtonFinish);
         CreateAccount = findViewById(R.id.CreateAccount);
@@ -72,7 +72,7 @@ public class ResetPassword extends AppCompatActivity {
         });
     }
     private void MenuItem(){
-        Menu menu= GuestNavView.getMenu();
+        Menu menu= navigationView.getMenu();
         MenuItem menuItem = menu.findItem(R.id.ItemResetPassword);
         menuItem.setCheckable(false);
         menuItem.setChecked(true);
@@ -94,11 +94,11 @@ public class ResetPassword extends AppCompatActivity {
             public void onClick(View v) { drawerLayout.open(); }
         });
     }
-    private void NavView(){
-        GuestNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+    private void NavigationView(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                new GuestMenuView(ResetPassword.this, item.getItemId());
+                new GuestNavigationView(ResetPassword.this, item.getItemId());
                 return false;
             }
         });

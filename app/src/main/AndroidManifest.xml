@@ -6,12 +6,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/open_screen"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LiftYourLife">
-        <activity android:name=".User.ChangePassword"></activity>
+        <activity android:name=".User.Statistics"></activity>
+        <activity android:name=".User.ChangePassword" />
         <activity android:name=".User.WorkOutUpdate" />
         <activity android:name=".User.MyWorkOut" />
         <activity android:name=".User.Profile" />

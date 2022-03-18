@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.liftyourlife.Adapters.TagsAdapter;
 import com.example.liftyourlife.Class.GuestLanguage;
-import com.example.liftyourlife.Class.GuestMenuView;
+import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Tag;
 import com.example.liftyourlife.R;
 import com.google.android.material.navigation.NavigationView;
@@ -27,7 +27,7 @@ public class LiftYourLife extends AppCompatActivity {
     private RecyclerView Tags;
     private DrawerLayout drawerLayout;
     private List<Tag> tagList;
-    private NavigationView GuestNavView;
+    private NavigationView navigationView;
     private TextView Title, TextViewSearchLanguage;
     private ImageView BackIcon, MenuIcon;
     private GuestLanguage guestLanguage;
@@ -47,7 +47,7 @@ public class LiftYourLife extends AppCompatActivity {
         setLanguage();
         MenuItem();
         MenuIcon();
-        MenuView();
+        NavigationView();
     }
     private void setID(){
         MenuIcon = findViewById(R.id.MenuIcon);
@@ -58,7 +58,7 @@ public class LiftYourLife extends AppCompatActivity {
         Title.setText("");
         TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
         guestLanguage = new GuestLanguage(LiftYourLife.this);
-        GuestNavView = findViewById(R.id.GuestNavView);
+        navigationView = findViewById(R.id.navigationView);
         Tags = findViewById(R.id.Tags);
         LiftYourLifeTagsName = getResources().getStringArray(R.array.LiftYourLifeTagsName);
     }
@@ -69,7 +69,7 @@ public class LiftYourLife extends AppCompatActivity {
         });
     }
     private void MenuItem(){
-        Menu menu= GuestNavView.getMenu();
+        Menu menu= navigationView.getMenu();
         MenuItem menuItem = menu.findItem(R.id.ItemEasyLearnSCE);
         menuItem.setCheckable(false);
         menuItem.setChecked(true);
@@ -81,11 +81,11 @@ public class LiftYourLife extends AppCompatActivity {
             public void onClick(View v) { drawerLayout.open(); }
         });
     }
-    private void MenuView(){
-        GuestNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+    private void NavigationView(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                new GuestMenuView(LiftYourLife.this, item.getItemId());
+                new GuestNavigationView(LiftYourLife.this, item.getItemId());
                 return false;
             }
         });

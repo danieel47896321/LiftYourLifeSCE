@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.liftyourlife.Class.GuestLanguage;
-import com.example.liftyourlife.Class.GuestMenuView;
+import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.R;
@@ -46,7 +46,7 @@ public class SignIn extends AppCompatActivity {
     private TextView Title, TextViewSearchLanguage;
     private DrawerLayout drawerLayout;
     private ImageView BackIcon, MenuIcon;
-    private NavigationView GuestMenuView;
+    private NavigationView navigationView;
     private TextView ResetPassword, CreateAccount;
     private TextInputLayout TextInputLayoutEmail, TextInputLayoutPassword;
     private Button ButtonSignIn, Google;
@@ -73,7 +73,7 @@ public class SignIn extends AppCompatActivity {
         BackIcon();
         MenuIcon();
         EndIcon();
-        NavView();
+        NavigationView();
         SignInCheck();
         ResetPassword();
         CreateAccount();
@@ -85,7 +85,7 @@ public class SignIn extends AppCompatActivity {
         BackIcon = findViewById(R.id.BackIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
-        GuestMenuView = findViewById(R.id.GuestNavView);
+        navigationView = findViewById(R.id.navigationView);
         Title.setText(R.string.SignIn);
         CreateAccount = findViewById(R.id.CreateAccount);
         Google = findViewById(R.id.Google);
@@ -103,7 +103,7 @@ public class SignIn extends AppCompatActivity {
         });
     }
     private void MenuItem(){
-        Menu menu= GuestMenuView.getMenu();
+        Menu menu= navigationView.getMenu();
         MenuItem menuItem = menu.findItem(R.id.ItemSignIn);
         menuItem.setCheckable(false);
         menuItem.setChecked(true);
@@ -130,11 +130,11 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View v) { drawerLayout.open(); }
         });
     }
-    private void NavView(){
-        GuestMenuView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+    private void NavigationView(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                new GuestMenuView(SignIn.this, item.getItemId());
+                new GuestNavigationView(SignIn.this, item.getItemId());
                 return false;
             }
         });

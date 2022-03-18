@@ -49,17 +49,10 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull TagsAdapter.MyViewHolder holder, int position) {
         holder.textView.setText(Select.get(position).getTagName());
         holder.imageView.setImageResource(Select.get(position).getPhoto());
-        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.PickColor));
-                return false;
-            }
-        });
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.PickColor));
+                holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.gray));
                 if(holder.textView.getText().equals(context.getResources().getString(R.string.ResetPassword)))
                     intent = new Intent(context, ResetPassword.class);
                 else if(holder.textView.getText().equals(context.getResources().getString(R.string.SignIn)))
