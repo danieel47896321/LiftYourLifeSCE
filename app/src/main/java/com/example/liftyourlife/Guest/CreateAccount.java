@@ -45,7 +45,7 @@ public class CreateAccount extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName ,TextInputLayoutEmail, TextInputLayoutPassword, TextInputLayoutPasswordConfirm;
-    private TextView Title, SignIn, TextViewSearchCity, TextViewSearchAge, TextViewSearchGender,TextViewSearch, gender_vali, age_vali, city_vali, TextViewSearchLanguage;
+    private TextView Title, SignIn, TextViewSearchHeight, TextViewSearchWeight, TextViewSearchAge, TextViewSearchGender,TextViewSearch, TextViewSearchLanguage;
     private Dialog dialog;
     private ListView ListViewSearch;
     private EditText EditTextSearch;
@@ -250,38 +250,22 @@ public class CreateAccount extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_createaccount,null);
         builder.setCancelable(false);
         builder.setView(dialogView);
-        TextViewSearchCity = dialogView.findViewById(R.id.TextViewSearchCity);
+        TextViewSearchHeight = dialogView.findViewById(R.id.TextViewSearchHeight);
+        TextViewSearchWeight = dialogView.findViewById(R.id.TextViewSearchWeight);
         TextViewSearchAge = dialogView.findViewById(R.id.TextViewSearchAge);
         TextViewSearchGender = dialogView.findViewById(R.id.TextViewSearchGender);
         next_btn  = dialogView.findViewById(R.id.next_btn);
-        age_vali = dialogView.findViewById(R.id.age_vali);
-        city_vali = dialogView.findViewById(R.id.city_vali);
-        gender_vali = dialogView.findViewById(R.id.gender_vali);
-        city_vali.setVisibility(View.INVISIBLE);
-        age_vali.setVisibility(View.INVISIBLE);
-        gender_vali.setVisibility(View.INVISIBLE);
         AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
-        CityPick();
+        HeightPick();
+        WeightPick();
         AgePick();
         GenderPick();
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextViewSearchCity.getText().toString().equals(""))
-                    city_vali.setVisibility(View.VISIBLE);
-                else
-                    city_vali.setVisibility(View.INVISIBLE);
-                if(TextViewSearchAge.getText().toString().equals(""))
-                    age_vali.setVisibility(View.VISIBLE);
-                else
-                    age_vali.setVisibility(View.INVISIBLE);
-                if(TextViewSearchGender.getText().toString().equals(""))
-                    gender_vali.setVisibility(View.VISIBLE);
-                else
-                    gender_vali.setVisibility(View.INVISIBLE);
-                if(!(TextViewSearchCity.getText().toString().equals("")) && !(TextViewSearchAge.getText().toString().equals("")) && !(TextViewSearchGender.getText().toString().equals(""))){
+                if(!(TextViewSearchHeight.getText().toString().equals("")) && !(TextViewSearchWeight.getText().toString().equals("")) && !(TextViewSearchAge.getText().toString().equals("")) && !(TextViewSearchGender.getText().toString().equals(""))){
                     alertDialog.cancel();
                     CreateAccount();
                 }
@@ -290,7 +274,8 @@ public class CreateAccount extends AppCompatActivity {
     }
     private void CreateAccount(){
         user = new User(TextInputLayoutFirstName.getEditText().getText().toString(), TextInputLayoutLastName.getEditText().getText().toString(), TextInputLayoutEmail.getEditText().getText().toString());
-        user.setCity(TextViewSearchCity.getText().toString());
+        user.setHeight(TextViewSearchHeight.getText().toString());
+        user.setWeight(TextViewSearchWeight.getText().toString());
         user.setAge(TextViewSearchAge.getText().toString());
         user.setGender(TextViewSearchGender.getText().toString());
         firebaseAuth.createUserWithEmailAndPassword(user.getEmail(),TextInputLayoutPassword.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -310,11 +295,28 @@ public class CreateAccount extends AppCompatActivity {
             }
         });
     }
-    private void CityPick(){
-        TextViewSearchCity.setOnClickListener(new View.OnClickListener() {
+    private void HeightPick(){
+        String height[] = new String[300];
+        int index =0;
+        for(int i=0; i < 3 ; i++) {
+            for(int j=0; j<100; j++)
+                height[index++] = "" + i+ "."+ j;
+        }
+        TextViewSearchHeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDialog(getResources().getStringArray(R.array.City),getResources().getString(R.string.SelectCity),TextViewSearchCity);
+                setDialog(height ,getResources().getString(R.string.SelectHeight),TextViewSearchHeight);
+            }
+        });
+    }
+    private void WeightPick(){
+        String weight[] = new String[261];
+        for(int i=0; i < weight.length ; i++)
+            weight[i] = ""+(i+40)+" "+getResources().getString(R.string.Kg);
+        TextViewSearchWeight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDialog(weight ,getResources().getString(R.string.SelectWeight),TextViewSearchWeight);
             }
         });
     }
@@ -347,6 +349,14 @@ public class CreateAccount extends AppCompatActivity {
         ListViewSearch = dialog.findViewById(R.id.ListViewSearch);
         TextViewSearch = dialog.findViewById(R.id.TextViewSearch);
         TextViewSearch.setText(title);
+        if(title.equals(getResources().getString(R.string.SelectHeight))){
+            for(int i=0; i<array.length;i++)
+                array[i] += " "+ getResources().getString(R.string.Meters);
+        }
+        if(title.equals(getResources().getString(R.string.SelectWeight))){
+            for(int i=0; i<array.length;i++)
+                array[i] += " "+ getResources().getString(R.string.Kg);
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(CreateAccount.this, R.layout.dropdwon_item, array);
         ListViewSearch.setAdapter(adapter);
         EditTextSearch.addTextChangedListener(new TextWatcher() {

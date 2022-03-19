@@ -24,13 +24,19 @@
     <string name="Male" translatable="true">זכר</string>
     <string name="Female" translatable="true">נקבה</string>
     <string name="City" translatable="true">עיר</string>
+    <string name="Kg" translatable="true">קילוגרם</string>
+    <string name="Meters" translatable="true">מטרים</string>
     <string name="SelectCity" translatable="true">בחר עיר</string>
     <string name="BeerSheva" translatable="true">באר שבע</string>
     <string name="TelAviv" translatable="true">תל אביב</string>
     <string name="Haifa" translatable="true">חיפה</string>
     <string name="SelectAge" translatable="true">בחר גיל</string>
+    <string name="SelectWeight" translatable="true">בחר משקל</string>
+    <string name="SelectHeight" translatable="true">בחר גובה</string>
     <string name="Age" translatable="true">גיל</string>
     <string name="Gender" translatable="true">מגדר</string>
+    <string name="Weight" translatable="true">משקל</string>
+    <string name="Height" translatable="true">גובה</string>
     <string name="SelectGender" translatable="true">בחר מגדר</string>
     <string name="Next" translatable="true">הבא</string>
     <!-- EasyLearnSCE Page -->
@@ -83,10 +89,10 @@
     <string name="No" translatable="true">לא</string>
     <string name="AreYouSure" translatable="true">האם אתה בטוח שברצונך להתנתק?</string>
     <!-- Profile Page -->
-    <string name="CantChangeEmail" translatable="true">לא ניתן לשנות אימייל</string>
+    <string name="CantChangeEmail" translatable="true"> לא ניתן לשנות אימייל</string>
     <string name="ProfileUpdated" translatable="true">הפרופיל עודכן בהצלחה!</string>
     <string name="CameraPermissionDenied" translatable="true">ההרשאה למצלמה נדחתה</string>
-    <string name="Cammera" translatable="true">מצלמה</string>
+    <string name="Camera" translatable="true">מצלמה</string>
     <string name="Gallery" translatable="true">גלריה</string>
     <string name="CanNotChange" translatable="true">לא ניתן לשינוי</string>
     <string name="UpdateProfile" translatable="true">עדכן פרופיל</string>

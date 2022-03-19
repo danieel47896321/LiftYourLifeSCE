@@ -13,15 +13,15 @@
             android:title="@string/Home" />
         <item
             android:id="@+id/ItemMyWorkOut"
-            android:icon="@drawable/create_account"
+            android:icon="@drawable/workout"
             android:title="@string/MyWorkOut" />
         <item
             android:id="@+id/ItemWorkOutUpdate"
-            android:icon="@drawable/reset_password"
+            android:icon="@drawable/create_account"
             android:title="@string/WorkOutUpdate" />
         <item
             android:id="@+id/ItemStatistics"
-            android:icon="@drawable/person"
+            android:icon="@drawable/statistics"
             android:title="@string/Statistics" />
         <item
             android:id="@+id/ItemProfile"
@@ -33,7 +33,7 @@
             android:title="@string/ChangePassword" />
         <item
             android:id="@+id/ItemSignOut"
-            android:icon="@drawable/contact"
+            android:icon="@drawable/logout"
             android:title="@string/Logout" />
     </group>
 </menu>

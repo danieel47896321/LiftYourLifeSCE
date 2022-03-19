@@ -8,7 +8,7 @@
     android:background="@drawable/background_image">
 
     <TextView
-        android:id="@+id/TextViewSearchCity"
+        android:id="@+id/TextViewSearchHeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -16,11 +16,11 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:background="@android:drawable/editbox_background"
-        android:backgroundTint="@color/sky"
+        android:backgroundTint="@color/dark_blue"
         android:drawableEnd="@drawable/drop_down"
         android:drawableRight="@drawable/drop_down"
         android:gravity="center"
-        android:hint="@string/SelectCity"
+        android:hint="@string/Height"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
@@ -31,16 +31,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/TextViewSearchAge"
+        android:id="@+id/TextViewSearchWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:background="@android:drawable/editbox_background"
-        android:backgroundTint="@color/sky"
+        android:backgroundTint="@color/dark_blue"
         android:drawableEnd="@drawable/drop_down"
         android:drawableRight="@drawable/drop_down"
         android:gravity="center"
-        android:hint="@string/SelectAge"
+        android:hint="@string/Weight"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
@@ -48,7 +51,26 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchCity" />
+        app:layout_constraintTop_toBottomOf="@+id/height_vali" />
+
+    <TextView
+        android:id="@+id/TextViewSearchAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:backgroundTint="@color/dark_blue"
+        android:drawableEnd="@drawable/drop_down"
+        android:drawableRight="@drawable/drop_down"
+        android:gravity="center"
+        android:hint="@string/Age"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weight_vali" />
 
     <TextView
         android:id="@+id/TextViewSearchGender"
@@ -56,11 +78,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@android:drawable/editbox_background"
-        android:backgroundTint="@color/sky"
+        android:backgroundTint="@color/dark_blue"
         android:drawableEnd="@drawable/drop_down"
         android:drawableRight="@drawable/drop_down"
         android:gravity="center"
-        android:hint="@string/SelectGender"
+        android:hint="@string/Gender"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
@@ -71,16 +93,16 @@
         app:layout_constraintTop_toBottomOf="@+id/TextViewSearchAge" />
 
     <TextView
-        android:id="@+id/city_vali"
+        android:id="@+id/height_vali"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Required"
         android:textColor="@color/red"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/age_vali"
-        app:layout_constraintStart_toStartOf="@+id/age_vali"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchCity" />
+        app:layout_constraintEnd_toEndOf="@+id/weight_vali"
+        app:layout_constraintStart_toStartOf="@+id/weight_vali"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchHeight" />
 
     <TextView
         android:id="@+id/age_vali"
@@ -95,6 +117,18 @@
         app:layout_constraintTop_toBottomOf="@+id/TextViewSearchAge" />
 
     <TextView
+        android:id="@+id/weight_vali"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Required"
+        android:textColor="@color/red"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/gender_vali"
+        app:layout_constraintStart_toStartOf="@+id/gender_vali"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewSearchWeight" />
+
+    <TextView
         android:id="@+id/gender_vali"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -102,7 +136,7 @@
         android:textColor="@color/red"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/TextViewSearchCity"
+        app:layout_constraintEnd_toEndOf="@+id/TextViewSearchHeight"
         app:layout_constraintStart_toStartOf="@+id/TextViewSearchGender"
         app:layout_constraintTop_toBottomOf="@+id/TextViewSearchGender" />
 

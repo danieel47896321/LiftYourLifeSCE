@@ -261,7 +261,7 @@
                     android:textAllCaps="false"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:backgroundTint="@color/blue" />
+                    app:backgroundTint="@color/dark_blue" />
 
                 <TextView
                     android:id="@+id/SignIn"

@@ -9,14 +9,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,9 +39,6 @@ import com.example.liftyourlife.Class.UserLanguage;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
 import com.example.liftyourlife.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,8 +47,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class Profile extends AppCompatActivity {
-    private TextView Title,TextViewSearchCity, TextViewSearchAge, TextViewSearchGender,TextViewSearch, TextViewSearchLanguage;
-    private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName ,TextInputLayoutEmail;
+    private TextView Title,TextViewSearch, TextViewSearchLanguage;
+    private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName, TextInputLayoutEmail, TextInputLayoutGender, TextInputLayoutAge, TextInputLayoutHeight, TextInputLayoutWeight;
     private Button Confirm;
     private DrawerLayout drawerLayout;
     private ImageView BackIcon, MenuIcon,addImage;
@@ -63,8 +58,9 @@ public class Profile extends AppCompatActivity {
     private View UserProfileImage, UserImage;
     private NavigationView navigationView;
     private Dialog dialog;
+    private Uri uri = null;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
-    private ImageView Cammera;
+    private ImageView Camera;
     private EditText EditTextSearch;
     private ListView ListViewSearch;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -92,9 +88,10 @@ public class Profile extends AppCompatActivity {
         TextInputLayoutFirstName = findViewById(R.id.TextInputLayoutFirstName);
         TextInputLayoutLastName = findViewById(R.id.TextInputLayoutLastName);
         TextInputLayoutEmail = findViewById(R.id.TextInputLayoutEmail);
-        TextViewSearchCity = findViewById(R.id.TextViewSearchCity);
-        TextViewSearchAge = findViewById(R.id.TextViewSearchAge);
-        TextViewSearchGender = findViewById(R.id.TextViewSearchGender);
+        TextInputLayoutGender = findViewById(R.id.TextInputLayoutGender);
+        TextInputLayoutAge = findViewById(R.id.TextInputLayoutAge);
+        TextInputLayoutHeight = findViewById(R.id.TextInputLayoutHeight);
+        TextInputLayoutWeight = findViewById(R.id.TextInputLayoutWeight);
         addImage = findViewById(R.id.addImage);
         Confirm = findViewById(R.id.confirm);
         navigationView = findViewById(R.id.navigationView);
@@ -141,26 +138,30 @@ public class Profile extends AppCompatActivity {
         TextInputLayoutFirstName.getEditText().setText(user.getFirstName());
         TextInputLayoutLastName.getEditText().setText(user.getLastName());
         TextInputLayoutEmail.getEditText().setText(user.getEmail());
-        TextViewSearchCity.setText(user.getCity());
-        TextViewSearchAge.setText(user.getAge());
-        TextViewSearchGender.setText(user.getGender());
-        CityPick();
-        AgePick();
+        TextInputLayoutGender.getEditText().setText(user.getGender());
+        TextInputLayoutAge.getEditText().setText(user.getAge());
+        TextInputLayoutHeight.getEditText().setText(user.getHeight()+" "+getResources().getString(R.string.Meters));
+        TextInputLayoutWeight.getEditText().setText(user.getWeight()+" "+getResources().getString(R.string.Kg));
         GenderPick();
+        AgePick();
+        HeightPick();
+        WeightPick();
     }
     private void Confirm(){
         Confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(CheckInput()){
+                if(CheckInput()) {
                     newUser.setEmail(user.getEmail());
                     newUser.setUid(user.getUid());
                     newUser.setFirstName(TextInputLayoutFirstName.getEditText().getText().toString());
                     newUser.setLastName(TextInputLayoutLastName.getEditText().getText().toString());
-                    newUser.setGender(TextViewSearchGender.getText().toString());
-                    newUser.setAge(TextViewSearchAge.getText().toString());
-                    newUser.setCity(TextViewSearchCity.getText().toString());
-                    newUser.setFullName(newUser.getFirstName()+" "+newUser.getLastName());
+                    newUser.setGender(TextInputLayoutGender.getEditText().getText().toString());
+                    newUser.setAge(TextInputLayoutAge.getEditText().getText().toString());
+                    newUser.setHeight(TextInputLayoutHeight.getEditText().getText().toString());
+                    newUser.setWeight(TextInputLayoutWeight.getEditText().getText().toString());
+                    newUser.setFullName(newUser.getFirstName() + " " + newUser.getLastName());
+
                     /*
                     else {
                         newUser.setImage(user.getImage());
@@ -195,22 +196,32 @@ public class Profile extends AppCompatActivity {
                 TextInputLayoutLastName.setHelperText("");
             return false;
         }
-        else if(TextViewSearchCity.getText().toString().equals("")){
-            return false;
-        }
-        else if(TextViewSearchAge.getText().toString().equals("")){
-            return false;
-        }
-        else if(TextViewSearchGender.getText().toString().equals("")){
-            return false;
-        }
+        TextInputLayoutFirstName.setHelperText("");
+        TextInputLayoutLastName.setHelperText("");
         return true;
     }
-    private void CityPick(){
-        TextViewSearchCity.setOnClickListener(new View.OnClickListener() {
+    private void HeightPick(){
+        String height[] = new String[300];
+        int index =0;
+        for(int i=0; i < 3 ; i++) {
+            for(int j=0; j<100; j++)
+                height[index++] = "" + i+ "."+ j + " " + getResources().getString(R.string.Meters);
+        }
+        TextInputLayoutHeight.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDialog(getResources().getStringArray(R.array.City),getResources().getString(R.string.SelectCity),TextViewSearchCity);
+                setDialog(height ,getResources().getString(R.string.SelectHeight),TextInputLayoutHeight.getEditText());
+            }
+        });
+    }
+    private void WeightPick(){
+        String weight[] = new String[261];
+        for(int i=0; i < weight.length ; i++)
+            weight[i] = ""+(i+40)+" "+getResources().getString(R.string.Kg);
+        TextInputLayoutWeight.getEditText().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDialog(weight ,getResources().getString(R.string.SelectWeight),TextInputLayoutWeight.getEditText());
             }
         });
     }
@@ -218,18 +229,18 @@ public class Profile extends AppCompatActivity {
         String age[] = new String[103];
         for(int i=0; i<103 ; i++)
             age[i] = ""+(i+18);
-        TextViewSearchAge.setOnClickListener(new View.OnClickListener() {
+        TextInputLayoutAge.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDialog(age ,getResources().getString(R.string.SelectAge),TextViewSearchAge);
+                setDialog(age ,getResources().getString(R.string.SelectAge),TextInputLayoutAge.getEditText());
             }
         });
     }
     private void GenderPick(){
-        TextViewSearchGender.setOnClickListener(new View.OnClickListener() {
+        TextInputLayoutGender.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDialog(getResources().getStringArray(R.array.Gender),getResources().getString(R.string.SelectGender),TextViewSearchGender);
+                setDialog(getResources().getStringArray(R.array.Gender),getResources().getString(R.string.SelectGender),TextInputLayoutGender.getEditText());
             }
         });
     }
@@ -245,44 +256,44 @@ public class Profile extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_profile_picture,null);
         builder.setCancelable(false);
         builder.setView(dialogView);
-        Cammera = dialogView.findViewById(R.id.Cammera);
+        Camera = dialogView.findViewById(R.id.Cammera);
         ImageView Gallery = dialogView.findViewById(R.id.Gallery);
         AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
-        Cammera.setOnClickListener(new View.OnClickListener() {
+        Camera.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                /*if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 }
                 else {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, 2);
-                }*/
+                }
                 alertDialog.cancel();
             }
         });
         Gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //GalleryPicture();
+                GalleryPicture();
                 alertDialog.cancel();
             }
         });
     }
     private void GalleryPicture(){
-       /* Intent photo = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent photo = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         photo.setType("image/*");
-        startActivityForResult(photo, 1);*/
+        startActivityForResult(photo, 1);
     }
     private void CammeraPicture(){
-        /*Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(takePicture.resolveActivity(getPackageManager()) != null){
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             startActivityForResult(takePicture, 2);
-        }*/
+        }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -290,23 +301,21 @@ public class Profile extends AppCompatActivity {
         switch (requestCode){
             case 1:
                 if(resultCode == RESULT_OK){
-                    /*uri = data.getData();
+                    uri = data.getData();
                     Bitmap bitmap = null;
                     try { bitmap = MediaStore.Images.Media.getBitmap(Profile.this.getContentResolver(), uri);
                     } catch (IOException e) { e.printStackTrace(); }
                     UserProfileImage.setBackground(new BitmapDrawable(getResources(), bitmap));
-                    UserImage.setBackground(new BitmapDrawable(getResources(), bitmap));*/
+                    UserImage.setBackground(new BitmapDrawable(getResources(), bitmap));
                 }
                 break;
             case 2:
                 if(resultCode == RESULT_OK){
-                   /* Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                     UserProfileImage.setBackground(new BitmapDrawable(getResources(), bitmap));
                     UserImage.setBackground(new BitmapDrawable(getResources(), bitmap));
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
-                    uri = Uri.parse(path);*/
                 }
                 break;
         }

@@ -22,12 +22,18 @@
     <string name="Male" translatable="true">Male</string>
     <string name="Female" translatable="true">Female</string>
     <string name="City" translatable="true">City</string>
+    <string name="Kg" translatable="true">Kg</string>
+    <string name="Meters" translatable="true">Meters</string>
     <string name="SelectCity" translatable="true">Select City</string>
+    <string name="SelectWeight" translatable="true">Select Weight</string>
+    <string name="SelectHeight" translatable="true">Select Height</string>
     <string name="BeerSheva" translatable="true">Beer Sheva</string>
     <string name="TelAviv" translatable="true">Tel Aviv</string>
     <string name="Haifa" translatable="true">Haifa</string>
     <string name="Age" translatable="true">Age</string>
     <string name="Gender" translatable="true">Gender</string>
+    <string name="Weight" translatable="true">Weight</string>
+    <string name="Height" translatable="true">Height</string>
     <string name="SelectAge" translatable="true">Select Age</string>
     <string name="SelectGender" translatable="true">Select Gender</string>
     <string name="Next" translatable="true">Next</string>
@@ -84,7 +90,7 @@
     <string name="CantChangeEmail" translatable="true">Cant Change Email</string>
     <string name="ProfileUpdated" translatable="true">Profile successfully updated!</string>
     <string name="CameraPermissionDenied" translatable="true">Camera Permission Denied</string>
-    <string name="Cammera" translatable="true">Cammera</string>
+    <string name="Camera" translatable="true">Cammera</string>
     <string name="Gallery" translatable="true">Gallery</string>
     <string name="CanNotChange" translatable="true">Can not change</string>
     <string name="UpdateProfile" translatable="true">Update Profile</string>
@@ -111,10 +117,5 @@
         <item>@string/Male</item>
         <item>@string/Female</item>
         <item>@string/Other</item>
-    </string-array>
-    <string-array name="City">
-        <item>@string/BeerSheva</item>
-        <item>@string/TelAviv</item>
-        <item>@string/Haifa</item>
     </string-array>
 </resources>
