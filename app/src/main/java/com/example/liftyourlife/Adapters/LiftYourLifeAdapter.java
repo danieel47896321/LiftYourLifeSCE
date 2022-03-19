@@ -17,16 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.liftyourlife.Class.Tag;
 import com.example.liftyourlife.Class.User;
-import com.example.liftyourlife.Guest.About;
-import com.example.liftyourlife.Guest.Contact;
-import com.example.liftyourlife.Guest.CreateAccount;
 import com.example.liftyourlife.Guest.LiftYourLife;
-import com.example.liftyourlife.Guest.ResetPassword;
-import com.example.liftyourlife.Guest.SignIn;
 import com.example.liftyourlife.R;
 import com.example.liftyourlife.User.ChangePassword;
 import com.example.liftyourlife.User.Home;
-import com.example.liftyourlife.User.MyWorkOut;
+import com.example.liftyourlife.User.WorkOut;
 import com.example.liftyourlife.User.Profile;
 import com.example.liftyourlife.User.Statistics;
 import com.example.liftyourlife.User.WorkOutUpdate;
@@ -76,8 +71,8 @@ public class LiftYourLifeAdapter extends RecyclerView.Adapter<LiftYourLifeAdapte
                     intent = new Intent(context, Profile.class);
                 else if(holder.liftyourlife_text.getText().equals(context.getResources().getString(R.string.ChangePassword)))
                     intent = new Intent(context, ChangePassword.class);
-                else if(holder.liftyourlife_text.getText().equals(context.getResources().getString(R.string.MyWorkOut)))
-                    intent = new Intent(context, MyWorkOut.class);
+                else if(holder.liftyourlife_text.getText().equals(context.getResources().getString(R.string.WorkOut)))
+                    intent = new Intent(context, WorkOut.class);
                 else if(holder.liftyourlife_text.getText().equals(context.getResources().getString(R.string.WorkOutUpdate)))
                     intent = new Intent(context, WorkOutUpdate.class);
                 else if(holder.liftyourlife_text.getText().equals(context.getResources().getString(R.string.Statistics)))

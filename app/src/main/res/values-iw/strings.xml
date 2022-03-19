@@ -80,7 +80,7 @@
     <!-- Home Page -->
     <string name="Profile" translatable="true">פרופיל</string>
     <string name="Home" translatable="true">מסך בית</string>
-    <string name="MyWorkOut" translatable="true">האימונים שלי</string>
+    <string name="WorkOut" translatable="true">אימונים</string>
     <string name="WorkOutUpdate" translatable="true">עידכון אימונים</string>
     <string name="Statistics" translatable="true">סטטיסטיקה</string>
     <string name="ChangePassword" translatable="true">שינוי סיסמה</string>

@@ -78,7 +78,7 @@ public class Home extends AppCompatActivity {
     }
     private void setTags(){
         List<String> list = new ArrayList<>();
-        list.add(getResources().getString(R.string.MyWorkOut));
+        list.add(getResources().getString(R.string.WorkOut));
         list.add(getResources().getString(R.string.WorkOutUpdate));
         list.add(getResources().getString(R.string.Statistics));
         list.add(getResources().getString(R.string.Profile));

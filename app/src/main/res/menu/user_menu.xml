@@ -14,7 +14,7 @@
         <item
             android:id="@+id/ItemMyWorkOut"
             android:icon="@drawable/workout"
-            android:title="@string/MyWorkOut" />
+            android:title="@string/WorkOut" />
         <item
             android:id="@+id/ItemWorkOutUpdate"
             android:icon="@drawable/create_account"

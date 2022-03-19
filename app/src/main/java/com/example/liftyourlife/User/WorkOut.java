@@ -19,7 +19,7 @@ import com.example.liftyourlife.Class.UserNavigationView;
 import com.example.liftyourlife.R;
 import com.google.android.material.navigation.NavigationView;
 
-public class WorkOutUpdate extends AppCompatActivity {
+public class WorkOut extends AppCompatActivity {
     private NavigationView UserNavigationView;
     private ImageView BackIcon, MenuIcon;
     private DrawerLayout drawerLayout;
@@ -30,7 +30,7 @@ public class WorkOutUpdate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work_out_update);
+        setContentView(R.layout.activity_work_out);
         init();
     }
     private void init(){
@@ -49,10 +49,10 @@ public class WorkOutUpdate extends AppCompatActivity {
         MenuIcon = findViewById(R.id.MenuIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
-        Title.setText(R.string.WorkOutUpdate);
+        Title.setText(R.string.WorkOut);
         TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        userLanguage = new UserLanguage(WorkOutUpdate.this,user);
-        new UserNavigationHeader(user,WorkOutUpdate.this);
+        userLanguage = new UserLanguage(WorkOut.this,user);
+        new UserNavigationHeader(user,WorkOut.this);
     }
     private void setLanguage(){
         TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +80,7 @@ public class WorkOutUpdate extends AppCompatActivity {
         UserNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                new UserNavigationView(WorkOutUpdate.this, item.getItemId(), user);
+                new UserNavigationView(WorkOut.this, item.getItemId(), user);
                 return false;
             }
         });
@@ -93,7 +93,7 @@ public class WorkOutUpdate extends AppCompatActivity {
         menuItem.setEnabled(false);
     }
     public void onBackPressed(){
-        intent = new Intent(WorkOutUpdate.this, Home.class);
+        intent = new Intent(WorkOut.this, Home.class);
         intent.putExtra("user", user);
         startActivity(intent);
         finish();

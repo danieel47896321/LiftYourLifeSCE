@@ -11,7 +11,7 @@ import com.example.liftyourlife.Guest.LiftYourLife;
 import com.example.liftyourlife.R;
 import com.example.liftyourlife.User.ChangePassword;
 import com.example.liftyourlife.User.Home;
-import com.example.liftyourlife.User.MyWorkOut;
+import com.example.liftyourlife.User.WorkOut;
 import com.example.liftyourlife.User.Profile;
 import com.example.liftyourlife.User.Statistics;
 import com.example.liftyourlife.User.WorkOutUpdate;
@@ -31,7 +31,7 @@ public class UserNavigationView {
         else if (id == R.id.ItemWorkOutUpdate)
             StartActivity(context, WorkOutUpdate.class, user);
         else if (id == R.id.ItemMyWorkOut)
-            StartActivity(context, MyWorkOut.class, user);
+            StartActivity(context, WorkOut.class, user);
         else if (id == R.id.ItemChangePassword)
             StartActivity(context, ChangePassword.class, user);
         else if (id == R.id.ItemStatistics)

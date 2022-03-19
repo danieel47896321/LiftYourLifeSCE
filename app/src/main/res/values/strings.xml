@@ -78,7 +78,7 @@
     <!-- Home Page -->
     <string name="Profile" translatable="true">Profile</string>
     <string name="Home" translatable="true">Home</string>
-    <string name="MyWorkOut" translatable="true">My Work Out</string>
+    <string name="WorkOut" translatable="true">Workout</string>
     <string name="WorkOutUpdate" translatable="true">Work Out Update</string>
     <string name="ChangePassword" translatable="true">Change Password</string>
     <string name="Statistics" translatable="true">Statistics</string>
