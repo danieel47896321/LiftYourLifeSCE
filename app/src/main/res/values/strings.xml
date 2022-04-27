@@ -101,6 +101,9 @@
     <string name="ConfirmNewPassword" translatable="true">Confirm Password</string>
     <string name="Change" translatable="true">Change</string>
     <string name="PasswordChanged" translatable="true">Password Changed</string>
+    <!-- Statistics Page -->
+    <string name="WeightTracking" translatable="true">Weight Tracking</string>
+    <string name="WorkoutTracking" translatable="true">Workout Tracking</string>
 
     <!-- Arrays -->
     <string-array name="Lagnuage">

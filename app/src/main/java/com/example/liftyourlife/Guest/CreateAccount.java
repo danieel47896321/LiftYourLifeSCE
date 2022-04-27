@@ -290,9 +290,17 @@ public class CreateAccount extends AppCompatActivity {
         });
     }
     private void CreateAccount(){
+        String Height="",Weight="";
+        for(int i=0; i < 3 ; i++)
+            for(int j=0; j<100; j++)
+                if(TextInputLayoutHeight.getEditText().getText().toString().equals( i+ "."+ j + " " + getResources().getString(R.string.Meters)))
+                    Height = i+ "."+ j ;
+        user.setHeight(Height);
+        for(int i=0; i < 261 ; i++)
+            if(TextInputLayoutWeight.getEditText().getText().toString().equals( (i+20)+" "+getResources().getString(R.string.Kg)))
+                Weight = (i+20)+"";
         user = new User(TextInputLayoutFirstName.getEditText().getText().toString(), TextInputLayoutLastName.getEditText().getText().toString(), TextInputLayoutEmail.getEditText().getText().toString());
-        user.setHeight(TextInputLayoutHeight.getEditText().getText().toString());
-        user.setWeight(TextInputLayoutWeight.getEditText().getText().toString());
+        user.setWeight(Weight);
         user.setBirthDay(TextInputLayoutBirthDay.getEditText().getText().toString());
         user.setAge(getYears(new Date(UserYear,UserMonth,UserDay)) + "");
         user.setGender(TextInputLayoutGender.getEditText().getText().toString());

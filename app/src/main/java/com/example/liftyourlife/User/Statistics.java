@@ -11,18 +11,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
 import com.example.liftyourlife.R;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Statistics extends AppCompatActivity {
     private NavigationView UserNavigationView;
     private ImageView BackIcon, MenuIcon;
     private DrawerLayout drawerLayout;
     private TextView Title;
+    private BarChart WeightChart, WorkoutChart;
     private Intent intent;
     private User user = new User();
     @Override
@@ -37,6 +43,8 @@ public class Statistics extends AppCompatActivity {
         BackIcon();
         NavigationView();
         MenuItem();
+        WorkoutChart();
+        WeightChart();
     }
     private void setID(){
         intent = getIntent();
@@ -44,10 +52,25 @@ public class Statistics extends AppCompatActivity {
         UserNavigationView = findViewById(R.id.navigationView);
         BackIcon = findViewById(R.id.BackIcon);
         MenuIcon = findViewById(R.id.MenuIcon);
+        WeightChart = findViewById(R.id.WeightChart);
+        WorkoutChart = findViewById(R.id.WorkoutChart);
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
         Title.setText(R.string.Statistics);
         new UserNavigationHeader(user,Statistics.this);
+    }
+    private void WorkoutChart(){
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        for(int i=1; i<10; i++) {
+            float value = i*10;
+            BarEntry barEntry = new BarEntry(i, value);
+            barEntries.add(barEntry);
+        }
+        //WorkoutChart.setData(barEntries);
+
+    }
+    private void WeightChart(){
+
     }
     private void MenuIcon(){
         MenuIcon.setOnClickListener(new View.OnClickListener() {

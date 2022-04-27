@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -44,6 +45,8 @@ import com.example.liftyourlife.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -146,38 +149,43 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CheckInput()) {
-                    newUser.setEmail(user.getEmail());
-                    newUser.setUid(user.getUid());
-                    newUser.setFirstName(TextInputLayoutFirstName.getEditText().getText().toString());
-                    newUser.setLastName(TextInputLayoutLastName.getEditText().getText().toString());
-                    newUser.setGender(TextInputLayoutGender.getEditText().getText().toString());
-                    newUser.setBirthDay(TextInputLayoutBirthDay.getEditText().getText().toString());
-                    newUser.setAge(getYears(new Date(UserYear,UserMonth,UserDay)) + "");
-                    newUser.setHeight(TextInputLayoutHeight.getEditText().getText().toString());
-                    newUser.setWeight(TextInputLayoutWeight.getEditText().getText().toString());
-                    newUser.setFullName(newUser.getFirstName() + " " + newUser.getLastName());
-
-                    /*
-                    else {
-                        newUser.setImage(user.getImage());
-                        AlertDialog.Builder Builder;
-                        Builder = new AlertDialog.Builder(Profile.this, R.style.AppCompatAlertDialogStyle);
-                        Builder.setTitle(getResources().getString(R.string.Profile));
-                        Builder.setMessage(getResources().getString(R.string.ProfileUpdated));
-                        Builder.setPositiveButton(getResources().getString(R.string.OK), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                updateData();
-                            }
-                        });
-                        Builder.setCancelable(false);
-                        Builder.create().show();
-                    }*/
+                    String Height="",Weight="";
+                    user.setFirstName(TextInputLayoutFirstName.getEditText().getText().toString());
+                    user.setLastName(TextInputLayoutLastName.getEditText().getText().toString());
+                    user.setGender(TextInputLayoutGender.getEditText().getText().toString());
+                    user.setBirthDay(TextInputLayoutBirthDay.getEditText().getText().toString());
+                    user.setAge(getYears(new Date(UserYear,UserMonth,UserDay)) + "");
+                    for(int i=0; i < 3 ; i++)
+                        for(int j=0; j<100; j++)
+                            if(TextInputLayoutHeight.getEditText().getText().toString().equals( i+ "."+ j + " " + getResources().getString(R.string.Meters)))
+                                Height = i+ "."+ j ;
+                    user.setHeight(Height);
+                    for(int i=0; i < 261 ; i++)
+                        if(TextInputLayoutWeight.getEditText().getText().toString().equals( (i+20)+" "+getResources().getString(R.string.Kg)))
+                            Weight = (i+20)+"";
+                    user.setWeight(Weight);
+                    user.setFullName(user.getFirstName() + " " + user.getLastName());
+                    SuccessfullyUpdatedMSG();
                 }
             }
         });
     }
+    private void SuccessfullyUpdatedMSG(){
+        AlertDialog.Builder Builder;
+        Builder = new AlertDialog.Builder(Profile.this, R.style.AppCompatAlertDialogStyle);
+        Builder.setTitle(getResources().getString(R.string.Profile));
+        Builder.setMessage(getResources().getString(R.string.ProfileUpdated));
+        Builder.setPositiveButton(getResources().getString(R.string.OK), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                updateData();
+            }
+        });
+        Builder.setCancelable(false);
+        Builder.create().show();
+    }
     private void updateData(){
-
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Users").child(user.getUid());
+        databaseReference.setValue(user);
     }
     private int getYears(Date date){
         int years = Calendar.getInstance().get(Calendar.YEAR) - date.getYear();
@@ -199,6 +207,12 @@ public class Profile extends AppCompatActivity {
                 TextInputLayoutLastName.setHelperText("");
             return false;
         }
+        if(getYears(new Date(UserYear,UserMonth,UserDay)) < 18){
+            TextInputLayoutBirthDay.setHelperText(getResources().getString(R.string.RequiredAge18OrMore));
+            return false;
+        }
+        else
+            TextInputLayoutBirthDay.setHelperText("");
         TextInputLayoutFirstName.setHelperText("");
         TextInputLayoutLastName.setHelperText("");
         return true;
@@ -299,7 +313,7 @@ public class Profile extends AppCompatActivity {
         photo.setType("image/*");
         startActivityForResult(photo, 1);
     }
-    private void CammeraPicture(){
+    private void CameraPicture(){
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(takePicture.resolveActivity(getPackageManager()) != null){
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
@@ -380,17 +394,13 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) { StartActivity(Home.class); }
         });
     }
+    @Override
+    public void onBackPressed() { StartActivity(Home.class); }
     private void StartActivity(Class Destination){
         intent = new Intent(Profile.this, Destination);
         intent.putExtra("user", user);
         startActivity(intent);
         finish();
     }
-    @Override
-    public void onBackPressed() {
-        intent = new Intent(Profile.this, Home.class);
-        intent.putExtra("user", user);
-        startActivity(intent);
-        finish();
-    }
+
 }

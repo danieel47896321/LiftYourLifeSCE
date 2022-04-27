@@ -103,6 +103,8 @@
     <string name="ConfirmNewPassword" translatable="true">אימות סיסמה</string>
     <string name="Change" translatable="true">שינוי</string>
     <string name="PasswordChanged" translatable="true">הסיסמה השתנתה</string>
-
+    <!-- Statistics Page -->
+    <string name="WeightTracking" translatable="true">מעקב משקל</string>
+    <string name="WorkoutTracking" translatable="true">מעקב אימונים</string>
 
 </resources>
