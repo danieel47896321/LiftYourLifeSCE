@@ -59,6 +59,7 @@ public class Statistics extends AppCompatActivity {
         Title.setText(R.string.Statistics);
         new UserNavigationHeader(user,Statistics.this);
     }
+
     private void WorkoutChart(){
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         for(int i=1; i<10; i++) {
