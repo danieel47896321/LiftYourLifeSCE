@@ -14,8 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.liftyourlife.Adapters.TagsAdapter;
-import com.example.liftyourlife.Class.GuestLanguage;
+import com.example.liftyourlife.Adapters.LiftYourLifeAdapter;
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Tag;
 import com.example.liftyourlife.R;
@@ -24,13 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LiftYourLife extends AppCompatActivity {
-    private RecyclerView Tags;
+    private RecyclerView recyclerView;
     private DrawerLayout drawerLayout;
     private List<Tag> tagList;
     private NavigationView navigationView;
-    private TextView Title, TextViewSearchLanguage;
+    private TextView Title;
     private ImageView BackIcon, MenuIcon;
-    private GuestLanguage guestLanguage;
     private final int SIZE = 5;
     private String LiftYourLifeTagsName[] = new String[SIZE];
     private int TagsPhoto[] = {R.drawable.sign_in,R.drawable.create_account,R.drawable.reset_password,R.drawable.about,R.drawable.contact};
@@ -44,7 +42,6 @@ public class LiftYourLife extends AppCompatActivity {
         tagList = new ArrayList<>();
         setID();
         setTags();
-        setLanguage();
         MenuItem();
         MenuIcon();
         NavigationView();
@@ -56,17 +53,9 @@ public class LiftYourLife extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
         Title.setText("");
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        guestLanguage = new GuestLanguage(LiftYourLife.this);
         navigationView = findViewById(R.id.navigationView);
-        Tags = findViewById(R.id.Tags);
+        recyclerView = findViewById(R.id.recyclerView);
         LiftYourLifeTagsName = getResources().getStringArray(R.array.LiftYourLifeTagsName);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { guestLanguage.setDialog(); }
-        });
     }
     private void MenuItem(){
         Menu menu= navigationView.getMenu();
@@ -96,9 +85,9 @@ public class LiftYourLife extends AppCompatActivity {
         ShowTags(tagList);
     }
     private void ShowTags(List<Tag> selects){
-        TagsAdapter tagsAdapter = new TagsAdapter(this,selects);
-        Tags.setLayoutManager(new GridLayoutManager(this,1));
-        Tags.setAdapter(tagsAdapter);
+        LiftYourLifeAdapter liftYourLifeAdapter = new LiftYourLifeAdapter(this,selects);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        recyclerView.setAdapter(liftYourLifeAdapter);
     }
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LiftYourLife.this);

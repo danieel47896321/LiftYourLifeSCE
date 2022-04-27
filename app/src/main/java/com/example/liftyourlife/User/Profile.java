@@ -35,7 +35,6 @@ import android.widget.TextView;
 
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.User;
-import com.example.liftyourlife.Class.UserLanguage;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
 import com.example.liftyourlife.R;
@@ -47,14 +46,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class Profile extends AppCompatActivity {
-    private TextView Title,TextViewSearch, TextViewSearchLanguage;
+    private TextView Title,TextViewSearch;
     private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName, TextInputLayoutEmail, TextInputLayoutGender, TextInputLayoutAge, TextInputLayoutHeight, TextInputLayoutWeight;
     private Button Confirm;
     private DrawerLayout drawerLayout;
     private ImageView BackIcon, MenuIcon,addImage;
     private Loading loading;
     private Intent intent;
-    private UserLanguage userLanguage;
     private View UserProfileImage, UserImage;
     private NavigationView navigationView;
     private Dialog dialog;
@@ -73,7 +71,6 @@ public class Profile extends AppCompatActivity {
     }
     void init(){
         setID();
-        setLanguage();
         MenuItem();
         BackIcon();
         MenuIcon();
@@ -102,15 +99,7 @@ public class Profile extends AppCompatActivity {
         Title.setText(getResources().getString(R.string.Profile));
         user = (User)intent.getSerializableExtra("user");
         drawerLayout = findViewById(R.id.drawerLayout);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        userLanguage = new UserLanguage(Profile.this, user);
         new UserNavigationHeader(user,Profile.this);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { userLanguage.setDialog(); }
-        });
     }
     private void MenuItem(){
         Menu menu= navigationView.getMenu();

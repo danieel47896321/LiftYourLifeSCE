@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.liftyourlife.Class.GuestLanguage;
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.PopUpMSG;
@@ -45,13 +44,12 @@ public class CreateAccount extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName ,TextInputLayoutEmail, TextInputLayoutPassword, TextInputLayoutPasswordConfirm;
-    private TextView Title, SignIn, TextViewSearchHeight, TextViewSearchWeight, TextViewSearchAge, TextViewSearchGender,TextViewSearch, TextViewSearchLanguage;
+    private TextView Title, SignIn, TextViewSearchHeight, TextViewSearchWeight, TextViewSearchAge, TextViewSearchGender,TextViewSearch;
     private Dialog dialog;
     private ListView ListViewSearch;
     private EditText EditTextSearch;
     private Button ButtonNext, next_btn;
     private Loading loading;
-    private GuestLanguage guestLanguage;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance() ;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app");
     private DatabaseReference databaseReference = firebaseDatabase.getReference().child("Users");
@@ -64,7 +62,6 @@ public class CreateAccount extends AppCompatActivity {
     }
     private void init(){
         setID();
-        setLanguage();
         MenuItem();
         BackIcon();
         MenuIcon();
@@ -88,14 +85,6 @@ public class CreateAccount extends AppCompatActivity {
         TextInputLayoutPassword = findViewById(R.id.TextInputLayoutPassword);
         TextInputLayoutPasswordConfirm = findViewById(R.id.TextInputLayoutPasswordConfirm);
         ButtonNext = findViewById(R.id.ButtonNext);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        guestLanguage = new GuestLanguage(CreateAccount.this);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { guestLanguage.setDialog(); }
-        });
     }
     private void MenuItem(){
         Menu menu= navigationView.getMenu();

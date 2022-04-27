@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.liftyourlife.Class.User;
-import com.example.liftyourlife.Class.UserLanguage;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
 import com.example.liftyourlife.R;
@@ -23,8 +22,7 @@ public class WorkOut extends AppCompatActivity {
     private NavigationView UserNavigationView;
     private ImageView BackIcon, MenuIcon;
     private DrawerLayout drawerLayout;
-    private TextView Title, TextViewSearchLanguage;
-    private UserLanguage userLanguage;
+    private TextView Title;
     private Intent intent;
     private User user = new User();
     @Override
@@ -35,7 +33,6 @@ public class WorkOut extends AppCompatActivity {
     }
     private void init(){
         setID();
-        setLanguage();
         MenuIcon();
         BackIcon();
         NavigationView();
@@ -50,17 +47,7 @@ public class WorkOut extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
         Title.setText(R.string.WorkOut);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        userLanguage = new UserLanguage(WorkOut.this,user);
         new UserNavigationHeader(user,WorkOut.this);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userLanguage.setDialog();
-            }
-        });
     }
     private void MenuIcon(){
         MenuIcon.setOnClickListener(new View.OnClickListener() {

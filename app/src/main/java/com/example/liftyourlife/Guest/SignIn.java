@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.liftyourlife.Class.GuestLanguage;
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.User;
@@ -43,7 +42,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class SignIn extends AppCompatActivity {
-    private TextView Title, TextViewSearchLanguage;
+    private TextView Title;
     private DrawerLayout drawerLayout;
     private ImageView BackIcon, MenuIcon;
     private NavigationView navigationView;
@@ -56,7 +55,6 @@ public class SignIn extends AppCompatActivity {
     private Loading loading;
     private Intent intent;
     private User user = new User();
-    private GuestLanguage guestLanguage;
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Users");
@@ -68,7 +66,6 @@ public class SignIn extends AppCompatActivity {
     }
     private void init(){
         setID();
-        setLanguage();
         MenuItem();
         BackIcon();
         MenuIcon();
@@ -93,14 +90,6 @@ public class SignIn extends AppCompatActivity {
         TextInputLayoutEmail = findViewById(R.id.TextInputLayoutEmail);
         TextInputLayoutPassword = findViewById(R.id.TextInputLayoutPassword);
         ButtonSignIn = findViewById(R.id.ButtonSignIn);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        guestLanguage = new GuestLanguage(SignIn.this);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { guestLanguage.setDialog(); }
-        });
     }
     private void MenuItem(){
         Menu menu= navigationView.getMenu();

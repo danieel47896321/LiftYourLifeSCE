@@ -43,12 +43,12 @@ public class UserNavigationView {
                 public void onClick(DialogInterface dialog, int which) {
                     if (firebaseAuth.getCurrentUser() != null)
                         firebaseAuth.signOut();
-                    GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    /*GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                             .requestIdToken(context.getString(R.string.default_web_client_id)).requestEmail().build();
                     GoogleSignInClient googleClient = GoogleSignIn.getClient(context, options);
                     googleClient.signOut();
                     context.startActivity(new Intent(context, LiftYourLife.class));
-                    ((Activity) context).finish();
+                    ((Activity) context).finish();*/
                 }
             }).setNegativeButton(context.getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
                 @Override

@@ -1,11 +1,9 @@
 package com.example.liftyourlife.User;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,22 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.liftyourlife.Class.User;
-import com.example.liftyourlife.Class.UserLanguage;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
-import com.example.liftyourlife.Guest.LiftYourLife;
 import com.example.liftyourlife.R;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.navigation.NavigationView;
 
 public class Statistics extends AppCompatActivity {
     private NavigationView UserNavigationView;
     private ImageView BackIcon, MenuIcon;
     private DrawerLayout drawerLayout;
-    private TextView Title, TextViewSearchLanguage;
-    private UserLanguage userLanguage;
+    private TextView Title;
     private Intent intent;
     private User user = new User();
     @Override
@@ -41,7 +33,6 @@ public class Statistics extends AppCompatActivity {
     }
     private void init(){
         setID();
-        setLanguage();
         MenuIcon();
         BackIcon();
         NavigationView();
@@ -56,17 +47,7 @@ public class Statistics extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
         Title.setText(R.string.Statistics);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        userLanguage = new UserLanguage(Statistics.this,user);
         new UserNavigationHeader(user,Statistics.this);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userLanguage.setDialog();
-            }
-        });
     }
     private void MenuIcon(){
         MenuIcon.setOnClickListener(new View.OnClickListener() {

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
@@ -16,10 +15,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.liftyourlife.Adapters.LiftYourLifeAdapter;
 import com.example.liftyourlife.Class.Tag;
 import com.example.liftyourlife.Class.User;
-import com.example.liftyourlife.Class.UserLanguage;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
 import com.example.liftyourlife.Guest.LiftYourLife;
@@ -37,8 +34,7 @@ public class Home extends AppCompatActivity {
     private NavigationView UserNavigationView;
     private ImageView BackIcon, MenuIcon;
     private DrawerLayout drawerLayout;
-    private TextView Title, TextViewSearchLanguage;
-    private UserLanguage userLanguage;
+    private TextView Title;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private List<Tag> tagList;
     private RecyclerView recyclerView;
@@ -53,7 +49,6 @@ public class Home extends AppCompatActivity {
     private void init(){
         setID();
         setTags();
-        setLanguage();
         MenuIcon();
         SignOutIcon();
         MenuView();
@@ -70,10 +65,8 @@ public class Home extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         Title = findViewById(R.id.Title);
         Title.setText(R.string.Home);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        userLanguage = new UserLanguage(Home.this,user);
         tagList = new ArrayList<>();
-        recyclerView = findViewById(R.id.HomeRycyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         new UserNavigationHeader(user,Home.this);
     }
     private void setTags(){
@@ -86,18 +79,11 @@ public class Home extends AppCompatActivity {
         list.add(getResources().getString(R.string.Logout));
         for(int i=0; i< list.size();i++)
             tagList.add(new Tag(list.get(i),R.drawable.tag));
-        LiftYourLifeAdapter liftYourLifeAdapter = new LiftYourLifeAdapter(Home.this,tagList,user);
+        /*LiftYourLifeAdapter liftYourLifeAdapter = new LiftYourLifeAdapter(Home.this,tagList,user);
         recyclerView.setLayoutManager(new GridLayoutManager(Home.this,2));
-        recyclerView.setAdapter(liftYourLifeAdapter);
+        recyclerView.setAdapter(liftYourLifeAdapter);*/
     }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userLanguage.setDialog();
-            }
-        });
-    }
+
     private void MenuIcon(){
         MenuIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,12 +122,12 @@ public class Home extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if(firebaseAuth.getCurrentUser() != null)
                             firebaseAuth.signOut();
-                        GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                       /*- GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                 .requestIdToken(Home.this.getString(R.string.default_web_client_id)).requestEmail().build();
                         GoogleSignInClient googleClient = GoogleSignIn.getClient(Home.this, options);
                         googleClient.signOut();
                         startActivity(new Intent(Home.this, LiftYourLife.class));
-                        finish();
+                        finish();*/
                     }
                 }).setNegativeButton(getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
             @Override
