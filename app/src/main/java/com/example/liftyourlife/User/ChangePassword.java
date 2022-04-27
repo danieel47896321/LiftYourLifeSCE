@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.Class.User;
-import com.example.liftyourlife.Class.UserLanguage;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
 import com.example.liftyourlife.R;
@@ -32,12 +31,11 @@ public class ChangePassword extends AppCompatActivity {
 
     private TextInputLayout TextInputLayoutCurrentPassword, TextInputLayoutNewPassword, TextInputLayoutPasswordConfirm;
     private Button ButtonSaveChanges;
-    private UserLanguage userLanguage;
     private DrawerLayout drawerLayout;
     private Loading loading;
     private Intent intent;
     private User user;
-    private TextView Title, TextViewSearchLanguage;
+    private TextView Title;
     private ImageView BackIcon, MenuIcon;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -50,7 +48,6 @@ public class ChangePassword extends AppCompatActivity {
     }
     private void init(){
         setID();
-        setLanguage();
         SaveChanges();
         MenuItem();
         BackIcon();
@@ -61,7 +58,6 @@ public class ChangePassword extends AppCompatActivity {
         TextInputLayoutCurrentPassword = findViewById(R.id.TextInputLayoutCurrentPassword);
         TextInputLayoutNewPassword = findViewById(R.id.TextInputLayoutNewPassword);
         TextInputLayoutPasswordConfirm = findViewById(R.id.TextInputLayoutPasswordConfirm);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
         ButtonSaveChanges = findViewById(R.id.ButtonSaveChanges);
         navigationView = findViewById(R.id.navigationView);
         MenuIcon = findViewById(R.id.MenuIcon);
@@ -71,15 +67,7 @@ public class ChangePassword extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         intent = getIntent();
         user = (User)intent.getSerializableExtra("user");
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        userLanguage = new UserLanguage(ChangePassword.this, user);
         new UserNavigationHeader(user,ChangePassword.this);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { userLanguage.setDialog(); }
-        });
     }
     private void MenuItem(){
         Menu menu= navigationView.getMenu();

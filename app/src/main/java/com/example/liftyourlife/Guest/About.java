@@ -10,17 +10,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.liftyourlife.Class.GuestLanguage;
+
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class About extends AppCompatActivity {
-    private TextView Title, TextViewSearchLanguage;
+    private TextView Title;
     private ImageView BackIcon, MenuIcon;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private GuestLanguage guestLanguage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +32,6 @@ public class About extends AppCompatActivity {
         BackIcon();
         MenuIcon();
         NavigationView();
-        setLanguage();
     }
     private void setID(){
         MenuIcon = findViewById(R.id.MenuIcon);
@@ -42,14 +40,6 @@ public class About extends AppCompatActivity {
         Title = findViewById(R.id.Title);
         navigationView = findViewById(R.id.navigationView);
         Title.setText(R.string.About);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        guestLanguage = new GuestLanguage(About.this);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { guestLanguage.setDialog(); }
-        });
     }
     private void MenuItem(){
         Menu menu= navigationView.getMenu();

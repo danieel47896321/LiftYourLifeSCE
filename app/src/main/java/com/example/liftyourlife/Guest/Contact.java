@@ -12,17 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.liftyourlife.Class.GuestLanguage;
+
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class Contact extends AppCompatActivity {
-    private TextView SendEmail, Title, TextViewSearchLanguage;
+    private TextView SendEmail, Title;
     private ImageView BackIcon, MenuIcon;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private GuestLanguage guestLanguage;
     private Intent intent;
     private String Email = "LiftYourLifeSCE@gmail.com";
     @Override
@@ -38,7 +37,6 @@ public class Contact extends AppCompatActivity {
         MenuIcon();
         NavigationView();
         SendEmail();
-        setLanguage();
     }
     private void setID() {
         intent = getIntent();
@@ -49,14 +47,6 @@ public class Contact extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         SendEmail = findViewById(R.id.SendEmail);
         Title.setText(R.string.Contact);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        guestLanguage = new GuestLanguage(Contact.this);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { guestLanguage.setDialog(); }
-        });
     }
     private void MenuItem(){
         Menu menu= navigationView.getMenu();

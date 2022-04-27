@@ -7,10 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".Guest.CreateAccount">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_image">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/grey">
 
         <include
             android:id="@+id/Header"
@@ -21,263 +22,152 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Header">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="11dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="11dp">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Header">
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TextInputLayoutFirstName"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
-                    android:gravity="start"
-                    android:hint="@string/FirstName"
-                    android:textColorHint="@color/white"
-                    app:boxStrokeColor="@color/white"
-                    app:boxStrokeWidth="3dp"
-                    app:boxStrokeWidthFocused="3dp"
-                    app:counterEnabled="false"
-                    app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextColor="@color/white"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/white"
-                    app:helperTextTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:helperTextTextColor="@color/red"
-                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
-                    app:hintTextColor="@color/white"
-                    app:startIconDrawable="@drawable/person"
-                    app:startIconTint="@color/white">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/TextInputEditTextInputFirstName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:gravity="start"
-                        android:inputType="textPersonName"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TextInputLayoutLastName"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
-                    android:gravity="start"
-                    android:hint="@string/LastName"
-                    android:textColorHint="@color/white"
-                    app:boxStrokeColor="@color/white"
-                    app:boxStrokeWidth="3dp"
-                    app:boxStrokeWidthFocused="3dp"
-                    app:counterEnabled="false"
-                    app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextColor="@color/white"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/white"
-                    app:helperTextTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:helperTextTextColor="@color/red"
-                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
-                    app:hintTextColor="@color/white"
-                    app:startIconDrawable="@drawable/person"
-                    app:startIconTint="@color/white">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/TextInputEditTextInputLastName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:gravity="start"
-                        android:inputType="textPersonName"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TextInputLayoutEmail"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
-                    android:gravity="start"
-                    android:hint="@string/Email"
-                    android:textColorHint="@color/white"
-                    app:boxStrokeColor="@color/white"
-                    app:boxStrokeWidth="3dp"
-                    app:boxStrokeWidthFocused="3dp"
-                    app:counterEnabled="false"
-                    app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextColor="@color/white"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/white"
-                    app:helperTextTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:helperTextTextColor="@color/red"
-                    app:hintTextColor="@color/white"
-                    app:startIconDrawable="@drawable/email"
-                    app:startIconTint="@color/white">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/TextInputEditTextInputEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:gravity="start"
-                        android:inputType="textEmailAddress"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TextInputLayoutPassword"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
-                    android:gravity="start"
-                    android:hint="@string/Password"
-                    android:textColorHint="@color/white"
-                    app:boxStrokeColor="@color/white"
-                    app:boxStrokeWidth="3dp"
-                    app:boxStrokeWidthFocused="3dp"
-                    app:counterEnabled="false"
-                    app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextColor="@color/white"
-                    app:endIconMode="password_toggle"
-                    app:endIconTint="@color/white"
-                    app:helperTextTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:helperTextTextColor="@color/red"
-                    app:hintTextColor="@color/white"
-                    app:startIconDrawable="@drawable/password"
-                    app:startIconTint="@color/white">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/TextInputEditTextInputPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:gravity="start"
-                        android:inputType="textPassword"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/TextInputLayoutPasswordConfirm"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
-                    android:gravity="start"
-                    android:hint="@string/ConfirmPassword"
-                    android:textColorHint="@color/white"
-                    app:boxStrokeColor="@color/white"
-                    app:boxStrokeWidth="3dp"
-                    app:boxStrokeWidthFocused="3dp"
-                    app:counterEnabled="false"
-                    app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:counterTextColor="@color/white"
-                    app:endIconMode="password_toggle"
-                    app:endIconTint="@color/white"
-                    app:helperTextTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:helperTextTextColor="@color/red"
-                    app:hintTextColor="@color/white"
-                    app:startIconDrawable="@drawable/password"
-                    app:startIconTint="@color/white">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/TextInputEditTextInputPasswordConfirm"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:gravity="start"
-                        android:inputType="textPassword"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Button
-                    android:id="@+id/ButtonNext"
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginRight="32dp"
-                    android:background="@drawable/button_background"
-                    android:text="@string/Next"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="@color/dark_blue" />
+                    android:fillViewport="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/SignIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/AlreadyHaveAccount"
-                    android:textColor="@color/yellow"
-                    android:textColorHint="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:orientation="vertical">
 
-            </LinearLayout>
-        </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/TextInputLayoutFirstName"
+                            style="@style/TextInputLayout_Style"
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/FirstName"
+                            app:endIconMode="clear_text"
+                            app:startIconDrawable="@drawable/person">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/TextInputEditText_Style"
+                                android:id="@+id/TextInputEditTextInputFirstName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPersonName" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/TextInputLayoutLastName"
+                            style="@style/TextInputLayout_Style"
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:layout_marginTop="4dp"
+                            android:hint="@string/LastName"
+                            app:endIconMode="clear_text"
+                            app:startIconDrawable="@drawable/person">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/TextInputEditText_Style"
+                                android:id="@+id/TextInputEditTextInputLastName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPersonName" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/TextInputLayoutEmail"
+                            style="@style/TextInputLayout_Style"
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:layout_marginTop="4dp"
+                            android:hint="@string/Email"
+                            app:endIconMode="clear_text"
+                            app:startIconDrawable="@drawable/email">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/TextInputEditText_Style"
+                                android:id="@+id/TextInputEditTextInputEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textEmailAddress" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/TextInputLayoutPassword"
+                            style="@style/TextInputLayout_Style"
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:layout_marginTop="4dp"
+                            android:hint="@string/Password"
+                            app:endIconMode="password_toggle"
+                            app:startIconDrawable="@drawable/password">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/TextInputEditTextInputPassword"
+                                style="@style/TextInputEditText_Style"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/TextInputLayoutPasswordConfirm"
+                            style="@style/TextInputLayout_Style"
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:layout_marginTop="4dp"
+                            android:hint="@string/ConfirmPassword"
+                            app:endIconMode="password_toggle"
+                            app:startIconDrawable="@drawable/password">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/TextInputEditTextInputPasswordConfirm"
+                                style="@style/TextInputEditText_Style"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/ButtonNext"
+                            style="@style/Button_Style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/Next" />
+
+                        <TextView
+                            android:id="@+id/SignIn"
+                            style="@style/Clicked_TextView_Style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="@string/AlreadyHaveAccount" />
+
+                    </LinearLayout>
+                </ScrollView>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
@@ -285,7 +175,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:itemBackground="@drawable/menu_item_select_background"
         app:headerLayout="@layout/guest_navigation_header"
         app:menu="@menu/guest_menu" />
 

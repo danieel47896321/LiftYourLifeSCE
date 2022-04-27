@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/drawable/camera.xml" value="0.26666666666666666" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/drawable/gallery.xml" value="0.26666666666666666" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/activity_about.xml" value="0.2" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/activity_change_password.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/activity_contact.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/activity_create_account.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/activity_home.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/activity_lift_your_life.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/activity_opening_screen.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/activity_reset_password.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/activity_sign_in.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/dialog_createaccount.xml" value="0.264" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/dialog_profile_picture.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/dialog_search_spinner.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/dropdwon_item.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/guest_navigation_header.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/header.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/liftyourlife_view.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/tag_view.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/LiftYourLifeSCE/app/src/main/res/layout/user_navigation_header.xml" value="0.25052083333333336" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

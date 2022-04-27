@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.liftyourlife.Class.GuestLanguage;
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.PopUpMSG;
@@ -31,8 +30,7 @@ public class ResetPassword extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageView BackIcon, MenuIcon;
-    private TextView CreateAccount, Title, TextViewSearchLanguage;
-    private GuestLanguage guestLanguage;
+    private TextView CreateAccount, Title;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance() ;
     private Loading loading;
     @Override
@@ -43,7 +41,6 @@ public class ResetPassword extends AppCompatActivity {
     }
     private void init(){
         setID();
-        setLanguage();
         MenuItem();
         BackIcon();
         MenuIcon();
@@ -62,14 +59,6 @@ public class ResetPassword extends AppCompatActivity {
         ButtonFinish = findViewById(R.id.ButtonFinish);
         CreateAccount = findViewById(R.id.CreateAccount);
         TextInputLayoutEmail = findViewById(R.id.TextInputLayoutEmail);
-        TextViewSearchLanguage = findViewById(R.id.TextViewSearchLanguage);
-        guestLanguage = new GuestLanguage(ResetPassword .this);
-    }
-    private void setLanguage(){
-        TextViewSearchLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { guestLanguage.setDialog(); }
-        });
     }
     private void MenuItem(){
         Menu menu= navigationView.getMenu();
