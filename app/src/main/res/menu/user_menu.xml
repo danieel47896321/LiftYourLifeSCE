@@ -16,10 +16,6 @@
             android:icon="@drawable/workout"
             android:title="@string/WorkOut" />
         <item
-            android:id="@+id/ItemWorkOutUpdate"
-            android:icon="@drawable/create_account"
-            android:title="@string/WorkOutUpdate" />
-        <item
             android:id="@+id/ItemStatistics"
             android:icon="@drawable/statistics"
             android:title="@string/Statistics" />

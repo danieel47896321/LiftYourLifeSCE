@@ -1,14 +1,17 @@
 package com.example.liftyourlife.Guest;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -39,16 +43,21 @@ import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class CreateAccount extends AppCompatActivity {
     private ImageView BackIcon, MenuIcon;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName ,TextInputLayoutEmail, TextInputLayoutPassword, TextInputLayoutPasswordConfirm;
-    private TextView Title, SignIn, TextViewSearchHeight, TextViewSearchWeight, TextViewSearchAge, TextViewSearchGender,TextViewSearch;
+    private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName ,TextInputLayoutEmail, TextInputLayoutPassword, TextInputLayoutPasswordConfirm, TextInputLayoutHeight, TextInputLayoutWeight, TextInputLayoutBirthDay, TextInputLayoutGender;
+    private TextView Title, SignIn, TextViewSearch;
     private Dialog dialog;
+    private Calendar calendar = Calendar.getInstance();
+    private int Year = calendar.get(Calendar.YEAR), Month = calendar.get(Calendar.MONTH), Day = calendar.get(Calendar.DAY_OF_MONTH), UserYear, UserMonth, UserDay;
     private ListView ListViewSearch;
     private EditText EditTextSearch;
-    private Button ButtonNext, next_btn;
+    private Button ButtonNext, NextButtonFinish;
     private Loading loading;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance() ;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app");
@@ -239,22 +248,41 @@ public class CreateAccount extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_createaccount,null);
         builder.setCancelable(false);
         builder.setView(dialogView);
-        TextViewSearchHeight = dialogView.findViewById(R.id.TextViewSearchHeight);
-        TextViewSearchWeight = dialogView.findViewById(R.id.TextViewSearchWeight);
-        TextViewSearchAge = dialogView.findViewById(R.id.TextViewSearchAge);
-        TextViewSearchGender = dialogView.findViewById(R.id.TextViewSearchGender);
-        next_btn  = dialogView.findViewById(R.id.next_btn);
+        TextInputLayoutHeight = dialogView.findViewById(R.id.TextInputLayoutHeight);
+        TextInputLayoutWeight = dialogView.findViewById(R.id.TextInputLayoutWeight);
+        TextInputLayoutBirthDay = dialogView.findViewById(R.id.TextInputLayoutBirthDay);
+        TextInputLayoutGender = dialogView.findViewById(R.id.TextInputLayoutGender);
+        NextButtonFinish  = dialogView.findViewById(R.id.NextButtonFinish);
         AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(true);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
         HeightPick();
         WeightPick();
-        AgePick();
+        BirthDayPick();
         GenderPick();
-        next_btn.setOnClickListener(new View.OnClickListener() {
+        NextButtonFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!(TextViewSearchHeight.getText().toString().equals("")) && !(TextViewSearchWeight.getText().toString().equals("")) && !(TextViewSearchAge.getText().toString().equals("")) && !(TextViewSearchGender.getText().toString().equals(""))){
+                if(TextInputLayoutHeight.getEditText().getText().toString().equals(""))
+                    TextInputLayoutHeight.setHelperText(getResources().getString(R.string.Required));
+                else
+                    TextInputLayoutHeight.setHelperText("");
+                if(TextInputLayoutWeight.getEditText().getText().toString().equals(""))
+                    TextInputLayoutWeight.setHelperText(getResources().getString(R.string.Required));
+                else
+                    TextInputLayoutWeight.setHelperText("");
+                if(TextInputLayoutBirthDay.getEditText().getText().toString().equals(""))
+                    TextInputLayoutBirthDay.setHelperText(getResources().getString(R.string.Required));
+                else if(getYears(new Date(UserYear,UserMonth,UserDay)) < 18)
+                    TextInputLayoutBirthDay.setHelperText(getResources().getString(R.string.RequiredAge18OrMore));
+                else
+                    TextInputLayoutBirthDay.setHelperText("");
+                if(TextInputLayoutGender.getEditText().getText().toString().equals(""))
+                    TextInputLayoutGender.setHelperText(getResources().getString(R.string.Required));
+                else
+                    TextInputLayoutGender.setHelperText("");
+                if(!(TextInputLayoutHeight.getEditText().getText().toString().equals("")) && !(TextInputLayoutWeight.getEditText().getText().toString().equals("")) && !(TextInputLayoutBirthDay.getEditText().getText().toString().equals("")) && !(TextInputLayoutGender.getEditText().getText().toString().equals(""))){
                     alertDialog.cancel();
                     CreateAccount();
                 }
@@ -263,10 +291,11 @@ public class CreateAccount extends AppCompatActivity {
     }
     private void CreateAccount(){
         user = new User(TextInputLayoutFirstName.getEditText().getText().toString(), TextInputLayoutLastName.getEditText().getText().toString(), TextInputLayoutEmail.getEditText().getText().toString());
-        user.setHeight(TextViewSearchHeight.getText().toString());
-        user.setWeight(TextViewSearchWeight.getText().toString());
-        user.setAge(TextViewSearchAge.getText().toString());
-        user.setGender(TextViewSearchGender.getText().toString());
+        user.setHeight(TextInputLayoutHeight.getEditText().getText().toString());
+        user.setWeight(TextInputLayoutWeight.getEditText().getText().toString());
+        user.setBirthDay(TextInputLayoutBirthDay.getEditText().getText().toString());
+        user.setAge(getYears(new Date(UserYear,UserMonth,UserDay)) + "");
+        user.setGender(TextInputLayoutGender.getEditText().getText().toString());
         firebaseAuth.createUserWithEmailAndPassword(user.getEmail(),TextInputLayoutPassword.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -284,47 +313,63 @@ public class CreateAccount extends AppCompatActivity {
             }
         });
     }
+    private int getYears(Date date){
+        int years = Calendar.getInstance().get(Calendar.YEAR) - date.getYear();
+        if(date.getMonth() >  Calendar.getInstance().get(Calendar.MONTH) ||
+                (date.getMonth() ==  Calendar.getInstance().get(Calendar.MONTH) &&
+                        date.getDate() > Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))
+            years -=1;
+        return years;
+    }
     private void HeightPick(){
         String height[] = new String[300];
         int index =0;
-        for(int i=0; i < 3 ; i++) {
+        for(int i=0; i < 3 ; i++)
             for(int j=0; j<100; j++)
-                height[index++] = "" + i+ "."+ j;
-        }
-        TextViewSearchHeight.setOnClickListener(new View.OnClickListener() {
+                height[index++] = "" + i+ "."+ j + " " + getResources().getString(R.string.Meters);
+        TextInputLayoutHeight.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDialog(height ,getResources().getString(R.string.SelectHeight),TextViewSearchHeight);
+                setDialog(height ,getResources().getString(R.string.SelectHeight),TextInputLayoutHeight.getEditText());
             }
         });
     }
     private void WeightPick(){
         String weight[] = new String[261];
         for(int i=0; i < weight.length ; i++)
-            weight[i] = ""+(i+40)+" "+getResources().getString(R.string.Kg);
-        TextViewSearchWeight.setOnClickListener(new View.OnClickListener() {
+            weight[i] = ""+(i+20)+" "+getResources().getString(R.string.Kg);
+        TextInputLayoutWeight.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDialog(weight ,getResources().getString(R.string.SelectWeight),TextViewSearchWeight);
+                setDialog(weight ,getResources().getString(R.string.SelectWeight),TextInputLayoutWeight.getEditText());
             }
         });
     }
-    private void AgePick(){
-        String age[] = new String[102];
-        for(int i=0; i < age.length ; i++)
-            age[i] = ""+(i+18);
-        TextViewSearchAge.setOnClickListener(new View.OnClickListener() {
+    private void BirthDayPick(){
+        TextInputLayoutBirthDay.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                setDialog(age ,getResources().getString(R.string.SelectAge),TextViewSearchAge);
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(CreateAccount.this, new DatePickerDialog.OnDateSetListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        month = month + 1;
+                        UserMonth = month;
+                        UserYear = year;
+                        UserDay = dayOfMonth;
+                        String Date = dayOfMonth + "/" + month + "/" + year;
+                        TextInputLayoutBirthDay.getEditText().setText(Date);
+                    }
+                },Year, Month, Day);
+                datePickerDialog.show();
             }
         });
     }
     private void GenderPick(){
-        TextViewSearchGender.setOnClickListener(new View.OnClickListener() {
+        TextInputLayoutGender.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDialog(getResources().getStringArray(R.array.Gender),getResources().getString(R.string.SelectGender),TextViewSearchGender);
+                setDialog(getResources().getStringArray(R.array.Gender),getResources().getString(R.string.SelectGender),TextInputLayoutGender.getEditText());
             }
         });
     }
@@ -338,14 +383,6 @@ public class CreateAccount extends AppCompatActivity {
         ListViewSearch = dialog.findViewById(R.id.ListViewSearch);
         TextViewSearch = dialog.findViewById(R.id.TextViewSearch);
         TextViewSearch.setText(title);
-        if(title.equals(getResources().getString(R.string.SelectHeight))){
-            for(int i=0; i<array.length;i++)
-                array[i] += " "+ getResources().getString(R.string.Meters);
-        }
-        if(title.equals(getResources().getString(R.string.SelectWeight))){
-            for(int i=0; i<array.length;i++)
-                array[i] += " "+ getResources().getString(R.string.Kg);
-        }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(CreateAccount.this, R.layout.dropdwon_item, array);
         ListViewSearch.setAdapter(adapter);
         EditTextSearch.addTextChangedListener(new TextWatcher() {

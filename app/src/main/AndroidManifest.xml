@@ -13,7 +13,6 @@
         android:theme="@style/Theme.LiftYourLife">
         <activity android:name=".User.Statistics"></activity>
         <activity android:name=".User.ChangePassword" />
-        <activity android:name=".User.WorkOutUpdate" />
         <activity android:name=".User.WorkOut" />
         <activity android:name=".User.Profile" />
         <activity android:name=".Guest.ResetPassword" />

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,6 +39,7 @@ import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
+import com.example.liftyourlife.Guest.CreateAccount;
 import com.example.liftyourlife.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -44,14 +47,18 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Profile extends AppCompatActivity {
     private TextView Title,TextViewSearch;
-    private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName, TextInputLayoutEmail, TextInputLayoutGender, TextInputLayoutAge, TextInputLayoutHeight, TextInputLayoutWeight;
+    private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName, TextInputLayoutHeight, TextInputLayoutWeight, TextInputLayoutBirthDay, TextInputLayoutGender;;
     private Button Confirm;
     private DrawerLayout drawerLayout;
     private ImageView BackIcon, MenuIcon,addImage;
     private Loading loading;
+    private Calendar calendar = Calendar.getInstance();
+    private int Year = calendar.get(Calendar.YEAR), Month = calendar.get(Calendar.MONTH), Day = calendar.get(Calendar.DAY_OF_MONTH), UserYear, UserMonth, UserDay;
     private Intent intent;
     private View UserProfileImage, UserImage;
     private NavigationView navigationView;
@@ -84,11 +91,10 @@ public class Profile extends AppCompatActivity {
         UserProfileImage = findViewById(R.id.UserProfileImage);
         TextInputLayoutFirstName = findViewById(R.id.TextInputLayoutFirstName);
         TextInputLayoutLastName = findViewById(R.id.TextInputLayoutLastName);
-        TextInputLayoutEmail = findViewById(R.id.TextInputLayoutEmail);
-        TextInputLayoutGender = findViewById(R.id.TextInputLayoutGender);
-        TextInputLayoutAge = findViewById(R.id.TextInputLayoutAge);
         TextInputLayoutHeight = findViewById(R.id.TextInputLayoutHeight);
         TextInputLayoutWeight = findViewById(R.id.TextInputLayoutWeight);
+        TextInputLayoutBirthDay = findViewById(R.id.TextInputLayoutBirthDay);
+        TextInputLayoutGender = findViewById(R.id.TextInputLayoutGender);
         addImage = findViewById(R.id.addImage);
         Confirm = findViewById(R.id.confirm);
         navigationView = findViewById(R.id.navigationView);
@@ -126,15 +132,14 @@ public class Profile extends AppCompatActivity {
     private void ShowInfo(){
         TextInputLayoutFirstName.getEditText().setText(user.getFirstName());
         TextInputLayoutLastName.getEditText().setText(user.getLastName());
-        TextInputLayoutEmail.getEditText().setText(user.getEmail());
         TextInputLayoutGender.getEditText().setText(user.getGender());
-        TextInputLayoutAge.getEditText().setText(user.getAge());
-        TextInputLayoutHeight.getEditText().setText(user.getHeight()+" "+getResources().getString(R.string.Meters));
-        TextInputLayoutWeight.getEditText().setText(user.getWeight()+" "+getResources().getString(R.string.Kg));
-        GenderPick();
-        AgePick();
+        TextInputLayoutBirthDay.getEditText().setText(user.getBirthDay());
+        TextInputLayoutHeight.getEditText().setText(user.getHeight() + " " + getResources().getString(R.string.Meters) );
+        TextInputLayoutWeight.getEditText().setText(user.getWeight() + " " + getResources().getString(R.string.Kg) );
         HeightPick();
         WeightPick();
+        BirthDayPick();
+        GenderPick();
     }
     private void Confirm(){
         Confirm.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +151,8 @@ public class Profile extends AppCompatActivity {
                     newUser.setFirstName(TextInputLayoutFirstName.getEditText().getText().toString());
                     newUser.setLastName(TextInputLayoutLastName.getEditText().getText().toString());
                     newUser.setGender(TextInputLayoutGender.getEditText().getText().toString());
-                    newUser.setAge(TextInputLayoutAge.getEditText().getText().toString());
+                    newUser.setBirthDay(TextInputLayoutBirthDay.getEditText().getText().toString());
+                    newUser.setAge(getYears(new Date(UserYear,UserMonth,UserDay)) + "");
                     newUser.setHeight(TextInputLayoutHeight.getEditText().getText().toString());
                     newUser.setWeight(TextInputLayoutWeight.getEditText().getText().toString());
                     newUser.setFullName(newUser.getFirstName() + " " + newUser.getLastName());
@@ -173,6 +179,14 @@ public class Profile extends AppCompatActivity {
     private void updateData(){
 
     }
+    private int getYears(Date date){
+        int years = Calendar.getInstance().get(Calendar.YEAR) - date.getYear();
+        if(date.getMonth() >  Calendar.getInstance().get(Calendar.MONTH) ||
+                (date.getMonth() ==  Calendar.getInstance().get(Calendar.MONTH) &&
+                        date.getDate() > Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))
+            years -=1;
+        return years;
+    }
     private boolean CheckInput(){
         if(TextInputLayoutFirstName.getEditText().getText().length() < 1 || TextInputLayoutLastName.getEditText().getText().length() < 1 ) {
             if(TextInputLayoutFirstName.getEditText().getText().length() < 1 )
@@ -192,10 +206,9 @@ public class Profile extends AppCompatActivity {
     private void HeightPick(){
         String height[] = new String[300];
         int index =0;
-        for(int i=0; i < 3 ; i++) {
+        for(int i=0; i < 3 ; i++)
             for(int j=0; j<100; j++)
                 height[index++] = "" + i+ "."+ j + " " + getResources().getString(R.string.Meters);
-        }
         TextInputLayoutHeight.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,7 +219,7 @@ public class Profile extends AppCompatActivity {
     private void WeightPick(){
         String weight[] = new String[261];
         for(int i=0; i < weight.length ; i++)
-            weight[i] = ""+(i+40)+" "+getResources().getString(R.string.Kg);
+            weight[i] = ""+(i+20)+" "+getResources().getString(R.string.Kg);
         TextInputLayoutWeight.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,14 +227,23 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
-    private void AgePick(){
-        String age[] = new String[103];
-        for(int i=0; i<103 ; i++)
-            age[i] = ""+(i+18);
-        TextInputLayoutAge.getEditText().setOnClickListener(new View.OnClickListener() {
+    private void BirthDayPick(){
+        TextInputLayoutBirthDay.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                setDialog(age ,getResources().getString(R.string.SelectAge),TextInputLayoutAge.getEditText());
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Profile.this, new DatePickerDialog.OnDateSetListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        month = month + 1;
+                        UserMonth = month;
+                        UserYear = year;
+                        UserDay = dayOfMonth;
+                        String Date = dayOfMonth + "/" + month + "/" + year;
+                        TextInputLayoutBirthDay.getEditText().setText(Date);
+                    }
+                },Year, Month, Day);
+                datePickerDialog.show();
             }
         });
     }

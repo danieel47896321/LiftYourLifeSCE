@@ -10,6 +10,7 @@ public class User implements Serializable {
     private String lastName = "LastName";
     private String Gender = "Male";
     private String Age = "18";
+    private String BirthDay = "1/1/1990";
     private String Image = "Image";
     private String Height = "1.7";
     private String Weight = "60";
@@ -40,7 +41,13 @@ public class User implements Serializable {
     public String getUid() { return Uid; }
     public String getFullName() { return FullName; }
     public String getWeight() { return Weight; }
+    public String getBirthDay() {
+        return BirthDay;
+    }
     //setters
+    public void setBirthDay(String birthDay) {
+        BirthDay = birthDay;
+    }
     public void setEmail(String email) { Email = email; }
     public void setFirstName(String firstName) { FirstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }

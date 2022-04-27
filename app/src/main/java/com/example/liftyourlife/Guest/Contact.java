@@ -46,6 +46,7 @@ public class Contact extends AppCompatActivity {
         Title = findViewById(R.id.Title);
         navigationView = findViewById(R.id.navigationView);
         SendEmail = findViewById(R.id.SendEmail);
+        SendEmail.setText(Email);
         Title.setText(R.string.Contact);
     }
     private void MenuItem(){
@@ -77,7 +78,6 @@ public class Contact extends AppCompatActivity {
             public void onClick(View v) {
                 intent = new Intent(intent.ACTION_SEND);
                 String toArray[] = new String[1];
-                Email = SendEmail.getText().toString();
                 toArray[0] = Email;
                 intent.putExtra(intent.EXTRA_EMAIL, toArray);
                 intent.putExtra(intent.EXTRA_SUBJECT, getResources().getString(R.string.ContactSubject));

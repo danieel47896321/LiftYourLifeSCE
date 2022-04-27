@@ -58,6 +58,8 @@
     <!-- CreateAccount Page -->
     <string name="FirstName" translatable="true">First Name</string>
     <string name="LastName" translatable="true">Last Name</string>
+    <string name="BirthDay" translatable="true">BirthDay</string>
+    <string name="RequiredAge18OrMore" translatable="true">Required Age 18 Or More</string>
     <string name="Phone" translatable="true">Phone</string>
     <string name="PhoneLenth" translatable="true">Required 10 digits</string>
     <string name="ConfirmPassword" translatable="true">Confirm Password</string>
@@ -79,7 +81,6 @@
     <string name="Profile" translatable="true">Profile</string>
     <string name="Home" translatable="true">Home</string>
     <string name="WorkOut" translatable="true">Workout</string>
-    <string name="WorkOutUpdate" translatable="true">Work Out Update</string>
     <string name="ChangePassword" translatable="true">Change Password</string>
     <string name="Statistics" translatable="true">Statistics</string>
     <string name="Logout" translatable="true">Logout</string>

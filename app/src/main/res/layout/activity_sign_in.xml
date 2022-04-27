@@ -97,11 +97,11 @@
                             android:layout_marginTop="4dp"
                             android:text="@string/RecoverPassword" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/ButtonSignIn"
                             style="@style/Button_Style"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="60dp"
                             android:layout_marginTop="16dp"
                             android:text="@string/SignIn"
                             app:layout_constraintEnd_toEndOf="@+id/TextInputLayoutPassword"
@@ -171,11 +171,11 @@
 
                         </LinearLayout>
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/Google"
                             style="@style/Button_Style"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="60dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="10dp"
                             android:text="@string/Google"

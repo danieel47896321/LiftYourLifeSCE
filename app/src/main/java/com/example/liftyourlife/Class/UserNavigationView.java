@@ -14,7 +14,6 @@ import com.example.liftyourlife.User.Home;
 import com.example.liftyourlife.User.WorkOut;
 import com.example.liftyourlife.User.Profile;
 import com.example.liftyourlife.User.Statistics;
-import com.example.liftyourlife.User.WorkOutUpdate;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -28,8 +27,6 @@ public class UserNavigationView {
             StartActivity(context, Home.class, user);
         else if (id == R.id.ItemProfile)
             StartActivity(context, Profile.class, user);
-        else if (id == R.id.ItemWorkOutUpdate)
-            StartActivity(context, WorkOutUpdate.class, user);
         else if (id == R.id.ItemMyWorkOut)
             StartActivity(context, WorkOut.class, user);
         else if (id == R.id.ItemChangePassword)
@@ -43,12 +40,12 @@ public class UserNavigationView {
                 public void onClick(DialogInterface dialog, int which) {
                     if (firebaseAuth.getCurrentUser() != null)
                         firebaseAuth.signOut();
-                    /*GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                             .requestIdToken(context.getString(R.string.default_web_client_id)).requestEmail().build();
                     GoogleSignInClient googleClient = GoogleSignIn.getClient(context, options);
                     googleClient.signOut();
                     context.startActivity(new Intent(context, LiftYourLife.class));
-                    ((Activity) context).finish();*/
+                    ((Activity) context).finish();
                 }
             }).setNegativeButton(context.getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
                 @Override
