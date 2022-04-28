@@ -74,7 +74,6 @@ public class SundayFragment extends Fragment {
         recyclerView.setAdapter(workoutAdapter);
     }
     private void setAddAndRemove(){
-        floatingActionButtonOpen.setVisibility(View.VISIBLE);
         floatingActionButtonOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +151,7 @@ public class SundayFragment extends Fragment {
     private void RemovePlanDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_remove_plan,null);
+        View dialogView = inflater.inflate(R.layout.dialog_remove,null);
         builder.setCancelable(false);
         builder.setView(dialogView);
         TextInputLayoutPlan = dialogView.findViewById(R.id.TextInputLayoutPlan);

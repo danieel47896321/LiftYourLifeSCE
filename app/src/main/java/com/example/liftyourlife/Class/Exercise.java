@@ -1,49 +1,37 @@
 package com.example.liftyourlife.Class;
 
+import java.util.ArrayList;
+
 public class Exercise {
     private String Exercise;
-    private int Weight;
-    private int Sets;
-    private int Reps;
-    private int Rest;
+    private String Description;
+    private ArrayList<ExerciseSet> Sets;
     private int Image;
-    public Exercise(String exercise, int sets, int reps, int rest, int image, int weight) {
+    public Exercise(String exercise, String description, int image, int reps) {
+        Sets = new ArrayList<>();
+        for(int i=0;i<reps;i++)
+            Sets.add(new ExerciseSet(i,0,0));
         Exercise = exercise;
-        Sets = sets;
-        Reps = reps;
-        Rest = rest;
+        Description = description;
         Image = image;
-        Weight = weight;
     }
-    public int getWeight() {
-        return Weight;
+    public ArrayList<ExerciseSet> getSets() {
+        return Sets;
     }
-    public void setWeight(int weight) {
-        Weight = weight;
+    public void setSets(ArrayList<ExerciseSet> sets) {
+        Sets = sets;
+    }
+    public String getDescription() {
+        return Description;
+    }
+    public void setDescription(String description) {
+        Description = description;
     }
     public String getExercise() {
         return Exercise;
     }
     public void setExercise(String exercise) {
         Exercise = exercise;
-    }
-    public int getSets() {
-        return Sets;
-    }
-    public void setSets(int sets) {
-        Sets = sets;
-    }
-    public int getReps() {
-        return Reps;
-    }
-    public void setReps(int reps) {
-        Reps = reps;
-    }
-    public int getRest() {
-        return Rest;
-    }
-    public void setRest(int rest) {
-        Rest = rest;
     }
     public int getImage() {
         return Image;

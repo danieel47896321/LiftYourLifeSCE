@@ -126,5 +126,7 @@
     <string name="Add" translatable="true">הוספה</string>
     <string name="Remove" translatable="true">הסרה</string>
     <string name="Cancel" translatable="true">ביטול</string>
+    <string name="Description">תיאור</string>
+    <string name="Seconds">שניות</string>
 
 </resources>

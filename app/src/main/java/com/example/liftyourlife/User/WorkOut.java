@@ -86,7 +86,6 @@ public class WorkOut extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         TabLayout.Tab tab = tabLayout.getTabAt(0);
-        Toast.makeText(this, "" +day, Toast.LENGTH_SHORT).show();
         switch (day) {
             case Calendar.SUNDAY:
                 tab = tabLayout.getTabAt(0);

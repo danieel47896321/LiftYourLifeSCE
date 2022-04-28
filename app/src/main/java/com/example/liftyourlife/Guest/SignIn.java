@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
+import com.example.liftyourlife.Class.RetrofitInterface;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.R;
 import com.example.liftyourlife.User.Home;
@@ -41,6 +42,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class SignIn extends AppCompatActivity {
     private TextView Title;
     private DrawerLayout drawerLayout;
@@ -58,6 +67,9 @@ public class SignIn extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Users");
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +77,7 @@ public class SignIn extends AppCompatActivity {
         init();
     }
     private void init(){
+
         setID();
         MenuItem();
         BackIcon();
@@ -77,6 +90,8 @@ public class SignIn extends AppCompatActivity {
         Google();
     }
     private void setID(){
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
         firebaseAuth = FirebaseAuth.getInstance();
         MenuIcon = findViewById(R.id.MenuIcon);
         BackIcon = findViewById(R.id.BackIcon);
@@ -245,6 +260,19 @@ public class SignIn extends AppCompatActivity {
                 loading = new Loading(SignIn.this);
                 if (task.isSuccessful()) {
                     if(firebaseAuth.getCurrentUser().isEmailVerified()) {
+                       /* HashMap<String, User> map = new HashMap<>();
+                        map.put("user", user);
+                        Call<User> call = retrofitInterface.userLogin(map);
+                        call.enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+
+                            }
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                Toast.makeText(SignIn.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });*/
                         getUser();
                     }
                     else {

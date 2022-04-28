@@ -16,6 +16,12 @@
         android:layout_marginBottom="7dp"
         app:cardCornerRadius="10dp">
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
@@ -24,7 +30,7 @@
             <ImageView
                 android:id="@+id/ExerciseImage"
                 android:layout_width="88dp"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
                 android:background="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -34,21 +40,24 @@
                 android:id="@+id/Exercise"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:textSize="26sp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
                 android:textAlignment="viewStart"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/black"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toStartOf="@+id/Arrow"
                 app:layout_constraintStart_toEndOf="@+id/ExerciseImage"
-                app:layout_constraintTop_toTopOf="@+id/ExerciseImage"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Tag" />
 
             <TextView
                 android:id="@+id/Description"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
-                android:textSize="18sp"
                 android:textColor="@color/default_color"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/Arrow"
                 app:layout_constraintStart_toStartOf="@+id/Exercise"
                 app:layout_constraintTop_toBottomOf="@+id/Exercise"
                 tools:text="Description" />
@@ -57,43 +66,64 @@
                 android:id="@+id/Sets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/default_color"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
                 android:textSize="18sp"
-
-                app:layout_constraintStart_toStartOf="@+id/Exercise"
+                app:layout_constraintStart_toStartOf="@+id/Description"
                 app:layout_constraintTop_toBottomOf="@+id/Description"
                 tools:text="@string/Sets" />
 
-            <TextView
-                android:id="@+id/Reps"
+            <ImageView
+                android:id="@+id/Arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/Sets"
-                app:layout_constraintStart_toEndOf="@+id/Sets"
-                app:layout_constraintTop_toTopOf="@+id/Sets"
-                tools:text="@string/Reps" />
-
-            <TextView
-                android:id="@+id/Rest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/Reps"
-                app:layout_constraintStart_toEndOf="@+id/Reps"
-                app:layout_constraintTop_toTopOf="@+id/Reps"
-                tools:text="@string/Rest" />
-
-            <TextView
-                android:id="@+id/Weight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:src="@drawable/arrow_down"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/Sets"
-                app:layout_constraintTop_toBottomOf="@+id/Sets"
-                tools:text="@string/Weight" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/addImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:padding="5dp"
+                android:src="@drawable/add_photo"
+                app:layout_constraintBottom_toBottomOf="@+id/ExerciseImage"
+                app:layout_constraintEnd_toEndOf="@+id/ExerciseImage"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@color/default_color"
+            android:layout_width="wrap_content"
+            android:layout_height="3dp" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

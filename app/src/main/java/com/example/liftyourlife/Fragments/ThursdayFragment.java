@@ -29,18 +29,14 @@ import android.widget.TextView;
 
 import com.example.liftyourlife.Adapters.WorkoutAdapter;
 import com.example.liftyourlife.Class.Plan;
-import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.R;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class ThursdayFragment extends Fragment {
@@ -69,16 +65,15 @@ public class ThursdayFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        setExercises();
+        setPlans();
         setAddAndRemove();
         return view;
     }
-    private void setExercises(){
+    private void setPlans(){
         WorkoutAdapter workoutAdapter = new WorkoutAdapter(getContext(), plans, user);
         recyclerView.setAdapter(workoutAdapter);
     }
     private void setAddAndRemove(){
-        floatingActionButtonOpen.setVisibility(View.VISIBLE);
         floatingActionButtonOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +143,7 @@ public class ThursdayFragment extends Fragment {
                     alertDialog.cancel();
                     String currentDateTime = new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
                     plans.add(new Plan(TextInputLayoutPlan.getEditText().getText().toString(), currentDateTime));
-                    setExercises();
+                    setPlans();
                 }
             }
         });
@@ -156,7 +151,7 @@ public class ThursdayFragment extends Fragment {
     private void RemovePlanDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_remove_plan,null);
+        View dialogView = inflater.inflate(R.layout.dialog_remove,null);
         builder.setCancelable(false);
         builder.setView(dialogView);
         TextInputLayoutPlan = dialogView.findViewById(R.id.TextInputLayoutPlan);
@@ -166,7 +161,7 @@ public class ThursdayFragment extends Fragment {
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ExercisePick();
+        PlanPick();
         ButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { alertDialog.cancel(); }
@@ -184,12 +179,12 @@ public class ThursdayFragment extends Fragment {
                     for(int i=0; i<plans.size();i++)
                         if(TextInputLayoutPlan.getEditText().getText().toString().equals(plans.get(i).getPlanName() + " - " + plans.get(i).getDate()))
                             plans.remove(i);
-                    setExercises();
+                    setPlans();
                 }
             }
         });
     }
-    private void ExercisePick(){
+    private void PlanPick(){
         TextInputLayoutPlan.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,6 +225,5 @@ public class ThursdayFragment extends Fragment {
             }
         });
     }
-
     public void setUser(User user) { this.user = user; }
 }

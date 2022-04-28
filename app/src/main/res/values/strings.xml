@@ -124,6 +124,8 @@
     <string name="Add" translatable="true">Add</string>
     <string name="Remove" translatable="true">Remove</string>
     <string name="Cancel" translatable="true">Cancel</string>
+    <string name="Description">Description</string>
+    <string name="Seconds">Seconds</string>
 
     <!-- Arrays -->
     <string-array name="Workout">
@@ -151,6 +153,4 @@
         <item>@string/Female</item>
         <item>@string/Other</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

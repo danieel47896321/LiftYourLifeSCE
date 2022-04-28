@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.PopUpMSG;
+import com.example.liftyourlife.Class.RetrofitInterface;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,6 +46,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateAccount extends AppCompatActivity {
     private ImageView BackIcon, MenuIcon;
@@ -63,6 +67,9 @@ public class CreateAccount extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app");
     private DatabaseReference databaseReference = firebaseDatabase.getReference().child("Users");
     private User user = new User();
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +88,8 @@ public class CreateAccount extends AppCompatActivity {
         CreateAccountCheck();
     }
     private void setID(){
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
         MenuIcon = findViewById(R.id.MenuIcon);
         BackIcon = findViewById(R.id.BackIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
