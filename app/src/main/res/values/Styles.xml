@@ -53,12 +53,11 @@
         <item name="android:textAlignment" >viewStart</item>
         <item name="android:textSize">18sp</item>
     </style>
-
-
-
-
-
-
+    <style name="TabLayout_Style" parent="TextAppearance.Design.Tab">
+        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">26sp</item>
+    </style>
     <style name="Custom_Button" parent="Widget.AppCompat.Button">
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">false</item>

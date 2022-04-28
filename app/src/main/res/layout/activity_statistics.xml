@@ -59,7 +59,7 @@
                     android:padding="10dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="220dp">
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/WeightChart"
@@ -105,13 +105,13 @@
                     android:padding="10dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="220dp">
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/WorkoutChart"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
-
+tc
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

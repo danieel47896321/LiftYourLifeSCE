@@ -104,8 +104,37 @@
     <!-- Statistics Page -->
     <string name="WeightTracking" translatable="true">Weight Tracking</string>
     <string name="WorkoutTracking" translatable="true">Workout Tracking</string>
+    <!-- WorkOut Page -->
+    <string name="Sunday" translatable="true">Sunday</string>
+    <string name="Monday" translatable="true">Monday</string>
+    <string name="Tuesday" translatable="true">Tuesday</string>
+    <string name="Wednesday" translatable="true">Wednesday</string>
+    <string name="Thursday" translatable="true">Thursday</string>
+    <string name="Friday" translatable="true">Friday</string>
+    <string name="Saturday" translatable="true">Saturday</string>
+    <string name="AddExercise" translatable="true">Add Exercise</string>
+    <string name="RemoveExercise" translatable="true">Remove Exercise</string>
+    <string name="AddPlan" translatable="true">Add Plan</string>
+    <string name="RemovePlan" translatable="true">Remove Plan</string>
+    <string name="Sets" translatable="true">Sets</string>
+    <string name="Reps" translatable="true">Reps</string>
+    <string name="Rest" translatable="true">Rest</string>
+    <string name="Plan" translatable="true">Plan</string>
+    <string name="Date" translatable="true">Date</string>
+    <string name="Add" translatable="true">Add</string>
+    <string name="Remove" translatable="true">Remove</string>
+    <string name="Cancel" translatable="true">Cancel</string>
 
     <!-- Arrays -->
+    <string-array name="Workout">
+        <item>@string/Sunday</item>
+        <item>@string/Monday</item>
+        <item>@string/Tuesday</item>
+        <item>@string/Wednesday</item>
+        <item>@string/Thursday</item>
+        <item>@string/Friday</item>
+        <item>@string/Saturday</item>
+    </string-array>
     <string-array name="Lagnuage">
         <item>@string/Hebrew</item>
         <item>@string/English</item>
@@ -122,4 +151,6 @@
         <item>@string/Female</item>
         <item>@string/Other</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
