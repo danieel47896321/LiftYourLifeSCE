@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.liftyourlife.Class.Exercise;
 import com.example.liftyourlife.Class.ExerciseSet;
 import com.example.liftyourlife.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.MyViewHolder> 
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView Sets, Reps, Weight, Rest;
-        ImageView CheckCircle;
+        ImageView CheckCircle, PlayCircle;
         NumberPicker RepsNumberPicker, RestNumberPicker, WeightNumberPicker;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -39,6 +41,7 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.MyViewHolder> 
             Weight = itemView.findViewById(R.id.Weight);
             Rest = itemView.findViewById(R.id.Rest);
             CheckCircle = itemView.findViewById(R.id.CheckCircle);
+            PlayCircle = itemView.findViewById(R.id.PlayCircle);
             RepsNumberPicker = itemView.findViewById(R.id.RepsNumberPicker);
             RepsNumberPicker.setMinValue(0);
             RepsNumberPicker.setMaxValue(300);
@@ -58,11 +61,39 @@ public class SetsAdapter extends RecyclerView.Adapter<SetsAdapter.MyViewHolder> 
     }
     public void onBindViewHolder(@NonNull SetsAdapter.MyViewHolder holder, int position) {
         ExerciseSet exerciseSet = exerciseSets.get(position);
+        holder.RepsNumberPicker.setValue(exerciseSet.getReps());
+        holder.RestNumberPicker.setValue(exerciseSet.getRest());
+        holder.WeightNumberPicker.setValue(exerciseSet.getWeight());
         holder.Sets.setText((exerciseSet.getSetNumber()+1)+"");
         holder.Reps.setText(context.getResources().getString(R.string.Reps) + ":");
         holder.Weight.setText(context.getResources().getString(R.string.Weight) + ":");
         holder.Rest.setText(context.getResources().getString(R.string.Rest) + ":");
         holder.CheckCircle.setImageResource(R.drawable.check_circle);
+        holder.PlayCircle.setImageResource(R.drawable.play);
+        if(exerciseSet.isFinish())
+            holder.CheckCircle.setImageResource(R.drawable.finish_check_circle);
+        else
+            holder.CheckCircle.setImageResource(R.drawable.check_circle);
+        holder.CheckCircle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exerciseSet.setFinish(!exerciseSet.isFinish());
+                if(exerciseSet.isFinish())
+                    holder.CheckCircle.setImageResource(R.drawable.finish_check_circle);
+                else
+                    holder.CheckCircle.setImageResource(R.drawable.check_circle);
+            }
+        });
+        holder.PlayCircle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exerciseSet.setPlay(!exerciseSet.isPlay());
+                if(exerciseSet.isPlay())
+                    holder.PlayCircle.setImageResource(R.drawable.stop_circle);
+                else
+                    holder.PlayCircle.setImageResource(R.drawable.play);
+            }
+        });
     }
     public int getItemCount() { return exerciseSets.size(); }
 }

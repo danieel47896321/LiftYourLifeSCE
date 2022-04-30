@@ -30,7 +30,7 @@ public class OpeningScreen extends AppCompatActivity {
     }
     private void init(){ HomePage(); }
     private void HomePage() {
-       if(firebaseAuth.getCurrentUser() != null ) {
+        if(firebaseAuth.getCurrentUser() != null ) {
             if(firebaseAuth.getCurrentUser().isEmailVerified()) {
                 loading = new Loading(OpeningScreen.this);
                 databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {

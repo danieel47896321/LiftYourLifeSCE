@@ -70,7 +70,7 @@ public class GenericPlanAdapter extends RecyclerView.Adapter<GenericPlanAdapter.
         Exercise exercise = exercises.get(position);
         holder.recyclerView.setHasFixedSize(true);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        holder.Exercise.setText(exercise.getExercise());
+        holder.Exercise.setText(exercise.getMuscleType() + ": " +exercise.getExercise());
         holder.Description.setText(exercise.getDescription());
         holder.Sets.setText(context.getResources().getString(R.string.Sets) + ": " + exercise.getSets().size());
         holder.ExerciseImage.setImageResource(R.drawable.person);

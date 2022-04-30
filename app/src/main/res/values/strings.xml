@@ -113,6 +113,7 @@
     <string name="Friday" translatable="true">Friday</string>
     <string name="Saturday" translatable="true">Saturday</string>
     <string name="AddExercise" translatable="true">Add Exercise</string>
+    <string name="PickExercise" translatable="true">Pick Exercise</string>
     <string name="RemoveExercise" translatable="true">Remove Exercise</string>
     <string name="AddPlan" translatable="true">Add Plan</string>
     <string name="RemovePlan" translatable="true">Remove Plan</string>
@@ -128,9 +129,27 @@
     <string name="Seconds">Seconds</string>
     <string name="PlanSuccessfullyAdded" translatable="true">The plan was successfully added.</string>
     <string name="PlanSuccessfullyRemoved" translatable="true">The plan was successfully removed.</string>
-
+    <string name="TypeOfMuscle" translatable="true">Type of muscle</string>
+    <string name="ExerciseName" translatable="true">Exercise Name</string>
+    <string name="Shoulder" translatable="true">Shoulder</string>
+    <string name="FrontHand" translatable="true">Front Hand</string>
+    <string name="BackHand" translatable="true">Back Hand</string>
+    <string name="Chest" translatable="true">Chest</string>
+    <string name="Back" translatable="true">Back</string>
+    <string name="Legs" translatable="true">Legs</string>
+    <string name="Stomach" translatable="true">Stomach</string>
 
     <!-- Arrays -->
+    <string-array name="MuscleType">
+        <item>@string/Shoulder</item>
+        <item>@string/FrontHand</item>
+        <item>@string/BackHand</item>
+        <item>@string/Chest</item>
+        <item>@string/Back</item>
+        <item>@string/Legs</item>
+        <item>@string/Stomach</item>
+        <item>@string/Other</item>
+    </string-array>
     <string-array name="Workout">
         <item>@string/Sunday</item>
         <item>@string/Monday</item>

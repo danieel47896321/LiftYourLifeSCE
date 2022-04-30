@@ -115,6 +115,7 @@
     <string name="Friday" translatable="true">שישי</string>
     <string name="Saturday" translatable="true">שבת</string>
     <string name="AddExercise" translatable="true">הוספת תרגיל</string>
+    <string name="PickExercise" translatable="true">בחירת תרגיל</string>
     <string name="RemoveExercise" translatable="true">הסרת תרגיל</string>
     <string name="AddPlan" translatable="true">הוספת תוכנית</string>
     <string name="RemovePlan" translatable="true">הסרת תוכנית</string>
@@ -130,5 +131,15 @@
     <string name="Seconds">שניות</string>
     <string name="PlanSuccessfullyAdded" translatable="true">התוכנית נוספה בהצלחה.</string>
     <string name="PlanSuccessfullyRemoved" translatable="true">התוכנית הוסרה בהצלחה.</string>
+    <string name="TypeOfMuscle" translatable="true">סוג שריר</string>
+    <string name="ExerciseName" translatable="true">שם התרגיל</string>
+    <string name="Shoulder" translatable="true">כתפיים</string>
+    <string name="FrontHand" translatable="true">יד קדמית</string>
+    <string name="BackHand" translatable="true">יד אחורית</string>
+    <string name="Chest" translatable="true">חזה</string>
+    <string name="Back" translatable="true">גב</string>
+    <string name="Legs" translatable="true">רגליים</string>
+    <string name="Stomach" translatable="true">בטן</string>
+
 
 </resources>

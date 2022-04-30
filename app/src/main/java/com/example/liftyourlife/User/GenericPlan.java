@@ -60,7 +60,7 @@ public class GenericPlan extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private TextView Title;
     private FloatingActionButton floatingActionButtonOpen;
-    private ExtendedFloatingActionButton floatingActionButtonAdd, floatingActionButtonRemove;
+    private ExtendedFloatingActionButton floatingActionButtonAdd, floatingActionButtonRemove, floatingActionButtonPick;
     private Animation rotateOpen, rotateClose, toBottom, fromBottom;
     private Boolean isOpen = false;
     private Intent intent;
@@ -69,7 +69,7 @@ public class GenericPlan extends AppCompatActivity {
     private EditText EditTextSearch;
     private TextView TextViewSearch;
     private Button ButtonAdd, ButtonRemove, ButtonCancel;
-    private TextInputLayout TextInputLayoutExercise;
+    private TextInputLayout TextInputLayoutExerciseName, TextInputLayoutDescription, TextInputLayoutTypeOfMuscle, TextInputLayoutReps,TextInputLayoutPlan;
     private Plan plan;
     private Context context;
     private User user = new User();
@@ -90,7 +90,7 @@ public class GenericPlan extends AppCompatActivity {
         setExercises();
     }
     private void setID(){
-        context = this.getApplicationContext();
+        context = this.getBaseContext();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -107,6 +107,7 @@ public class GenericPlan extends AppCompatActivity {
         floatingActionButtonOpen = findViewById(R.id.floatingActionButtonOpen);
         floatingActionButtonAdd = findViewById(R.id.floatingActionButtonAdd);
         floatingActionButtonRemove = findViewById(R.id.floatingActionButtonRemove);
+        floatingActionButtonPick = findViewById(R.id.floatingActionButtonPick);
         new UserNavigationHeader(user,GenericPlan.this);
     }
     private void setAddAndRemove(){
@@ -119,16 +120,25 @@ public class GenericPlan extends AppCompatActivity {
                 fromBottom = AnimationUtils.loadAnimation(context,R.anim.from_bottom);
                 toBottom = AnimationUtils.loadAnimation(context,R.anim.to_bottom);
                 if (isOpen) {
+                    floatingActionButtonPick.setVisibility(View.VISIBLE);
                     floatingActionButtonAdd.setVisibility(View.VISIBLE);
                     floatingActionButtonRemove.setVisibility(View.VISIBLE);
                     floatingActionButtonAdd.setAnimation(fromBottom);
+                    floatingActionButtonPick.setAnimation(fromBottom);
                     floatingActionButtonRemove.setAnimation(fromBottom);
                     floatingActionButtonOpen.setAnimation(rotateOpen);
                     floatingActionButtonAdd.setClickable(true);
+                    floatingActionButtonPick.setClickable(true);
                     floatingActionButtonRemove.setClickable(true);
                     floatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) { AddExerciseDialog(); }
+                    });
+                    floatingActionButtonPick.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
                     });
                     floatingActionButtonRemove.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -136,11 +146,14 @@ public class GenericPlan extends AppCompatActivity {
                     });
                 } else {
                     floatingActionButtonAdd.setVisibility(View.INVISIBLE);
+                    floatingActionButtonPick.setVisibility(View.INVISIBLE);
                     floatingActionButtonRemove.setVisibility(View.INVISIBLE);
                     floatingActionButtonAdd.setAnimation(toBottom);
+                    floatingActionButtonPick.setAnimation(toBottom);
                     floatingActionButtonRemove.setAnimation(toBottom);
                     floatingActionButtonOpen.setAnimation(rotateClose);
                     floatingActionButtonAdd.setClickable(false);
+                    floatingActionButtonPick.setClickable(false);
                     floatingActionButtonRemove.setClickable(false);
                 }
             }
@@ -164,18 +177,22 @@ public class GenericPlan extends AppCompatActivity {
         });
     }
     private void AddExerciseDialog(){
-        /*AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_exercise,null);
         builder.setCancelable(false);
         builder.setView(dialogView);
-        TextInputLayoutExercise = dialogView.findViewById(R.id.TextInputLayoutPlan);
+        TextInputLayoutExerciseName = dialogView.findViewById(R.id.TextInputLayoutExerciseName);
+        TextInputLayoutDescription = dialogView.findViewById(R.id.TextInputLayoutDescription);
+        TextInputLayoutTypeOfMuscle = dialogView.findViewById(R.id.TextInputLayoutTypeOfMuscle);
+        TextInputLayoutReps = dialogView.findViewById(R.id.TextInputLayoutReps);
         ButtonAdd = dialogView.findViewById(R.id.ButtonAdd);
         ButtonCancel = dialogView.findViewById(R.id.ButtonCancel);
         AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        MuscleType();
         ButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { alertDialog.cancel(); }
@@ -184,18 +201,33 @@ public class GenericPlan extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                /*if(TextInputLayoutExercise.getEditText().getText().toString().equals(""))
-                    TextInputLayoutExercise.setHelperText(getResources().getString(R.string.Required));
+                if(TextInputLayoutExerciseName.getEditText().getText().toString().equals(""))
+                    TextInputLayoutExerciseName.setHelperText(getResources().getString(R.string.Required));
                 else
-                    TextInputLayoutExercise.setHelperText("");
-                if(!(TextInputLayoutExercise.getEditText().getText().toString().equals(""))){
+                    TextInputLayoutExerciseName.setHelperText("");
+                if(TextInputLayoutTypeOfMuscle.getEditText().getText().toString().equals(""))
+                    TextInputLayoutTypeOfMuscle.setHelperText(getResources().getString(R.string.Required));
+                else
+                    TextInputLayoutTypeOfMuscle.setHelperText("");
+                if(TextInputLayoutReps.getEditText().getText().toString().equals(""))
+                    TextInputLayoutReps.setHelperText(getResources().getString(R.string.Required));
+                else
+                    TextInputLayoutReps.setHelperText("");
+                if(!(TextInputLayoutExerciseName.getEditText().getText().toString().equals("")) && !(TextInputLayoutTypeOfMuscle.getEditText().getText().toString().equals("")) && !(TextInputLayoutReps.getEditText().getText().toString().equals(""))){
                     alertDialog.cancel();
-                    String currentDateTime = new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
-                    plans.add(new Plan(TextInputLayoutPlan.getEditText().getText().toString(), currentDateTime));
-                    setExercises();
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child(plan.getDay()).child(user.getUid()).child(plan.getDate()).child("exercises");
+                    plan.getExercises().add(new Exercise(TextInputLayoutExerciseName.getEditText().getText().toString(),TextInputLayoutDescription.getEditText().getText().toString(),TextInputLayoutTypeOfMuscle.getEditText().getText().toString(),"null",Integer.valueOf(TextInputLayoutReps.getEditText().getText().toString())));
+                    databaseReference.setValue(plan.getExercises());
                 }
             }
-        });*/
+        });
+    }
+    private void MuscleType(){
+        String types[] = getResources().getStringArray(R.array.MuscleType);
+        TextInputLayoutTypeOfMuscle.getEditText().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { setDialog(types ,getResources().getString(R.string.TypeOfMuscle),TextInputLayoutTypeOfMuscle.getEditText()); }
+        });
     }
     private void RemoveExerciseDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -203,7 +235,7 @@ public class GenericPlan extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_remove,null);
         builder.setCancelable(false);
         builder.setView(dialogView);
-        TextInputLayoutExercise = dialogView.findViewById(R.id.TextInputLayoutPlan);
+        TextInputLayoutPlan = dialogView.findViewById(R.id.TextInputLayoutPlan);
         ButtonRemove = dialogView.findViewById(R.id.ButtonRemove);
         ButtonCancel = dialogView.findViewById(R.id.ButtonCancel);
         AlertDialog alertDialog = builder.create();
@@ -219,33 +251,35 @@ public class GenericPlan extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                if(TextInputLayoutExercise.getEditText().getText().toString().equals(""))
-                    TextInputLayoutExercise.setHelperText(getResources().getString(R.string.Required));
+                if(TextInputLayoutPlan.getEditText().getText().toString().equals(""))
+                    TextInputLayoutPlan.setHelperText(getResources().getString(R.string.Required));
                 else
-                    TextInputLayoutExercise.setHelperText("");
-                if(!TextInputLayoutExercise.getEditText().getText().toString().equals("")) {
+                    TextInputLayoutPlan.setHelperText("");
+                if(!TextInputLayoutPlan.getEditText().getText().toString().equals("")) {
                     alertDialog.cancel();
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child(plan.getDay()).child(user.getUid()).child(plan.getDate()).child("exercises");
                     for(int i=0; i<exercises.size();i++)
-                        if(TextInputLayoutExercise.getEditText().getText().toString().equals(exercises.get(i).getExercise()))
-                            exercises.remove(i);
+                        if(TextInputLayoutPlan.getEditText().getText().toString().equals(exercises.get(i).getExercise()))
+
+                    exercises.remove(i);
                     setExercises();
                 }
             }
         });
     }
     private void ExercisePick(){
-        TextInputLayoutExercise.getEditText().setOnClickListener(new View.OnClickListener() {
+        TextInputLayoutPlan.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String Remove_plans[] = new String[exercises.size()];
                 for(int i=0; i<exercises.size();i++)
                     Remove_plans[i] = exercises.get(i).getExercise();
-                setDialog(Remove_plans,getResources().getString(R.string.RemoveExercise), TextInputLayoutExercise.getEditText());
+                setDialog(Remove_plans,getResources().getString(R.string.RemoveExercise), TextInputLayoutPlan.getEditText());
             }
         });
     }
     private void setDialog(String[] array, String title, TextView textViewPick){
-        dialog = new Dialog(context);
+        dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_search_spinner);
         dialog.getWindow().setLayout(1000,950);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

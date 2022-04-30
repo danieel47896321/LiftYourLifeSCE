@@ -8,7 +8,9 @@ public class Plan implements Serializable {
     private String Date;
     private String Day;
     private ArrayList<Exercise> exercises;
-    public Plan(){}
+    public Plan(){
+        exercises = new ArrayList<>();
+    }
     public Plan(String planName, String date, String day) {
         exercises = new ArrayList<>();
         Day = day;
