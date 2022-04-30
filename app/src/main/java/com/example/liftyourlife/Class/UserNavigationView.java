@@ -27,7 +27,7 @@ public class UserNavigationView {
             StartActivity(context, Home.class, user);
         else if (id == R.id.ItemProfile)
             StartActivity(context, Profile.class, user);
-        else if (id == R.id.ItemMyWorkOut)
+        else if (id == R.id.ItemWorkOut)
             StartActivity(context, WorkOut.class, user);
         else if (id == R.id.ItemChangePassword)
             StartActivity(context, ChangePassword.class, user);

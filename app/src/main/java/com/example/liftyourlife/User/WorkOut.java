@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.Class.UserNavigationHeader;
@@ -182,7 +181,7 @@ public class WorkOut extends AppCompatActivity {
     }
     private void MenuItem(){
         Menu menu= UserNavigationView.getMenu();
-        MenuItem menuItem = menu.findItem(R.id.ItemStatistics);
+        MenuItem menuItem = menu.findItem(R.id.ItemWorkOut);
         menuItem.setCheckable(false);
         menuItem.setChecked(true);
         menuItem.setEnabled(false);

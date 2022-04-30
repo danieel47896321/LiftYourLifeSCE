@@ -12,9 +12,14 @@
             android:icon="@drawable/home"
             android:title="@string/Home" />
         <item
-            android:id="@+id/ItemMyWorkOut"
+            android:id="@+id/ItemWorkOut"
             android:icon="@drawable/workout"
             android:title="@string/WorkOut" />
+        <item
+            android:id="@+id/ItemPlan"
+            android:visible="false"
+            android:icon="@drawable/plan"
+            android:title="@string/Plan" />
         <item
             android:id="@+id/ItemStatistics"
             android:icon="@drawable/statistics"

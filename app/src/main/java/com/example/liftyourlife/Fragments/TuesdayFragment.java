@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -29,11 +30,17 @@ import android.widget.TextView;
 
 import com.example.liftyourlife.Adapters.WorkoutAdapter;
 import com.example.liftyourlife.Class.Plan;
+import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.R;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,8 +77,21 @@ public class TuesdayFragment extends Fragment {
         return view;
     }
     private void setExercises(){
-        WorkoutAdapter workoutAdapter = new WorkoutAdapter(getContext(), plans, user);
-        recyclerView.setAdapter(workoutAdapter);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child("Tuesday").child(user.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                plans.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Plan plan = dataSnapshot.getValue(Plan.class);
+                    plans.add(plan);
+                }
+                WorkoutAdapter workoutAdapter = new WorkoutAdapter(getContext(), plans, user);
+                recyclerView.setAdapter(workoutAdapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
     }
     private void setAddAndRemove(){
         floatingActionButtonOpen.setOnClickListener(new View.OnClickListener() {
@@ -141,9 +161,10 @@ public class TuesdayFragment extends Fragment {
                     TextInputLayoutPlan.setHelperText("");
                 if(!(TextInputLayoutPlan.getEditText().getText().toString().equals(""))){
                     alertDialog.cancel();
-                    String currentDateTime = new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date());
-                    plans.add(new Plan(TextInputLayoutPlan.getEditText().getText().toString(), currentDateTime));
-                    setExercises();
+                    String currentDateTime = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy").format(new Date());
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child("Tuesday").child(user.getUid()).child(currentDateTime);
+                    databaseReference.setValue(new Plan(TextInputLayoutPlan.getEditText().getText().toString(), currentDateTime,"Tuesday"));
+                    new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.PlanSuccessfullyAdded));
                 }
             }
         });
@@ -177,9 +198,11 @@ public class TuesdayFragment extends Fragment {
                 if(!TextInputLayoutPlan.getEditText().getText().toString().equals("")) {
                     alertDialog.cancel();
                     for(int i=0; i<plans.size();i++)
-                        if(TextInputLayoutPlan.getEditText().getText().toString().equals(plans.get(i).getPlanName() + " - " + plans.get(i).getDate()))
-                            plans.remove(i);
-                    setExercises();
+                        if(TextInputLayoutPlan.getEditText().getText().toString().equals(plans.get(i).getPlanName() + " - " + plans.get(i).getDate())) {
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child("Tuesday").child(user.getUid()).child(plans.get(i).getDate());
+                            databaseReference.setValue(null);
+                            new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.PlanSuccessfullyRemoved));
+                        }
                 }
             }
         });

@@ -1,18 +1,14 @@
 package com.example.liftyourlife;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.User;
-import com.example.liftyourlife.Guest.About;
-import com.example.liftyourlife.Guest.Contact;
 import com.example.liftyourlife.Guest.LiftYourLife;
 import com.example.liftyourlife.User.Home;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +30,7 @@ public class OpeningScreen extends AppCompatActivity {
     }
     private void init(){ HomePage(); }
     private void HomePage() {
-        if(firebaseAuth.getCurrentUser() != null ) {
+       if(firebaseAuth.getCurrentUser() != null ) {
             if(firebaseAuth.getCurrentUser().isEmailVerified()) {
                 loading = new Loading(OpeningScreen.this);
                 databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {

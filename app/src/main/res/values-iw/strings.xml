@@ -128,5 +128,7 @@
     <string name="Cancel" translatable="true">ביטול</string>
     <string name="Description">תיאור</string>
     <string name="Seconds">שניות</string>
+    <string name="PlanSuccessfullyAdded" translatable="true">התוכנית נוספה בהצלחה.</string>
+    <string name="PlanSuccessfullyRemoved" translatable="true">התוכנית הוסרה בהצלחה.</string>
 
 </resources>

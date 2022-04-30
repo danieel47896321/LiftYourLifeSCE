@@ -42,7 +42,7 @@ public class Home extends AppCompatActivity {
     private List<Tag> tagList;
     private RecyclerView recyclerView;
     private Intent intent;
-    private int TagPhotos[] = {R.drawable.statistics, R.drawable.statistics, R.drawable.person, R.drawable.reset_password,R.drawable.logout};
+    private int TagPhotos[] = {R.drawable.workout, R.drawable.statistics, R.drawable.person, R.drawable.reset_password,R.drawable.logout};
     private User user = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

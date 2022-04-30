@@ -126,6 +126,9 @@
     <string name="Cancel" translatable="true">Cancel</string>
     <string name="Description">Description</string>
     <string name="Seconds">Seconds</string>
+    <string name="PlanSuccessfullyAdded" translatable="true">The plan was successfully added.</string>
+    <string name="PlanSuccessfullyRemoved" translatable="true">The plan was successfully removed.</string>
+
 
     <!-- Arrays -->
     <string-array name="Workout">

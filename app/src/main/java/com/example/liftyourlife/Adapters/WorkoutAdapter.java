@@ -53,7 +53,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHo
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.constraintLayout.setBackgroundColor(context.getResources().getColor(R.color.grey));
+                holder.constraintLayout.setBackgroundColor(context.getResources().getColor(R.color.PickColor));
                 intent = new Intent(context, GenericPlan.class);
                 intent.putExtra("user", user);
                 intent.putExtra("plan", plan);

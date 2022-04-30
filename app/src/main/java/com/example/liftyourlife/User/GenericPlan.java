@@ -43,6 +43,11 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -142,9 +147,21 @@ public class GenericPlan extends AppCompatActivity {
         });
     }
     private void setExercises(){
-        exercises.add(new Exercise("לחיצת חזה","מתקן מספר 10",3,3));
-        GenericPlanAdapter genericPlan = new GenericPlanAdapter(context, exercises, user);
-        recyclerView.setAdapter(genericPlan);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child(plan.getDay()).child(user.getUid()).child(plan.getDate()).child("exercises");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                exercises.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Exercise exercise = dataSnapshot.getValue(Exercise.class);
+                    exercises.add(exercise);
+                }
+                GenericPlanAdapter genericPlan = new GenericPlanAdapter(context, exercises, user);
+                recyclerView.setAdapter(genericPlan);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
     }
     private void AddExerciseDialog(){
         /*AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -181,7 +198,7 @@ public class GenericPlan extends AppCompatActivity {
         });*/
     }
     private void RemoveExerciseDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_remove,null);
         builder.setCancelable(false);
@@ -282,7 +299,9 @@ public class GenericPlan extends AppCompatActivity {
     }
     private void MenuItem(){
         Menu menu= UserNavigationView.getMenu();
-        MenuItem menuItem = menu.findItem(R.id.ItemStatistics);
+        MenuItem menuItem = menu.findItem(R.id.ItemPlan);
+        menuItem.setTitle(plan.getPlanName());
+        menuItem.setVisible(true);
         menuItem.setCheckable(false);
         menuItem.setChecked(true);
         menuItem.setEnabled(false);

@@ -18,6 +18,9 @@ import com.example.liftyourlife.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ public class Statistics extends AppCompatActivity {
     private ImageView BackIcon, MenuIcon;
     private DrawerLayout drawerLayout;
     private TextView Title;
-    private BarChart WeightChart, WorkoutChart;
+    private LineChart WeightChart, WorkoutChart;
     private Intent intent;
     private User user = new User();
     @Override
@@ -61,17 +64,22 @@ public class Statistics extends AppCompatActivity {
     }
 
     private void WorkoutChart(){
-        ArrayList<BarEntry> barEntries = new ArrayList<>();
-        for(int i=1; i<10; i++) {
-            float value = i*10;
-            BarEntry barEntry = new BarEntry(i, value);
-            barEntries.add(barEntry);
-        }
+        ArrayList<Entry> list = new ArrayList<>();
+
+
         //WorkoutChart.setData(barEntries);
 
     }
     private void WeightChart(){
-
+        ArrayList<Entry> list = new ArrayList<>();
+        list.add(new Entry(1,70));
+        list.add(new Entry(2,70));
+        list.add(new Entry(3,73));
+        list.add(new Entry(4,71));
+        LineDataSet lineDataSet = new LineDataSet(list,getResources().getString(R.string.Weight));
+        lineDataSet.setDrawFilled(true);
+        LineData lineData = new LineData(lineDataSet);
+        WeightChart.setData(lineData);
     }
     private void MenuIcon(){
         MenuIcon.setOnClickListener(new View.OnClickListener() {

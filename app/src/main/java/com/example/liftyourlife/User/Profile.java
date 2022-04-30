@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,21 +36,33 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
 import com.example.liftyourlife.Guest.CreateAccount;
 import com.example.liftyourlife.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -72,6 +85,7 @@ public class Profile extends AppCompatActivity {
     private EditText EditTextSearch;
     private ListView ListViewSearch;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private User user, newUser = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +121,13 @@ public class Profile extends AppCompatActivity {
         Title = findViewById(R.id.Title);
         Title.setText(getResources().getString(R.string.Profile));
         user = (User)intent.getSerializableExtra("user");
+        String[] date1 = user.getBirthDay().split("/");
+        Year = Integer.valueOf(date1[2]);
+        UserYear = Integer.valueOf(date1[2]);
+        Month = Integer.valueOf(date1[1]);
+        UserMonth = Integer.valueOf(date1[1]);
+        Day = Integer.valueOf(date1[0]);
+        UserDay = Integer.valueOf(date1[0]);
         drawerLayout = findViewById(R.id.drawerLayout);
         new UserNavigationHeader(user,Profile.this);
     }
@@ -139,6 +160,15 @@ public class Profile extends AppCompatActivity {
         TextInputLayoutBirthDay.getEditText().setText(user.getBirthDay());
         TextInputLayoutHeight.getEditText().setText(user.getHeight() + " " + getResources().getString(R.string.Meters) );
         TextInputLayoutWeight.getEditText().setText(user.getWeight() + " " + getResources().getString(R.string.Kg) );
+        if(!user.getImage().equals("Image")) {
+            Glide.with(Profile.this).asBitmap().load(user.getImage()).into(new CustomTarget<Bitmap>() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) { UserProfileImage.setBackground(new BitmapDrawable(getResources(), resource)); }
+                @Override
+                public void onLoadCleared(@Nullable Drawable placeholder) { }
+            });
+        }
         HeightPick();
         WeightPick();
         BirthDayPick();
@@ -154,7 +184,6 @@ public class Profile extends AppCompatActivity {
                     user.setLastName(TextInputLayoutLastName.getEditText().getText().toString());
                     user.setGender(TextInputLayoutGender.getEditText().getText().toString());
                     user.setBirthDay(TextInputLayoutBirthDay.getEditText().getText().toString());
-                    user.setAge(getYears(new Date(UserYear,UserMonth,UserDay)) + "");
                     for(int i=0; i < 3 ; i++)
                         for(int j=0; j<100; j++)
                             if(TextInputLayoutHeight.getEditText().getText().toString().equals( i+ "."+ j + " " + getResources().getString(R.string.Meters)))
@@ -165,7 +194,12 @@ public class Profile extends AppCompatActivity {
                             Weight = (i+20)+"";
                     user.setWeight(Weight);
                     user.setFullName(user.getFirstName() + " " + user.getLastName());
-                    SuccessfullyUpdatedMSG();
+                    if(uri != null) {
+                        loading = new Loading(Profile.this);
+                        UploadImage();
+                    }
+                    else
+                        SuccessfullyUpdatedMSG();
                 }
             }
         });
@@ -187,12 +221,13 @@ public class Profile extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Users").child(user.getUid());
         databaseReference.setValue(user);
     }
-    private int getYears(Date date){
-        int years = Calendar.getInstance().get(Calendar.YEAR) - date.getYear();
-        if(date.getMonth() >  Calendar.getInstance().get(Calendar.MONTH) ||
-                (date.getMonth() ==  Calendar.getInstance().get(Calendar.MONTH) &&
-                        date.getDate() > Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))
-            years -=1;
+    private int getYears(){
+        int years = calendar.get(Calendar.YEAR) - UserYear;
+        if( UserMonth >  (calendar.get(Calendar.MONTH) + 1))
+            years -= 1;
+        else if( UserMonth ==  (calendar.get(Calendar.MONTH) + 1))
+            if (UserDay > calendar.get(Calendar.DAY_OF_MONTH))
+                years -= 1;
         return years;
     }
     private boolean CheckInput(){
@@ -207,7 +242,7 @@ public class Profile extends AppCompatActivity {
                 TextInputLayoutLastName.setHelperText("");
             return false;
         }
-        if(getYears(new Date(UserYear,UserMonth,UserDay)) < 18){
+        if(getYears() < 18){
             TextInputLayoutBirthDay.setHelperText(getResources().getString(R.string.RequiredAge18OrMore));
             return false;
         }
@@ -253,10 +288,13 @@ public class Profile extends AppCompatActivity {
                         UserMonth = month;
                         UserYear = year;
                         UserDay = dayOfMonth;
+                        Year = year;
+                        Month = month;
+                        Day = dayOfMonth;
                         String Date = dayOfMonth + "/" + month + "/" + year;
                         TextInputLayoutBirthDay.getEditText().setText(Date);
                     }
-                },Year, Month, Day);
+                },Year, Month-1, Day);
                 datePickerDialog.show();
             }
         });
@@ -313,13 +351,6 @@ public class Profile extends AppCompatActivity {
         photo.setType("image/*");
         startActivityForResult(photo, 1);
     }
-    private void CameraPicture(){
-        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(takePicture.resolveActivity(getPackageManager()) != null){
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            startActivityForResult(takePicture, 2);
-        }
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -341,6 +372,8 @@ public class Profile extends AppCompatActivity {
                     UserImage.setBackground(new BitmapDrawable(getResources(), bitmap));
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
+                    uri = Uri.parse(path);
                 }
                 break;
         }
@@ -356,7 +389,20 @@ public class Profile extends AppCompatActivity {
         }
     }
     private void UploadImage(){
-
+        StorageReference reference = storageReference.child(user.getUid()+".jpg");
+        reference.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        loading.stop();
+                        user.setImage(uri.toString());
+                        SuccessfullyUpdatedMSG();
+                    }
+                });
+            }
+        });
     }
     private void setDialog(String[] array, String title,TextView textViewPick){
         dialog = new Dialog(Profile.this);
@@ -368,7 +414,7 @@ public class Profile extends AppCompatActivity {
         ListViewSearch = dialog.findViewById(R.id.ListViewSearch);
         TextViewSearch = dialog.findViewById(R.id.TextViewSearch);
         TextViewSearch.setText(title);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(Profile.this, R.layout.dropdwon_item, array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Profile.this, R.layout.dropdown_item, array);
         ListViewSearch.setAdapter(adapter);
         EditTextSearch.addTextChangedListener(new TextWatcher() {
             @Override

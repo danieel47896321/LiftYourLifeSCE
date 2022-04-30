@@ -1,6 +1,7 @@
 package com.example.liftyourlife.Class;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     private String Uid = "Uid";
@@ -9,8 +10,8 @@ public class User implements Serializable {
     private String FirstName = "FirstName";
     private String lastName = "LastName";
     private String Gender = "Male";
-    private String Age = "18";
     private String BirthDay = "1/1/1990";
+    private String StartDate = "1/1/1990";
     private String Image = "Image";
     private String Height = "1.7";
     private String Weight = "60";
@@ -36,13 +37,18 @@ public class User implements Serializable {
     public String getLastName() { return lastName; }
     public String getImage() { return Image; }
     public String getGender() { return Gender; }
-    public String getAge() { return Age; }
     public String getHeight() { return Height; }
     public String getUid() { return Uid; }
     public String getFullName() { return FullName; }
     public String getWeight() { return Weight; }
     public String getBirthDay() {
         return BirthDay;
+    }
+    public String getStartDate() {
+        return StartDate;
+    }
+    public void setStartDate(String startDate) {
+        StartDate = startDate;
     }
     //setters
     public void setBirthDay(String birthDay) {
@@ -53,7 +59,6 @@ public class User implements Serializable {
     public void setLastName(String lastName) { this.lastName = lastName; }
     public void setImage(String image) { Image = image; }
     public void setGender(String gender) { Gender = gender; }
-    public void setAge(String age) { Age = age; }
     public void setUid(String uid) { Uid = uid; }
     public void setHeight(String height) { Height = height; }
     public void setFullName(String fullName) { FullName = fullName; }

@@ -31,7 +31,6 @@ import android.widget.TextView;
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.PopUpMSG;
-import com.example.liftyourlife.Class.RetrofitInterface;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,10 +44,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
-import java.util.Date;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateAccount extends AppCompatActivity {
     private ImageView BackIcon, MenuIcon;
@@ -67,9 +63,6 @@ public class CreateAccount extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app");
     private DatabaseReference databaseReference = firebaseDatabase.getReference().child("Users");
     private User user = new User();
-    private Retrofit retrofit;
-    private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +81,6 @@ public class CreateAccount extends AppCompatActivity {
         CreateAccountCheck();
     }
     private void setID(){
-        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-        retrofitInterface = retrofit.create(RetrofitInterface.class);
         MenuIcon = findViewById(R.id.MenuIcon);
         BackIcon = findViewById(R.id.BackIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -283,7 +274,7 @@ public class CreateAccount extends AppCompatActivity {
                     TextInputLayoutWeight.setHelperText("");
                 if(TextInputLayoutBirthDay.getEditText().getText().toString().equals(""))
                     TextInputLayoutBirthDay.setHelperText(getResources().getString(R.string.Required));
-                else if(getYears(new Date(UserYear,UserMonth,UserDay)) < 18)
+                else if(getYears() < 18)
                     TextInputLayoutBirthDay.setHelperText(getResources().getString(R.string.RequiredAge18OrMore));
                 else
                     TextInputLayoutBirthDay.setHelperText("");
@@ -311,8 +302,8 @@ public class CreateAccount extends AppCompatActivity {
         user = new User(TextInputLayoutFirstName.getEditText().getText().toString(), TextInputLayoutLastName.getEditText().getText().toString(), TextInputLayoutEmail.getEditText().getText().toString());
         user.setWeight(Weight);
         user.setBirthDay(TextInputLayoutBirthDay.getEditText().getText().toString());
-        user.setAge(getYears(new Date(UserYear,UserMonth,UserDay)) + "");
         user.setGender(TextInputLayoutGender.getEditText().getText().toString());
+        user.setStartDate( calendar.get(Calendar.DAY_OF_MONTH)+"/"+ (calendar.get(Calendar.MONTH) + 1)+"/"+calendar.get(Calendar.YEAR));
         firebaseAuth.createUserWithEmailAndPassword(user.getEmail(),TextInputLayoutPassword.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -330,12 +321,13 @@ public class CreateAccount extends AppCompatActivity {
             }
         });
     }
-    private int getYears(Date date){
-        int years = Calendar.getInstance().get(Calendar.YEAR) - date.getYear();
-        if(date.getMonth() >  Calendar.getInstance().get(Calendar.MONTH) ||
-                (date.getMonth() ==  Calendar.getInstance().get(Calendar.MONTH) &&
-                        date.getDate() > Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))
-            years -=1;
+    private int getYears(){
+        int years = calendar.get(Calendar.YEAR) - UserYear;
+        if( UserMonth >  (calendar.get(Calendar.MONTH) + 1))
+            years -= 1;
+        else if( UserMonth ==  (calendar.get(Calendar.MONTH) + 1))
+            if (UserDay > calendar.get(Calendar.DAY_OF_MONTH))
+                years -= 1;
         return years;
     }
     private void HeightPick(){
@@ -374,10 +366,13 @@ public class CreateAccount extends AppCompatActivity {
                         UserMonth = month;
                         UserYear = year;
                         UserDay = dayOfMonth;
+                        Year = year;
+                        Month = month - 1;
+                        Day = dayOfMonth;
                         String Date = dayOfMonth + "/" + month + "/" + year;
                         TextInputLayoutBirthDay.getEditText().setText(Date);
                     }
-                },Year, Month, Day);
+                },Year, Month , Day);
                 datePickerDialog.show();
             }
         });
@@ -400,7 +395,7 @@ public class CreateAccount extends AppCompatActivity {
         ListViewSearch = dialog.findViewById(R.id.ListViewSearch);
         TextViewSearch = dialog.findViewById(R.id.TextViewSearch);
         TextViewSearch.setText(title);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(CreateAccount.this, R.layout.dropdwon_item, array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(CreateAccount.this, R.layout.dropdown_item, array);
         ListViewSearch.setAdapter(adapter);
         EditTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
