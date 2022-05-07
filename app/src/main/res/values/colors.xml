@@ -13,10 +13,17 @@
     <color name="gray">#CCCCCC</color>
     <color name="red">#ED1919</color>
     <color name="dark_blue">#101BDD</color>
+    <color name="pick">#04F808</color>
     <color name="grey">#E4E6EA</color>
     <color name="grey2">#A2A3A5</color>
     <color name="blue">#0B57DC</color>
     <color name="blue2">#0979DA</color>
+    <color name="UNDERWEIGHT">#0979DA</color>
+    <color name="NORMAL">#04F808</color>
+    <color name="OVERWEIGHT">#FFD600</color>
+    <color name="OBESE">#FF6D00</color>
+    <color name="EXTREMELYOBESE">#EC0B0B</color>
+
     <color name="default_color">#808080</color>
     <color name="mtrl_textinput_default_box_stroke_color" override="true">#808080</color>
 

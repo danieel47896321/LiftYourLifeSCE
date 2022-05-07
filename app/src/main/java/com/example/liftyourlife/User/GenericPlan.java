@@ -216,8 +216,8 @@ public class GenericPlan extends AppCompatActivity {
                 if(!(TextInputLayoutExerciseName.getEditText().getText().toString().equals("")) && !(TextInputLayoutTypeOfMuscle.getEditText().getText().toString().equals("")) && !(TextInputLayoutReps.getEditText().getText().toString().equals(""))){
                     alertDialog.cancel();
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child(plan.getDay()).child(user.getUid()).child(plan.getDate()).child("exercises");
-                    plan.getExercises().add(new Exercise(TextInputLayoutExerciseName.getEditText().getText().toString(),TextInputLayoutDescription.getEditText().getText().toString(),TextInputLayoutTypeOfMuscle.getEditText().getText().toString(),"null",Integer.valueOf(TextInputLayoutReps.getEditText().getText().toString())));
-                    databaseReference.setValue(plan.getExercises());
+                   // plan.getExercises().add(new Exercise(TextInputLayoutExerciseName.getEditText().getText().toString(),TextInputLayoutDescription.getEditText().getText().toString(),TextInputLayoutTypeOfMuscle.getEditText().getText().toString(),"null",Integer.valueOf(TextInputLayoutReps.getEditText().getText().toString())));
+                   // databaseReference.setValue(plan.getExercises());
                 }
             }
         });

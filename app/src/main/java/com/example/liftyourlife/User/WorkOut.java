@@ -21,13 +21,7 @@ import android.widget.TextView;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
-import com.example.liftyourlife.Fragments.FridayFragment;
-import com.example.liftyourlife.Fragments.MondayFragment;
-import com.example.liftyourlife.Fragments.SaturdayFragment;
-import com.example.liftyourlife.Fragments.SundayFragment;
-import com.example.liftyourlife.Fragments.ThursdayFragment;
-import com.example.liftyourlife.Fragments.TuesdayFragment;
-import com.example.liftyourlife.Fragments.WednesdayFragment;
+import com.example.liftyourlife.Fragments.WorkoutFragment;
 import com.example.liftyourlife.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -73,7 +67,7 @@ public class WorkOut extends AppCompatActivity {
         Title.setText(R.string.WorkOut);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager);
-        fragmentPager = new ViewPagerAdapter(WorkOut.this, user);
+        fragmentPager = new ViewPagerAdapter(WorkOut.this);
         viewPager2.setAdapter(fragmentPager);
         titles = new String[7];
         titles = getResources().getStringArray(R.array.Workout);
@@ -111,47 +105,38 @@ public class WorkOut extends AppCompatActivity {
         tab.select();
     }
     public static class ViewPagerAdapter extends FragmentStateAdapter {
-        private User user;
-        public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, User user) {
+        public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
-            this.user = user;
         }
         @NonNull
         @Override
         public Fragment createFragment(int position) {
+            WorkoutFragment workoutFragment = new WorkoutFragment();
             switch (position){
                 case 0:
-                    SundayFragment sundayFragment = new SundayFragment();
-                    sundayFragment.setUser(user);
-                    return sundayFragment;
+                    workoutFragment.setDay("SUNDAY");
+                    return workoutFragment;
                 case 1:
-                    MondayFragment mondayFragment = new MondayFragment();
-                    mondayFragment.setUser(user);
-                    return mondayFragment;
+                    workoutFragment.setDay("MONDAY");
+                    return workoutFragment;
                 case 2:
-                    TuesdayFragment tuesdayFragment = new TuesdayFragment();
-                    tuesdayFragment.setUser(user);
-                    return tuesdayFragment;
+                    workoutFragment.setDay("TUESDAY");
+                    return workoutFragment;
                 case 3:
-                    WednesdayFragment wednesdayFragment = new WednesdayFragment();
-                    wednesdayFragment.setUser(user);
-                    return wednesdayFragment;
+                    workoutFragment.setDay("WEDNESDAY");
+                    return workoutFragment;
                 case 4:
-                    ThursdayFragment thursdayFragment = new ThursdayFragment();
-                    thursdayFragment.setUser(user);
-                    return thursdayFragment;
+                    workoutFragment.setDay("THURSDAY");
+                    return workoutFragment;
                 case 5:
-                    FridayFragment fridayFragment = new FridayFragment();
-                    fridayFragment.setUser(user);
-                    return fridayFragment;
+                    workoutFragment.setDay("FRIDAY");
+                    return workoutFragment;
                 case 6:
-                    SaturdayFragment saturdayFragment = new SaturdayFragment();
-                    saturdayFragment.setUser(user);
-                    return saturdayFragment;
+                    workoutFragment.setDay("SATURDAY");
+                    return workoutFragment;
             }
-            SundayFragment sundayFragment = new SundayFragment();
-            sundayFragment.setUser(user);
-            return sundayFragment;
+            workoutFragment.setDay("SUNDAY");
+            return workoutFragment;
         }
         @Override
         public int getItemCount() { return 7; }

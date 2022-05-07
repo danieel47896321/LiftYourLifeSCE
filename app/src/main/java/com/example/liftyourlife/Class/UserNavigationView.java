@@ -13,10 +13,7 @@ import com.example.liftyourlife.User.ChangePassword;
 import com.example.liftyourlife.User.Home;
 import com.example.liftyourlife.User.WorkOut;
 import com.example.liftyourlife.User.Profile;
-import com.example.liftyourlife.User.Statistics;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.example.liftyourlife.User.BMI;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class UserNavigationView {
@@ -31,8 +28,8 @@ public class UserNavigationView {
             StartActivity(context, WorkOut.class, user);
         else if (id == R.id.ItemChangePassword)
             StartActivity(context, ChangePassword.class, user);
-        else if (id == R.id.ItemStatistics)
-            StartActivity(context, Statistics.class, user);
+        else if (id == R.id.ItemBmi)
+            StartActivity(context, BMI.class, user);
         else if (id == R.id.ItemSignOut) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(context.getResources().getString(R.string.Logout)).setMessage(context.getResources().getString(R.string.AreYouSure)).setCancelable(true).setPositiveButton(context.getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
@@ -40,10 +37,6 @@ public class UserNavigationView {
                 public void onClick(DialogInterface dialog, int which) {
                     if (firebaseAuth.getCurrentUser() != null)
                         firebaseAuth.signOut();
-                    GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestIdToken(context.getString(R.string.default_web_client_id)).requestEmail().build();
-                    GoogleSignInClient googleClient = GoogleSignIn.getClient(context, options);
-                    googleClient.signOut();
                     context.startActivity(new Intent(context, LiftYourLife.class));
                     ((Activity) context).finish();
                 }

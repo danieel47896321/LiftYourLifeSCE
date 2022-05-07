@@ -17,8 +17,10 @@ import android.widget.Toast;
 
 import com.example.liftyourlife.Class.GuestNavigationView;
 import com.example.liftyourlife.Class.Loading;
+import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.R;
+import com.example.liftyourlife.Server.RetrofitInterface;
 import com.example.liftyourlife.User.Home;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -41,24 +43,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class SignIn extends AppCompatActivity {
     private TextView Title;
     private DrawerLayout drawerLayout;
     private ImageView BackIcon, MenuIcon;
     private NavigationView navigationView;
-    private TextView ResetPassword, CreateAccount;
+    private TextView CreateAccount;
     private TextInputLayout TextInputLayoutEmail, TextInputLayoutPassword;
-    private Button ButtonSignIn, Google;
-    private GoogleSignInClient mGoogleSignInClient;
-    private static final int RC_SIGN_IN = 4;
-    private static final String TAG = "GoogleActivity";
-    private Loading loading;
-    private Intent intent;
+    private Button ButtonSignIn;
     private User user = new User();
-    private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Users");
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://10.0.2.2:3000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +72,6 @@ public class SignIn extends AppCompatActivity {
         init();
     }
     private void init(){
-
         setID();
         MenuItem();
         BackIcon();
@@ -74,11 +79,11 @@ public class SignIn extends AppCompatActivity {
         EndIcon();
         NavigationView();
         SignInCheck();
-        ResetPassword();
         CreateAccount();
-        Google();
     }
     private void setID(){
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
         firebaseAuth = FirebaseAuth.getInstance();
         MenuIcon = findViewById(R.id.MenuIcon);
         BackIcon = findViewById(R.id.BackIcon);
@@ -87,8 +92,6 @@ public class SignIn extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         Title.setText(R.string.SignIn);
         CreateAccount = findViewById(R.id.CreateAccount);
-        Google = findViewById(R.id.Google);
-        ResetPassword = findViewById(R.id.ResetPassword);
         TextInputLayoutEmail = findViewById(R.id.TextInputLayoutEmail);
         TextInputLayoutPassword = findViewById(R.id.TextInputLayoutPassword);
         ButtonSignIn = findViewById(R.id.ButtonSignIn);
@@ -107,12 +110,6 @@ public class SignIn extends AppCompatActivity {
                 TextInputLayoutEmail.setHelperText("");
                 TextInputLayoutEmail.getEditText().setText("");
             }
-        });
-    }
-    private void ResetPassword(){
-        ResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { StartActivity(ResetPassword.class); }
         });
     }
     private void MenuIcon(){
@@ -167,84 +164,26 @@ public class SignIn extends AppCompatActivity {
         firebaseAuth.fetchSignInMethodsForEmail(TextInputLayoutEmail.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                if(task.getResult().getSignInMethods().isEmpty())
-                    TextInputLayoutEmail.setHelperText(getResources().getString(R.string.EmailNotExist));
-                else {
-                    TextInputLayoutEmail.setHelperText("");
-                    if(TextInputLayoutPassword.getEditText().getText().length()<1)
-                        TextInputLayoutPassword.setHelperText(getResources().getString(R.string.Required));
-                    else if(TextInputLayoutPassword.getEditText().getText().length()<6)
-                        TextInputLayoutPassword.setHelperText(getResources().getString(R.string.Must6Chars));
-                    else
-                        TextInputLayoutPassword.setHelperText(getResources().getString(R.string.WrongPassword));
-                }
-                loading.stop();
-            }
-        });
-    }
-    private void Google(){
-        Google.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(firebaseAuth.getCurrentUser() != null)
-                    firebaseAuth.getInstance().signOut();
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
-                mGoogleSignInClient = GoogleSignIn.getClient(SignIn.this, gso);
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-            }
-        });
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                loading = new Loading(SignIn.this);
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) { loading.stop(); }
-        }
-    }
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            firebaseUser = firebaseAuth.getCurrentUser();
-                            // Sign in success, update UI with the signed-in user's information
-                            if(task.getResult().getAdditionalUserInfo().isNewUser()){
-                                int firstSpace = firebaseUser.getDisplayName().indexOf(" ");
-                                user.setEmail(firebaseUser.getEmail());
-                                user.setFirstName(firebaseUser.getDisplayName().substring(0,firstSpace));
-                                user.setLastName(firebaseUser.getDisplayName().substring(firstSpace+1));
-                                user.setFullName(user.getFirstName()+" "+user.getLastName());
-                                user.setUid(firebaseAuth.getCurrentUser().getUid());
-                                databaseReference.child(firebaseUser.getUid()).setValue(user);
-                                intent = new Intent(SignIn.this, Home.class);
-                                intent.putExtra("user", user);
-                                startActivity(intent);
-                                finish();
-                            }
-                            getUser();
-                        }
-                        else {
-                            Toast.makeText(SignIn.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
+                if(task.isSuccessful()) {
+                    if (task.getResult().getSignInMethods().isEmpty())
+                        TextInputLayoutEmail.setHelperText(getResources().getString(R.string.EmailNotExist));
+                    else {
+                        TextInputLayoutEmail.setHelperText("");
+                        if (TextInputLayoutPassword.getEditText().getText().length() < 1)
+                            TextInputLayoutPassword.setHelperText(getResources().getString(R.string.Required));
+                        else if (TextInputLayoutPassword.getEditText().getText().length() < 6)
+                            TextInputLayoutPassword.setHelperText(getResources().getString(R.string.Must6Chars));
+                        else
+                            TextInputLayoutPassword.setHelperText(getResources().getString(R.string.WrongPassword));
                     }
-                });
+                }
+            }
+        });
     }
     private void SignIn(){
         firebaseAuth.signInWithEmailAndPassword(TextInputLayoutEmail.getEditText().getText().toString(), TextInputLayoutPassword.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                loading = new Loading(SignIn.this);
                 if (task.isSuccessful()) {
                     if(firebaseAuth.getCurrentUser().isEmailVerified()) {
                         getUser();
@@ -259,21 +198,25 @@ public class SignIn extends AppCompatActivity {
     }
     private void getUser(){
         if(firebaseAuth.getCurrentUser() != null) {
-            databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            HashMap<String,String> map = new HashMap<>();
+            map.put("uid",firebaseAuth.getCurrentUser().getUid());
+            Call<User> call = retrofitInterface.getUser(map);
+            call.enqueue(new Callback<User>() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
-                    Home(user);
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.code() == 200) {
+                        user = response.body();
+                        Home(user);
+                    } else if (response.code() == 404) { new PopUpMSG(SignIn.this, getResources().getString(R.string.SignIn), getResources().getString(R.string.Error)); }
                 }
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) { }
+                public void onFailure(Call<User> call, Throwable t) { }
             });
         }
     }
     private void Home(User user){
         Intent intent = new Intent(SignIn.this, Home.class);
         intent.putExtra("user", user);
-        loading.stop();
         startActivity(intent);
         finish();
     }
@@ -289,7 +232,6 @@ public class SignIn extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(SignIn.this, LiftYourLife.class));
-        finish();
+        StartActivity(LiftYourLife.class);
     }
 }

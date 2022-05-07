@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.liftyourlife.Adapters.HomeAdapter;
-import com.example.liftyourlife.Adapters.LiftYourLifeAdapter;
 import com.example.liftyourlife.Class.Tag;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.Class.UserNavigationHeader;
@@ -42,7 +41,7 @@ public class Home extends AppCompatActivity {
     private List<Tag> tagList;
     private RecyclerView recyclerView;
     private Intent intent;
-    private int TagPhotos[] = {R.drawable.workout, R.drawable.statistics, R.drawable.person, R.drawable.reset_password,R.drawable.logout};
+    private int TagPhotos[] = {R.drawable.workout, R.drawable.bmi, R.drawable.person, R.drawable.reset_password,R.drawable.logout};
     private User user = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +75,7 @@ public class Home extends AppCompatActivity {
     private void setTags(){
         List<String> list = new ArrayList<>();
         list.add(getResources().getString(R.string.WorkOut));
-        list.add(getResources().getString(R.string.Statistics));
+        list.add(getResources().getString(R.string.Bmi));
         list.add(getResources().getString(R.string.Profile));
         list.add(getResources().getString(R.string.ChangePassword));
         list.add(getResources().getString(R.string.Logout));

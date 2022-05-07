@@ -4,16 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Exercise implements Serializable {
+    private String Uid;
+    private String PlanName;
+    private String Date;
+    private String Day;
     private String Exercise;
     private String Description;
     private String MuscleType;
-    private ArrayList<ExerciseSet> Sets;
+    private String Sets;
     private String Image;
-    public Exercise() { Sets = new ArrayList<>(); }
+    public Exercise() {  }
     public Exercise(String exercise, String description, String muscleType, String image, int reps) {
-        Sets = new ArrayList<>();
-        for(int i=0;i<reps;i++)
-            Sets.add(new ExerciseSet(i,10,30,8));
         MuscleType = muscleType;
         Exercise = exercise;
         Description = description;
@@ -25,10 +26,10 @@ public class Exercise implements Serializable {
     public void setMuscleType(String muscleType) {
         MuscleType = muscleType;
     }
-    public ArrayList<ExerciseSet> getSets() {
+    public String getSets() {
         return Sets;
     }
-    public void setSets(ArrayList<ExerciseSet> sets) {
+    public void setSets(String sets) {
         Sets = sets;
     }
     public String getDescription() {

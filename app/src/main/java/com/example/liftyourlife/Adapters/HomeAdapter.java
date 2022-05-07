@@ -23,7 +23,7 @@ import com.example.liftyourlife.User.ChangePassword;
 import com.example.liftyourlife.User.Home;
 import com.example.liftyourlife.User.WorkOut;
 import com.example.liftyourlife.User.Profile;
-import com.example.liftyourlife.User.Statistics;
+import com.example.liftyourlife.User.BMI;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -72,8 +72,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                     intent = new Intent(context, ChangePassword.class);
                 else if(holder.TagName.getText().equals(context.getResources().getString(R.string.WorkOut)))
                     intent = new Intent(context, WorkOut.class);
-                else if(holder.TagName.getText().equals(context.getResources().getString(R.string.Statistics)))
-                    intent = new Intent(context, Statistics.class);
+                else if(holder.TagName.getText().equals(context.getResources().getString(R.string.Bmi)))
+                    intent = new Intent(context, BMI.class);
                 else
                     intent = new Intent(context, Home.class);
                 if(holder.TagName.getText().equals(context.getResources().getString(R.string.Logout))) {

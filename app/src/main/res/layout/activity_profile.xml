@@ -54,34 +54,6 @@
                         android:padding="10dp"
                         android:orientation="vertical">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <View
-                                android:id="@+id/UserProfileImage"
-                                android:layout_width="match_parent"
-                                android:layout_height="160dp"
-                                android:background="@drawable/guest_header"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/addImage"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:clickable="true"
-                                android:padding="5dp"
-                                app:layout_constraintBottom_toBottomOf="@+id/UserProfileImage"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                android:src="@drawable/add_photo"/>
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/TextInputLayoutFirstName"
                             style="@style/TextInputLayout_Style"
@@ -220,7 +192,6 @@
                             style="@style/Button_Style"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
-                            android:layout_marginTop="8dp"
                             android:text="@string/UpdateProfile" />
 
                     </LinearLayout>

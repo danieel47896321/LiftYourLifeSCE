@@ -21,9 +21,9 @@
             android:icon="@drawable/plan"
             android:title="@string/Plan" />
         <item
-            android:id="@+id/ItemStatistics"
-            android:icon="@drawable/statistics"
-            android:title="@string/Statistics" />
+            android:id="@+id/ItemBmi"
+            android:icon="@drawable/bmi"
+            android:title="@string/Bmi" />
         <item
             android:id="@+id/ItemProfile"
             android:icon="@drawable/person"

@@ -1,30 +1,21 @@
 package com.example.liftyourlife.User;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,57 +27,42 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.example.liftyourlife.Class.Loading;
+import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
-import com.example.liftyourlife.Guest.CreateAccount;
 import com.example.liftyourlife.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.liftyourlife.Server.RetrofitInterface;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Profile extends AppCompatActivity {
     private TextView Title,TextViewSearch;
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://10.0.2.2:3000";
     private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName, TextInputLayoutHeight, TextInputLayoutWeight, TextInputLayoutBirthDay, TextInputLayoutGender;;
     private Button Confirm;
     private DrawerLayout drawerLayout;
-    private ImageView BackIcon, MenuIcon,addImage;
-    private Loading loading;
+    private ImageView BackIcon, MenuIcon;
     private Calendar calendar = Calendar.getInstance();
     private int Year = calendar.get(Calendar.YEAR), Month = calendar.get(Calendar.MONTH), Day = calendar.get(Calendar.DAY_OF_MONTH), UserYear, UserMonth, UserDay;
     private Intent intent;
-    private View UserProfileImage, UserImage;
     private NavigationView navigationView;
     private Dialog dialog;
-    private Uri uri = null;
-    private static final int MY_CAMERA_PERMISSION_CODE = 100;
-    private ImageView Camera;
     private EditText EditTextSearch;
     private ListView ListViewSearch;
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private User user, newUser = new User();
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,22 +76,20 @@ public class Profile extends AppCompatActivity {
         MenuIcon();
         NavigationView();
         Confirm();
-        AddImage();
         ShowInfo();
     }
     public void setID(){
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
         intent = getIntent();
-        UserProfileImage = findViewById(R.id.UserProfileImage);
         TextInputLayoutFirstName = findViewById(R.id.TextInputLayoutFirstName);
         TextInputLayoutLastName = findViewById(R.id.TextInputLayoutLastName);
         TextInputLayoutHeight = findViewById(R.id.TextInputLayoutHeight);
         TextInputLayoutWeight = findViewById(R.id.TextInputLayoutWeight);
         TextInputLayoutBirthDay = findViewById(R.id.TextInputLayoutBirthDay);
         TextInputLayoutGender = findViewById(R.id.TextInputLayoutGender);
-        addImage = findViewById(R.id.addImage);
         Confirm = findViewById(R.id.confirm);
         navigationView = findViewById(R.id.navigationView);
-        UserImage = navigationView.getHeaderView(0).findViewById(R.id.UserImage);
         MenuIcon = findViewById(R.id.MenuIcon);
         BackIcon = findViewById(R.id.BackIcon);
         Title = findViewById(R.id.Title);
@@ -158,17 +132,8 @@ public class Profile extends AppCompatActivity {
         TextInputLayoutLastName.getEditText().setText(user.getLastName());
         TextInputLayoutGender.getEditText().setText(user.getGender());
         TextInputLayoutBirthDay.getEditText().setText(user.getBirthDay());
-        TextInputLayoutHeight.getEditText().setText(user.getHeight() + " " + getResources().getString(R.string.Meters) );
+        TextInputLayoutHeight.getEditText().setText(user.getHeight() + " " + getResources().getString(R.string.Cm) );
         TextInputLayoutWeight.getEditText().setText(user.getWeight() + " " + getResources().getString(R.string.Kg) );
-        if(!user.getImage().equals("Image")) {
-            Glide.with(Profile.this).asBitmap().load(user.getImage()).into(new CustomTarget<Bitmap>() {
-                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) { UserProfileImage.setBackground(new BitmapDrawable(getResources(), resource)); }
-                @Override
-                public void onLoadCleared(@Nullable Drawable placeholder) { }
-            });
-        }
         HeightPick();
         WeightPick();
         BirthDayPick();
@@ -184,42 +149,50 @@ public class Profile extends AppCompatActivity {
                     user.setLastName(TextInputLayoutLastName.getEditText().getText().toString());
                     user.setGender(TextInputLayoutGender.getEditText().getText().toString());
                     user.setBirthDay(TextInputLayoutBirthDay.getEditText().getText().toString());
-                    for(int i=0; i < 3 ; i++)
-                        for(int j=0; j<100; j++)
-                            if(TextInputLayoutHeight.getEditText().getText().toString().equals( i+ "."+ j + " " + getResources().getString(R.string.Meters)))
-                                Height = i+ "."+ j ;
+                    for(int i=0; i < 301 ; i++)
+                        if(TextInputLayoutHeight.getEditText().getText().toString().equals( i + " " + getResources().getString(R.string.Cm)))
+                            Height = i +"";
                     user.setHeight(Height);
                     for(int i=0; i < 261 ; i++)
                         if(TextInputLayoutWeight.getEditText().getText().toString().equals( (i+20)+" "+getResources().getString(R.string.Kg)))
                             Weight = (i+20)+"";
                     user.setWeight(Weight);
                     user.setFullName(user.getFirstName() + " " + user.getLastName());
-                    if(uri != null) {
-                        loading = new Loading(Profile.this);
-                        UploadImage();
-                    }
-                    else
-                        SuccessfullyUpdatedMSG();
+                    updateData();
+
                 }
             }
         });
     }
-    private void SuccessfullyUpdatedMSG(){
-        AlertDialog.Builder Builder;
-        Builder = new AlertDialog.Builder(Profile.this, R.style.AppCompatAlertDialogStyle);
-        Builder.setTitle(getResources().getString(R.string.Profile));
-        Builder.setMessage(getResources().getString(R.string.ProfileUpdated));
-        Builder.setPositiveButton(getResources().getString(R.string.OK), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                updateData();
+    private void updateData(){
+        HashMap<String,String> map = new HashMap<>();
+        map.put("uid",user.getUid());
+        map.put("email",user.getEmail());
+        map.put("fullName",user.getFullName());
+        map.put("firstName",user.getFirstName());
+        map.put("lastName",user.getLastName());
+        map.put("gender",user.getGender());
+        map.put("birthDay",user.getBirthDay());
+        map.put("startDate",user.getStartDate());
+        map.put("height",user.getHeight());
+        map.put("weight",user.getWeight());
+        Call<Void> call = retrofitInterface.updateProfile(map);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200) {
+                    new PopUpMSG(Profile.this, getResources().getString(R.string.Profile), getResources().getString(R.string.ProfileUpdated));
+                } else if (response.code() == 404) {
+                    new PopUpMSG(Profile.this, getResources().getString(R.string.Profile), getResources().getString(R.string.Error));
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                new PopUpMSG(Profile.this, getResources().getString(R.string.CreateAccount), t.getMessage());
             }
         });
-        Builder.setCancelable(false);
-        Builder.create().show();
-    }
-    private void updateData(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Users").child(user.getUid());
-        databaseReference.setValue(user);
+
+        //DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Users").child(user.getUid());
     }
     private int getYears(){
         int years = calendar.get(Calendar.YEAR) - UserYear;
@@ -253,11 +226,10 @@ public class Profile extends AppCompatActivity {
         return true;
     }
     private void HeightPick(){
-        String height[] = new String[300];
+        String height[] = new String[301];
         int index =0;
-        for(int i=0; i < 3 ; i++)
-            for(int j=0; j<100; j++)
-                height[index++] = "" + i+ "."+ j + " " + getResources().getString(R.string.Meters);
+        for(int i=0; i < height.length ; i++)
+            height[index++] = i + " " + getResources().getString(R.string.Cm);
         TextInputLayoutHeight.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -266,9 +238,9 @@ public class Profile extends AppCompatActivity {
         });
     }
     private void WeightPick(){
-        String weight[] = new String[261];
+        String weight[] = new String[301];
         for(int i=0; i < weight.length ; i++)
-            weight[i] = ""+(i+20)+" "+getResources().getString(R.string.Kg);
+            weight[i] = ""+(i+0)+" "+getResources().getString(R.string.Kg);
         TextInputLayoutWeight.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -304,103 +276,6 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDialog(getResources().getStringArray(R.array.Gender),getResources().getString(R.string.SelectGender),TextInputLayoutGender.getEditText());
-            }
-        });
-    }
-    private void AddImage(){
-        addImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { chooseProfilePicture(); }
-        });
-    }
-    private void chooseProfilePicture() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Profile.this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_profile_picture,null);
-        builder.setCancelable(false);
-        builder.setView(dialogView);
-        Camera = dialogView.findViewById(R.id.Cammera);
-        ImageView Gallery = dialogView.findViewById(R.id.Gallery);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.setCanceledOnTouchOutside(true);
-        alertDialog.show();
-        Camera.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-                }
-                else {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, 2);
-                }
-                alertDialog.cancel();
-            }
-        });
-        Gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GalleryPicture();
-                alertDialog.cancel();
-            }
-        });
-    }
-    private void GalleryPicture(){
-        Intent photo = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        photo.setType("image/*");
-        startActivityForResult(photo, 1);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case 1:
-                if(resultCode == RESULT_OK){
-                    uri = data.getData();
-                    Bitmap bitmap = null;
-                    try { bitmap = MediaStore.Images.Media.getBitmap(Profile.this.getContentResolver(), uri);
-                    } catch (IOException e) { e.printStackTrace(); }
-                    UserProfileImage.setBackground(new BitmapDrawable(getResources(), bitmap));
-                    UserImage.setBackground(new BitmapDrawable(getResources(), bitmap));
-                }
-                break;
-            case 2:
-                if(resultCode == RESULT_OK){
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    UserProfileImage.setBackground(new BitmapDrawable(getResources(), bitmap));
-                    UserImage.setBackground(new BitmapDrawable(getResources(), bitmap));
-                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
-                    uri = Uri.parse(path);
-                }
-                break;
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, 2);
-            }
-        }
-    }
-    private void UploadImage(){
-        StorageReference reference = storageReference.child(user.getUid()+".jpg");
-        reference.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        loading.stop();
-                        user.setImage(uri.toString());
-                        SuccessfullyUpdatedMSG();
-                    }
-                });
             }
         });
     }

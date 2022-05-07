@@ -1,33 +1,28 @@
 package com.example.liftyourlife.Class;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-
 public class Plan implements Serializable {
+    private String Uid;
     private String PlanName;
     private String Date;
     private String Day;
-    private ArrayList<Exercise> exercises;
-    public Plan(){
-        exercises = new ArrayList<>();
-    }
-    public Plan(String planName, String date, String day) {
-        exercises = new ArrayList<>();
+    public Plan(){ }
+    public Plan(String planName, String date, String day, String uid) {
         Day = day;
         PlanName = planName;
         Date = date;
+        Uid = uid;
+    }
+    public String getUid() {
+        return Uid;
+    }
+    public void setUid(String uid) {
+        Uid = uid;
     }
     public String getDay() {
         return Day;
     }
     public void setDay(String day) {
         Day = day;
-    }
-    public ArrayList<Exercise> getExercises() {
-        return exercises;
-    }
-    public void setExercises(ArrayList<Exercise> exercises) {
-        this.exercises = exercises;
     }
     public String getPlanName() {
         return PlanName;

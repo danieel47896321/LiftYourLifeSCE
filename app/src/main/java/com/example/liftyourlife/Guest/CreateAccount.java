@@ -33,6 +33,7 @@ import com.example.liftyourlife.Class.Loading;
 import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.R;
+import com.example.liftyourlife.Server.RetrofitInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -40,14 +41,22 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class CreateAccount extends AppCompatActivity {
     private ImageView BackIcon, MenuIcon;
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://10.0.2.2:3000";
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private TextInputLayout TextInputLayoutFirstName, TextInputLayoutLastName ,TextInputLayoutEmail, TextInputLayoutPassword, TextInputLayoutPasswordConfirm, TextInputLayoutHeight, TextInputLayoutWeight, TextInputLayoutBirthDay, TextInputLayoutGender;
@@ -60,8 +69,6 @@ public class CreateAccount extends AppCompatActivity {
     private Button ButtonNext, NextButtonFinish;
     private Loading loading;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance() ;
-    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app");
-    private DatabaseReference databaseReference = firebaseDatabase.getReference().child("Users");
     private User user = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +88,8 @@ public class CreateAccount extends AppCompatActivity {
         CreateAccountCheck();
     }
     private void setID(){
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
         MenuIcon = findViewById(R.id.MenuIcon);
         BackIcon = findViewById(R.id.BackIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -291,10 +300,9 @@ public class CreateAccount extends AppCompatActivity {
     }
     private void CreateAccount(){
         String Height="",Weight="";
-        for(int i=0; i < 3 ; i++)
-            for(int j=0; j<100; j++)
-                if(TextInputLayoutHeight.getEditText().getText().toString().equals( i+ "."+ j + " " + getResources().getString(R.string.Meters)))
-                    Height = i+ "."+ j ;
+        for(int i=0; i < 301 ; i++)
+            if(TextInputLayoutHeight.getEditText().getText().toString().equals( i + " " + getResources().getString(R.string.Cm)))
+                Height = i +"";
         user.setHeight(Height);
         for(int i=0; i < 261 ; i++)
             if(TextInputLayoutWeight.getEditText().getText().toString().equals( (i+20)+" "+getResources().getString(R.string.Kg)))
@@ -304,6 +312,8 @@ public class CreateAccount extends AppCompatActivity {
         user.setBirthDay(TextInputLayoutBirthDay.getEditText().getText().toString());
         user.setGender(TextInputLayoutGender.getEditText().getText().toString());
         user.setStartDate( calendar.get(Calendar.DAY_OF_MONTH)+"/"+ (calendar.get(Calendar.MONTH) + 1)+"/"+calendar.get(Calendar.YEAR));
+        user.setFullName(user.getFirstName()+" "+user.getLastName());
+        Loading loading = new Loading(CreateAccount.this);
         firebaseAuth.createUserWithEmailAndPassword(user.getEmail(),TextInputLayoutPassword.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -312,14 +322,41 @@ public class CreateAccount extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             user.setUid(firebaseAuth.getUid());
-                            user.setFullName(user.getFirstName()+" "+user.getLastName());
-                            databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(user);
-                            new PopUpMSG(CreateAccount.this, getResources().getString(R.string.CreateAccount), getResources().getString(R.string.CompleteCreateAccount), SignIn.class);
+                            HashMap<String,String> map = new HashMap<>();
+                            map.put("uid",user.getUid());
+                            map.put("email",user.getEmail());
+                            map.put("fullName",user.getFullName());
+                            map.put("firstName",user.getFirstName());
+                            map.put("lastName",user.getLastName());
+                            map.put("gender",user.getGender());
+                            map.put("birthDay",user.getBirthDay());
+                            map.put("startDate",user.getStartDate());
+                            map.put("height",user.getHeight());
+                            map.put("weight",user.getWeight());
+                            Call<Void> call = retrofitInterface.sendUser(map);
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    loading.stop();
+                                    if (response.code() == 200) {
+                                        new PopUpMSG(CreateAccount.this, getResources().getString(R.string.CreateAccount), getResources().getString(R.string.CompleteCreateAccount), SignIn.class);
+                                    } else if (response.code() == 404) {
+                                        new PopUpMSG(CreateAccount.this, getResources().getString(R.string.CreateAccount), getResources().getString(R.string.TheEmailAlreadyExistsInTheSystem));
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    loading.stop();
+                                }
+                            });
                         }
                     });
-                }
+                }else
+                    loading.stop();
             }
         });
+
+
     }
     private int getYears(){
         int years = calendar.get(Calendar.YEAR) - UserYear;
@@ -331,11 +368,10 @@ public class CreateAccount extends AppCompatActivity {
         return years;
     }
     private void HeightPick(){
-        String height[] = new String[300];
+        String height[] = new String[301];
         int index =0;
-        for(int i=0; i < 3 ; i++)
-            for(int j=0; j<100; j++)
-                height[index++] = "" + i+ "."+ j + " " + getResources().getString(R.string.Meters);
+        for(int i=0; i < height.length ; i++)
+            height[index++] = i + " " + getResources().getString(R.string.Cm);
         TextInputLayoutHeight.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

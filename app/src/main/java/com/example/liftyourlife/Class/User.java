@@ -12,7 +12,6 @@ public class User implements Serializable {
     private String Gender = "Male";
     private String BirthDay = "1/1/1990";
     private String StartDate = "1/1/1990";
-    private String Image = "Image";
     private String Height = "1.7";
     private String Weight = "60";
     public User(String firstName, String lastName, String email) {
@@ -27,7 +26,6 @@ public class User implements Serializable {
         this.FirstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.Gender = user.getGender();
-        this.Image = user.getImage();
         this.Height = user.getHeight();
         this.Weight = user.getWeight();
     }
@@ -35,7 +33,6 @@ public class User implements Serializable {
     public String getEmail() { return Email; }
     public String getFirstName() { return FirstName; }
     public String getLastName() { return lastName; }
-    public String getImage() { return Image; }
     public String getGender() { return Gender; }
     public String getHeight() { return Height; }
     public String getUid() { return Uid; }
@@ -57,7 +54,6 @@ public class User implements Serializable {
     public void setEmail(String email) { Email = email; }
     public void setFirstName(String firstName) { FirstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
-    public void setImage(String image) { Image = image; }
     public void setGender(String gender) { Gender = gender; }
     public void setUid(String uid) { Uid = uid; }
     public void setHeight(String height) { Height = height; }

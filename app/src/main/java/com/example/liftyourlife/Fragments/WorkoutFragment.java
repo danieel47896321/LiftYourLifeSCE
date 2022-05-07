@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -33,27 +32,38 @@ import com.example.liftyourlife.Class.Plan;
 import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.R;
+import com.example.liftyourlife.Server.RetrofitInterface;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
-public class MondayFragment extends Fragment {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class WorkoutFragment extends Fragment {
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://10.0.2.2:3000";
     private RecyclerView recyclerView;
     private Context context;
     private FloatingActionButton floatingActionButtonOpen;
     private ExtendedFloatingActionButton floatingActionButtonAdd, floatingActionButtonRemove;
     private Animation rotateOpen, rotateClose, toBottom, fromBottom;
     private Boolean isOpen = false;
-    private User user;
+    private User user = null;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private Dialog dialog;
     private ListView ListViewSearch;
     private EditText EditTextSearch;
@@ -61,9 +71,12 @@ public class MondayFragment extends Fragment {
     private Button ButtonAdd, ButtonRemove, ButtonCancel;
     private TextInputLayout TextInputLayoutPlan;
     private ArrayList<Plan> plans;
+    private String DAY = "SUNDAY";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_monday,container,false);
+        View view = inflater.inflate(R.layout.fragment_workout,container,false);
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
         context = view.getContext();
         plans = new ArrayList<>();
         floatingActionButtonOpen = view.findViewById(R.id.floatingActionButtonOpen);
@@ -72,25 +85,52 @@ public class MondayFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        setExercises();
+        getUser();
         setAddAndRemove();
         return view;
     }
-    private void setExercises(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child("Monday").child(user.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
+    private void getUser(){
+        if(firebaseAuth.getCurrentUser() != null) {
+            if(user == null) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("uid", firebaseAuth.getCurrentUser().getUid());
+                Call<User> call = retrofitInterface.getUser(map);
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if (response.code() == 200) {
+                            user = response.body();
+                            setPlans();
+                        } else if (response.code() == 404) {
+                            new PopUpMSG(context, getResources().getString(R.string.WorkOut), getResources().getString(R.string.Error));
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) { }
+                });
+            }
+        }
+    }
+    private void setPlans(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("Uid", user.getUid());
+        map.put("Day", DAY);
+        Call<List<Plan>> call = retrofitInterface.setPlans(map);
+        call.enqueue(new Callback<List<Plan>>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                plans.clear();
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Plan plan = dataSnapshot.getValue(Plan.class);
-                    plans.add(plan);
+            public void onResponse(Call<List<Plan>> call, Response<List<Plan>> response) {
+                if (response.code() == 200) {
+                    plans.clear();
+                    for(Plan plan : response.body())
+                        plans.add(plan);
+                    WorkoutAdapter workoutAdapter = new WorkoutAdapter(getContext(), plans, user);
+                    recyclerView.setAdapter(workoutAdapter);
+                } else if (response.code() == 404) {
+                    new PopUpMSG(context, getResources().getString(R.string.WorkOut), getResources().getString(R.string.Error));
                 }
-                WorkoutAdapter workoutAdapter = new WorkoutAdapter(getContext(), plans, user);
-                recyclerView.setAdapter(workoutAdapter);
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
+            public void onFailure(Call<List<Plan>> call, Throwable t) { }
         });
     }
     private void setAddAndRemove(){
@@ -162,9 +202,26 @@ public class MondayFragment extends Fragment {
                 if(!(TextInputLayoutPlan.getEditText().getText().toString().equals(""))){
                     alertDialog.cancel();
                     String currentDateTime = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy").format(new Date());
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child("Monday").child(user.getUid()).child(currentDateTime);
-                    databaseReference.setValue(new Plan(TextInputLayoutPlan.getEditText().getText().toString(), currentDateTime,"Monday"));
-                    new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.PlanSuccessfullyAdded));
+                    Plan plan = new Plan(TextInputLayoutPlan.getEditText().getText().toString(), currentDateTime,DAY,user.getUid());
+                    HashMap<String,String> map = new HashMap<>();
+                    map.put("Uid",plan.getUid());
+                    map.put("PlanName",plan.getPlanName());
+                    map.put("Date",plan.getDate());
+                    map.put("Day",plan.getDay());
+                    Call<Void> call = retrofitInterface.AddPlan(map);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.code() == 200) {
+                                new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.PlanSuccessfullyAdded));
+                                setPlans();
+                            } else if (response.code() == 404) {
+                                new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.Error));
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) { }
+                    });
                 }
             }
         });
@@ -182,7 +239,7 @@ public class MondayFragment extends Fragment {
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ExercisePick();
+        PlanPick();
         ButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { alertDialog.cancel(); }
@@ -199,15 +256,31 @@ public class MondayFragment extends Fragment {
                     alertDialog.cancel();
                     for(int i=0; i<plans.size();i++)
                         if(TextInputLayoutPlan.getEditText().getText().toString().equals(plans.get(i).getPlanName() + " - " + plans.get(i).getDate())) {
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child("Monday").child(user.getUid()).child(plans.get(i).getDate());
-                            databaseReference.setValue(null);
-                            new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.PlanSuccessfullyRemoved));
+                            HashMap<String,String> map = new HashMap<>();
+                            map.put("Uid",plans.get(i).getUid());
+                            map.put("PlanName",plans.get(i).getPlanName());
+                            map.put("Date",plans.get(i).getDate());
+                            map.put("Day",plans.get(i).getDay());
+                            Call<Void> call = retrofitInterface.RemovePlan(map);
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if (response.code() == 200) {
+                                        new PopUpMSG(context, getResources().getString(R.string.RemovePlan), getResources().getString(R.string.PlanSuccessfullyRemoved));
+                                        setPlans();
+                                    } else if (response.code() == 404) {
+                                        new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.Error));
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) { }
+                            });
                         }
                 }
             }
         });
     }
-    private void ExercisePick(){
+    private void PlanPick(){
         TextInputLayoutPlan.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -248,6 +321,7 @@ public class MondayFragment extends Fragment {
             }
         });
     }
-
-    public void setUser(User user) { this.user = user; }
+    public void setDay(String day) {
+        DAY = day;
+    }
 }

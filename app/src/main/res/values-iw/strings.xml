@@ -25,7 +25,7 @@
     <string name="Female" translatable="true">נקבה</string>
     <string name="City" translatable="true">עיר</string>
     <string name="Kg" translatable="true">קילוגרם</string>
-    <string name="Meters" translatable="true">מטרים</string>
+    <string name="Cm" translatable="true">סנטימטרים</string>
     <string name="SelectCity" translatable="true">בחר עיר</string>
     <string name="BeerSheva" translatable="true">באר שבע</string>
     <string name="TelAviv" translatable="true">תל אביב</string>
@@ -67,6 +67,7 @@
     <string name="ConfirmPassword" translatable="true">אימות סיסמה</string>
     <string name="AlreadyHaveAccount" translatable="true">קיים כבר משתמש? כניסה</string>
     <string name="CompleteCreateAccount" translatable="true">נרשמת בהצלחה, בבקשה אמת את חשבונך בעזרת קישור אימות שנשלח לאיימיל שלך.</string>
+    <string name="TheEmailAlreadyExistsInTheSystem" translatable="true">האימייל כבר קיים במערכת.</string>
     <!-- ResetPassword Page -->
     <string name="ForgotPasswordInfo" translatable="true">נא הזן את כתובת האימייל שברצונך לשחזר עבורו את הסיסמה</string>
     <string name="ResetLink" translatable="true">קישור לאיפוס הסיסמה נשלח לאימייל</string>
@@ -83,7 +84,7 @@
     <string name="Profile" translatable="true">פרופיל</string>
     <string name="Home" translatable="true">ראשי</string>
     <string name="WorkOut" translatable="true">אימונים</string>
-    <string name="Statistics" translatable="true">סטטיסטיקה</string>
+    <string name="Bmi" translatable="true">BMI</string>
     <string name="ChangePassword" translatable="true">שינוי סיסמה</string>
     <string name="Logout" translatable="true">התנתק</string>
     <string name="Yes" translatable="true">כן</string>
@@ -103,9 +104,16 @@
     <string name="ConfirmNewPassword" translatable="true">אימות סיסמה</string>
     <string name="Change" translatable="true">שינוי</string>
     <string name="PasswordChanged" translatable="true">הסיסמה השתנתה</string>
-    <!-- Statistics Page -->
+    <!-- BMI Page -->
     <string name="WeightTracking" translatable="true">מעקב משקלים</string>
-    <string name="WorkoutTracking" translatable="true">מעקב אימונים</string>
+    <string name="BMI" translatable="true">מדד מסת גוף - BMI</string>
+    <string name="CalculateBMI" translatable="true">חישוב BMI</string>
+    <string name="Result">תוצאה</string>
+    <string name="UNDERWEIGHT">מתחת למשקל</string>
+    <string name="NORMAL">רגיל</string>
+    <string name="OVERWEIGHT">מעל המשקל</string>
+    <string name="OBESE">שמן מאוד</string>
+    <string name="EXTREMELYOBESE">השמנת יתר קיצונית</string>
     <!-- WorkOut Page -->
     <string name="Sunday" translatable="true">ראשון</string>
     <string name="Monday" translatable="true">שני</string>

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/grey"
-    tools:context=".Fragments.WednesdayFragment">
+    tools:context=".Fragments.WorkoutFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_marginTop="5dp"

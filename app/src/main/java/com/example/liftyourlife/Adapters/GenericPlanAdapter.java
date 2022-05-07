@@ -72,7 +72,7 @@ public class GenericPlanAdapter extends RecyclerView.Adapter<GenericPlanAdapter.
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.Exercise.setText(exercise.getMuscleType() + ": " +exercise.getExercise());
         holder.Description.setText(exercise.getDescription());
-        holder.Sets.setText(context.getResources().getString(R.string.Sets) + ": " + exercise.getSets().size());
+        //holder.Sets.setText(context.getResources().getString(R.string.Sets) + ": " + exercise.getSets().size());
         holder.ExerciseImage.setImageResource(R.drawable.person);
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +82,8 @@ public class GenericPlanAdapter extends RecyclerView.Adapter<GenericPlanAdapter.
                     holder.Arrow.setImageResource(R.drawable.arrow_up);
                     holder.linearLayout.setVisibility(View.VISIBLE);
                     holder.view.setVisibility(View.VISIBLE);
-                    SetsAdapter setsAdapter = new SetsAdapter(context, exercises.get(position).getSets());
-                    holder.recyclerView.setAdapter(setsAdapter);
+                   // SetsAdapter setsAdapter = new SetsAdapter(context, exercises.get(position).getSets());
+                    //holder.recyclerView.setAdapter(setsAdapter);
                 }
                 else{
                     holder.Arrow.setImageResource(R.drawable.arrow_down);

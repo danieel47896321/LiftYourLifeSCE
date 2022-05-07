@@ -16,13 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LiftYourLife">
         <activity android:name=".User.GenericPlan"></activity>
-        <activity android:name=".User.Statistics" />
+        <activity android:name=".User.BMI" />
         <activity android:name=".User.ChangePassword" />
         <activity android:name=".User.WorkOut" />
         <activity android:name=".User.Profile" />
-        <activity android:name=".Guest.ResetPassword" />
         <activity android:name=".User.Home" />
         <activity android:name=".Guest.CreateAccount" />
+        <activity android:name=".Guest.ResetPassword" />
         <activity android:name=".Guest.SignIn" />
         <activity android:name=".Guest.Contact" />
         <activity android:name=".Guest.About" />
