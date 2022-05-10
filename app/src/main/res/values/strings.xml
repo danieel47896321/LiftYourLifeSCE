@@ -146,6 +146,10 @@
     <string name="Back" translatable="true">Back</string>
     <string name="Legs" translatable="true">Legs</string>
     <string name="Stomach" translatable="true">Stomach</string>
+    <!-- GenericPlan Page -->
+    <string name="ExerciseSuccessfullyAdded" translatable="true">Exercise Successfully Added</string>
+    <string name="ExerciseSuccessfullyRemoved" translatable="true">Exercise Successfully Removed</string>
+    <string name="ExerciseNameExists" translatable="true">The exercise has not been added, there is already an exercise with this name.</string>
 
     <!-- Arrays -->
     <string-array name="MuscleType">

@@ -12,14 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/ExerciseImage"
-            android:layout_width="80dp"
-            android:layout_height="70dp"
-            android:src="@drawable/add_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/TextInputLayoutExerciseName" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TextInputLayoutExerciseName"
             style="@style/TextInputLayout_Style"
@@ -28,7 +20,7 @@
             android:hint="@string/ExerciseName"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ExerciseImage"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -45,7 +37,7 @@
             android:layout_height="90dp"
             android:hint="@string/Description"
             app:layout_constraintEnd_toEndOf="@+id/TextInputLayoutExerciseName"
-            app:layout_constraintStart_toStartOf="@+id/ExerciseImage"
+            app:layout_constraintStart_toStartOf="@+id/TextInputLayoutExerciseName"
             app:layout_constraintTop_toBottomOf="@+id/TextInputLayoutExerciseName">
 
             <com.google.android.material.textfield.TextInputEditText

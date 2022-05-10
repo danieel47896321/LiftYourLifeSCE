@@ -1,5 +1,6 @@
 package com.example.liftyourlife.Server;
 import com.example.liftyourlife.Class.Exercise;
+import com.example.liftyourlife.Class.ExerciseSet;
 import com.example.liftyourlife.Class.Plan;
 import com.example.liftyourlife.Class.User;
 
@@ -28,4 +29,10 @@ public interface RetrofitInterface {
     Call<Void> AddExercise(@Body HashMap<String, String> map);
     @POST("/removeExercise")
     Call<Void> RemoveExercise(@Body HashMap<String, String> map);
+    @POST("/updateSet")
+    Call<Void> updateSet(@Body HashMap<String, String> map);
+    @POST("/addSet")
+    Call<Void> AddSet(@Body HashMap<String, String> map);
+    @POST("/setSets")
+    Call<List<ExerciseSet>> SetSets(@Body HashMap<String, String> map);
 }

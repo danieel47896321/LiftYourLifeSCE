@@ -84,7 +84,7 @@
     <string name="Profile" translatable="true">פרופיל</string>
     <string name="Home" translatable="true">ראשי</string>
     <string name="WorkOut" translatable="true">אימונים</string>
-    <string name="Bmi" translatable="true">BMI</string>
+    <string name="Bmi" translatable="true">מדד מסת גוף</string>
     <string name="ChangePassword" translatable="true">שינוי סיסמה</string>
     <string name="Logout" translatable="true">התנתק</string>
     <string name="Yes" translatable="true">כן</string>
@@ -148,6 +148,8 @@
     <string name="Back" translatable="true">גב</string>
     <string name="Legs" translatable="true">רגליים</string>
     <string name="Stomach" translatable="true">בטן</string>
-
-
+    <!-- GenericPlan Page -->
+    <string name="ExerciseSuccessfullyAdded" translatable="true">התרגיל נוסף בהצלחה.</string>
+    <string name="ExerciseNameExists" translatable="true">התרגיל לא הוסף, קיים כבר תרגיל עם השם הזה.</string>
+    <string name="ExerciseSuccessfullyRemoved" translatable="true">התרגיל הוסר בהצלחה.</string>
 </resources>

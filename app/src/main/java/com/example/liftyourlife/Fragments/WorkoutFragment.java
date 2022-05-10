@@ -215,7 +215,7 @@ public class WorkoutFragment extends Fragment {
                             if (response.code() == 200) {
                                 new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.PlanSuccessfullyAdded));
                                 setPlans();
-                            } else if (response.code() == 404) {
+                            } else if (response.code() == 400) {
                                 new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.Error));
                             }
                         }
@@ -268,8 +268,8 @@ public class WorkoutFragment extends Fragment {
                                     if (response.code() == 200) {
                                         new PopUpMSG(context, getResources().getString(R.string.RemovePlan), getResources().getString(R.string.PlanSuccessfullyRemoved));
                                         setPlans();
-                                    } else if (response.code() == 404) {
-                                        new PopUpMSG(context, getResources().getString(R.string.AddPlan), getResources().getString(R.string.Error));
+                                    } else if (response.code() == 400) {
+                                        new PopUpMSG(context, getResources().getString(R.string.RemovePlan), getResources().getString(R.string.Error));
                                     }
                                 }
                                 @Override

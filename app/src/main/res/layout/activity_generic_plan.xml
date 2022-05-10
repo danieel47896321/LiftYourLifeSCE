@@ -50,25 +50,9 @@
             android:layout_marginBottom="12dp"
             android:visibility="invisible"
             app:icon="@drawable/add"
-            app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonPick"
-            app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonPick"
-            app:layout_constraintStart_toStartOf="@+id/floatingActionButtonPick" />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/floatingActionButtonPick"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/PickExercise"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            app:icon="@drawable/add"
             app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonRemove"
-            app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonOpen" />
+            app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonRemove"
+            app:layout_constraintStart_toStartOf="@+id/floatingActionButtonRemove" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/floatingActionButtonRemove"
@@ -85,7 +69,7 @@
             android:visibility="invisible"
             app:icon="@drawable/remove"
             app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonOpen"
-            app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonAdd" />
+            app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonOpen" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonOpen"

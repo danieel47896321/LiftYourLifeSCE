@@ -2,54 +2,39 @@ package com.example.liftyourlife.Class;
 
 import java.io.Serializable;
 
-public class ExerciseSet implements Serializable {
-    private int SetNumber;
-    private int Weight;
-    private int Rest;
-    private int Reps;
-    private boolean Finish = false;
-    private boolean Play = false;
+public class ExerciseSet extends Exercise implements Serializable {
+    private String SetNumber;
+    private String Weight;
+    private String Reps;
+    private String Finish = "false";
     public ExerciseSet() { }
-    public ExerciseSet(int setNumber, int weight, int rest, int reps) {
+    public ExerciseSet(String setNumber, String weight, String reps) {
         SetNumber = setNumber;
         Weight = weight;
-        Rest = rest;
         Reps = reps;
     }
-    public boolean isPlay() {
-        return Play;
-    }
-    public void setPlay(boolean play) {
-        Play = play;
-    }
-    public boolean isFinish() {
+    public String isFinish() {
         return Finish;
     }
-    public void setFinish(boolean finish) {
+    public void setFinish(String finish) {
         Finish = finish;
     }
-    public int getReps() {
+    public String getReps() {
         return Reps;
     }
-    public void setReps(int reps) {
+    public void setReps(String reps) {
         Reps = reps;
     }
-    public int getSetNumber() {
+    public String getSetNumber() {
         return SetNumber;
     }
-    public void setSetNumber(int setNumber) {
+    public void setSetNumber(String setNumber) {
         SetNumber = setNumber;
     }
-    public int getWeight() {
+    public String getWeight() {
         return Weight;
     }
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         Weight = weight;
-    }
-    public int getRest() {
-        return Rest;
-    }
-    public void setRest(int rest) {
-        Rest = rest;
     }
 }

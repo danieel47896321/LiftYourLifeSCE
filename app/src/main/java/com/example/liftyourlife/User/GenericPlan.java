@@ -35,32 +35,40 @@ import com.example.liftyourlife.Adapters.GenericPlanAdapter;
 import com.example.liftyourlife.Adapters.WorkoutAdapter;
 import com.example.liftyourlife.Class.Exercise;
 import com.example.liftyourlife.Class.Plan;
+import com.example.liftyourlife.Class.PopUpMSG;
 import com.example.liftyourlife.Class.User;
 import com.example.liftyourlife.Class.UserNavigationHeader;
 import com.example.liftyourlife.Class.UserNavigationView;
 import com.example.liftyourlife.R;
+import com.example.liftyourlife.Server.RetrofitInterface;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GenericPlan extends AppCompatActivity {
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://10.0.2.2:3000";
     private RecyclerView recyclerView;
     private NavigationView UserNavigationView;
     private ImageView BackIcon, MenuIcon;
     private DrawerLayout drawerLayout;
     private TextView Title;
     private FloatingActionButton floatingActionButtonOpen;
-    private ExtendedFloatingActionButton floatingActionButtonAdd, floatingActionButtonRemove, floatingActionButtonPick;
+    private ExtendedFloatingActionButton floatingActionButtonAdd, floatingActionButtonRemove;
     private Animation rotateOpen, rotateClose, toBottom, fromBottom;
     private Boolean isOpen = false;
     private Intent intent;
@@ -90,7 +98,9 @@ public class GenericPlan extends AppCompatActivity {
         setExercises();
     }
     private void setID(){
-        context = this.getBaseContext();
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+        context = this;
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -107,7 +117,6 @@ public class GenericPlan extends AppCompatActivity {
         floatingActionButtonOpen = findViewById(R.id.floatingActionButtonOpen);
         floatingActionButtonAdd = findViewById(R.id.floatingActionButtonAdd);
         floatingActionButtonRemove = findViewById(R.id.floatingActionButtonRemove);
-        floatingActionButtonPick = findViewById(R.id.floatingActionButtonPick);
         new UserNavigationHeader(user,GenericPlan.this);
     }
     private void setAddAndRemove(){
@@ -120,25 +129,16 @@ public class GenericPlan extends AppCompatActivity {
                 fromBottom = AnimationUtils.loadAnimation(context,R.anim.from_bottom);
                 toBottom = AnimationUtils.loadAnimation(context,R.anim.to_bottom);
                 if (isOpen) {
-                    floatingActionButtonPick.setVisibility(View.VISIBLE);
                     floatingActionButtonAdd.setVisibility(View.VISIBLE);
                     floatingActionButtonRemove.setVisibility(View.VISIBLE);
                     floatingActionButtonAdd.setAnimation(fromBottom);
-                    floatingActionButtonPick.setAnimation(fromBottom);
                     floatingActionButtonRemove.setAnimation(fromBottom);
                     floatingActionButtonOpen.setAnimation(rotateOpen);
                     floatingActionButtonAdd.setClickable(true);
-                    floatingActionButtonPick.setClickable(true);
                     floatingActionButtonRemove.setClickable(true);
                     floatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) { AddExerciseDialog(); }
-                    });
-                    floatingActionButtonPick.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
                     });
                     floatingActionButtonRemove.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -146,34 +146,38 @@ public class GenericPlan extends AppCompatActivity {
                     });
                 } else {
                     floatingActionButtonAdd.setVisibility(View.INVISIBLE);
-                    floatingActionButtonPick.setVisibility(View.INVISIBLE);
                     floatingActionButtonRemove.setVisibility(View.INVISIBLE);
                     floatingActionButtonAdd.setAnimation(toBottom);
-                    floatingActionButtonPick.setAnimation(toBottom);
                     floatingActionButtonRemove.setAnimation(toBottom);
                     floatingActionButtonOpen.setAnimation(rotateClose);
                     floatingActionButtonAdd.setClickable(false);
-                    floatingActionButtonPick.setClickable(false);
                     floatingActionButtonRemove.setClickable(false);
                 }
             }
         });
     }
     private void setExercises(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child(plan.getDay()).child(user.getUid()).child(plan.getDate()).child("exercises");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("Uid",plan.getUid());
+        map.put("PlanName",plan.getPlanName());
+        map.put("Date",plan.getDate());
+        map.put("Day",plan.getDay());
+        Call<List<Exercise>> call = retrofitInterface.setExercises(map);
+        call.enqueue(new Callback<List<Exercise>>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                exercises.clear();
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Exercise exercise = dataSnapshot.getValue(Exercise.class);
-                    exercises.add(exercise);
+            public void onResponse(Call<List<Exercise>> call, Response<List<Exercise>> response) {
+                if (response.code() == 200) {
+                    exercises.clear();
+                    for(Exercise exercise : response.body())
+                        exercises.add(exercise);
+                    GenericPlanAdapter genericPlan = new GenericPlanAdapter(context, exercises, user);
+                    recyclerView.setAdapter(genericPlan);
+                } else if (response.code() == 404) {
+                    new PopUpMSG(context, plan.getPlanName(), getResources().getString(R.string.Error));
                 }
-                GenericPlanAdapter genericPlan = new GenericPlanAdapter(context, exercises, user);
-                recyclerView.setAdapter(genericPlan);
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
+            public void onFailure(Call<List<Exercise>> call, Throwable t) { }
         });
     }
     private void AddExerciseDialog(){
@@ -215,9 +219,54 @@ public class GenericPlan extends AppCompatActivity {
                     TextInputLayoutReps.setHelperText("");
                 if(!(TextInputLayoutExerciseName.getEditText().getText().toString().equals("")) && !(TextInputLayoutTypeOfMuscle.getEditText().getText().toString().equals("")) && !(TextInputLayoutReps.getEditText().getText().toString().equals(""))){
                     alertDialog.cancel();
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child(plan.getDay()).child(user.getUid()).child(plan.getDate()).child("exercises");
-                   // plan.getExercises().add(new Exercise(TextInputLayoutExerciseName.getEditText().getText().toString(),TextInputLayoutDescription.getEditText().getText().toString(),TextInputLayoutTypeOfMuscle.getEditText().getText().toString(),"null",Integer.valueOf(TextInputLayoutReps.getEditText().getText().toString())));
-                   // databaseReference.setValue(plan.getExercises());
+                    Exercise exercise = new Exercise(plan.getPlanName(),plan.getDate(),plan.getDay(),plan.getUid(),TextInputLayoutExerciseName.getEditText().getText().toString(),TextInputLayoutDescription.getEditText().getText().toString(),TextInputLayoutTypeOfMuscle.getEditText().getText().toString(),"",TextInputLayoutReps.getEditText().getText().toString());
+                    HashMap<String,String> map = new HashMap<>();
+                    map.put("Uid",exercise.getUid());
+                    map.put("PlanName",exercise.getPlanName());
+                    map.put("Date",exercise.getDate());
+                    map.put("Day",exercise.getDay());
+                    map.put("Exercise",exercise.getExercise());
+                    map.put("Description",exercise.getDescription());
+                    map.put("MuscleType",exercise.getMuscleType());
+                    map.put("Sets",exercise.getSets());
+                    map.put("Image",exercise.getImage());
+                    Call<Void> call = retrofitInterface.AddExercise(map);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.code() == 200) {
+                                new PopUpMSG(context, getResources().getString(R.string.AddExercise), getResources().getString(R.string.ExerciseSuccessfullyAdded));
+                                setExercises();
+                                for(int i=0; i<Integer.valueOf(exercise.getSets());i++) {
+                                    HashMap<String,String> map = new HashMap<>();
+                                    map.put("Uid",exercise.getUid());
+                                    map.put("PlanName",exercise.getPlanName());
+                                    map.put("Date",exercise.getDate());
+                                    map.put("Day",exercise.getDay());
+                                    map.put("Exercise",exercise.getExercise());
+                                    map.put("SetNumber",i + "");
+                                    map.put("Weight",10 + "");
+                                    map.put("Reps",8 + "");
+                                    map.put("Finish","false");
+                                    Call<Void> call2 = retrofitInterface.AddSet(map);
+                                    call2.enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                            if (response.code() == 200) {
+                                            } else if (response.code() == 400) { }
+                                        }
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) { }
+                                    });
+                                }
+
+                            } else if (response.code() == 400) {
+                                new PopUpMSG(context, getResources().getString(R.string.AddExercise), getResources().getString(R.string.ExerciseNameExists));
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) { }
+                    });
                 }
             }
         });
@@ -257,12 +306,29 @@ public class GenericPlan extends AppCompatActivity {
                     TextInputLayoutPlan.setHelperText("");
                 if(!TextInputLayoutPlan.getEditText().getText().toString().equals("")) {
                     alertDialog.cancel();
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://liftyourlife-9d039-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Plans").child(plan.getDay()).child(user.getUid()).child(plan.getDate()).child("exercises");
                     for(int i=0; i<exercises.size();i++)
-                        if(TextInputLayoutPlan.getEditText().getText().toString().equals(exercises.get(i).getExercise()))
-
-                    exercises.remove(i);
-                    setExercises();
+                        if(TextInputLayoutPlan.getEditText().getText().toString().equals(exercises.get(i).getExercise())) {
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("Uid", exercises.get(i).getUid());
+                            map.put("PlanName", exercises.get(i).getPlanName());
+                            map.put("Date", exercises.get(i).getDate());
+                            map.put("Day", exercises.get(i).getDay());
+                            map.put("Exercise", exercises.get(i).getExercise());
+                            Call<Void> call = retrofitInterface.RemoveExercise(map);
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if (response.code() == 200) {
+                                        new PopUpMSG(context, getResources().getString(R.string.RemoveExercise), getResources().getString(R.string.ExerciseSuccessfullyRemoved));
+                                        setExercises();
+                                    } else if (response.code() == 400) {
+                                        new PopUpMSG(context, getResources().getString(R.string.RemoveExercise), getResources().getString(R.string.Error));
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) { }
+                            });
+                        }
                 }
             }
         });
