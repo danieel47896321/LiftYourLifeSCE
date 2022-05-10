@@ -18,8 +18,12 @@ npm install dotenv
 # Authentication and Cache
 we connected out android studio project to Firebase server to save the registered emails and check in the app the user current id.
 
+# API
+we used Firebase send to email reset password link.
+
 # Frontend
 we used Android Studio for the front.
+
 ![CHEESE!](https://user-images.githubusercontent.com/74861262/167571865-b258a9a6-71de-417a-8e65-af3ea99d6096.png)
 ![CHEESE!](https://user-images.githubusercontent.com/74861262/167571896-700e5a1c-9843-4638-84ce-c903ceccacfe.png)
 ![CHEESE!](https://user-images.githubusercontent.com/74861262/167571924-aa10d2ef-18fe-4806-9060-7df09525cfbe.png)
