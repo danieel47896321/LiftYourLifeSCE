@@ -1,4 +1,25 @@
-# LiftYourLifeSCE
+# Distributed Web Application LiftYourLifeSCE
+This is a  distributed web application project Used to track training and personal progress.
+This uses Node.js, MongoDB, Firebase and Android Studio.
+![CHEESE!](https://user-images.githubusercontent.com/74861262/167573720-9d98e8a0-5d2f-481e-b648-aa2dee216dac.png)
+# Database
+we used MongoDB Community Server.
+download it to use locally.
+# Backend 
+used nodeJS in vsc listening on port 3000.
+
+Initialize the Project:
+npm init
+Add MongoDB as a Dependency:
+npm install Mongodb
+Add Dotenv as a Dependency:
+npm install dotenv
+
+# Authentication and Cache
+we connected out android studio project to Firebase server to save the registered emails and check in the app the user current id.
+
+# Frontend
+we used Android Studio for the front.
 ![CHEESE!](https://user-images.githubusercontent.com/74861262/167571865-b258a9a6-71de-417a-8e65-af3ea99d6096.png)
 ![CHEESE!](https://user-images.githubusercontent.com/74861262/167571896-700e5a1c-9843-4638-84ce-c903ceccacfe.png)
 ![CHEESE!](https://user-images.githubusercontent.com/74861262/167571924-aa10d2ef-18fe-4806-9060-7df09525cfbe.png)
