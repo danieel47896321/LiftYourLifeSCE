@@ -1,4 +1,4 @@
-# Distributed Web Application LiftYourLifeSCE
+# Distributed Web Application LiftYourLife
 This is a  distributed web application project Used to track training and personal progress.
 This uses Node.js, MongoDB, Firebase and Android Studio.
 ![CHEESE!](https://user-images.githubusercontent.com/74861262/167573720-9d98e8a0-5d2f-481e-b648-aa2dee216dac.png)
